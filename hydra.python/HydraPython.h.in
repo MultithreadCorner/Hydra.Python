@@ -1,0 +1,4 @@
+// the configured options
+#define HydraPython_VERSION_MAJOR @HydraPython_VERSION_MAJOR@
+#define HydraPython_VERSION_MINOR @HydraPython_VERSION_MINOR@
+#define HydraPython_VERSION_PATCH @HydraPython_VERSION_PATCH@
