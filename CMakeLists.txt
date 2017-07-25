@@ -5,22 +5,12 @@ cmake_minimum_required(VERSION 2.8)
 # project name
 project(Hydra.Python)
 
-# The version number.
-set (HydraPython_VERSION_MAJOR 1)
-set (HydraPython_VERSION_MINOR 0)
-set (HydraPython_VERSION_PATCH 0)
 
 # warn user if system is not UNIX
 if(NOT UNIX)
   message(FATAL_ERROR "This is an unsupported system.")
 endif()
 
-# configure a header file to pass some of the CMake settings
-# to the source code
-configure_file (
-  "${PROJECT_SOURCE_DIR}/hydra.python/HydraPython.h.in"
-  "${PROJECT_SOURCE_DIR}/hydra.python/HydraPython.h"
- )
 mark_as_advanced(HydraPython_VERSION_MAJOR HydraPython_VERSION_MINOR HydraPython_VERSION_PATCH)
 
 SET(HydraPython_CMAKE_DIR "${PROJECT_SOURCE_DIR}/cmake")
@@ -61,9 +51,20 @@ find_package(OpenMP)
 if(OPENMP_FOUND)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif(OPENMP_FOUND)
+
+
 #generate API documentation with Doxygen
 find_package(Doxygen)
 option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" NO)
+
+find_package(pybind11 REQUIRED)
+include_directories(${pybind11_INCLUDE_DIRS})
+
+
+set(Python_ADDITIONAL_VERSIONS 2.8 2.7 2.6)
+find_package(PythonLibs 2.7 REQUIRED)
+include_directories(${PYTHON_INCLUDE_DIRS})
+link_directories(${PYTHON_LIBRARIES})
 
 #including directories
 include_directories(include;  ${PROJECT_SOURCE_DIR})
