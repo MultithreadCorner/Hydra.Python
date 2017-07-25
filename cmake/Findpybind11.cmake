@@ -4,7 +4,7 @@
 
 find_path(pybind11_INCLUDE_DIR
 	NAMES pybind11/pybind11.h
-    PATHS ${PYBIND11_INSTALL_PATH}
+    PATHS ${PYBIND11_INSTALL_PATH} ${PROJECT_SOURCE_DIR}
 	DOC "The directory where pybind11 includes reside"
 )
 

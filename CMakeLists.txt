@@ -70,7 +70,7 @@ link_directories(${TBB_LIBRARY})
 endif(TBB_FOUND)
 
 #get OpenMP
-find_package(OpenMP)
+find_package(OpenMP REQUIRED)
 if(OPENMP_FOUND)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif(OPENMP_FOUND)
@@ -90,7 +90,7 @@ include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 
 #including directories
-include_directories(include;  ${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/include;  ${PROJECT_SOURCE_DIR})
 
 if(CUDA_FOUND)
 
