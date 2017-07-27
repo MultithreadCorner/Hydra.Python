@@ -22,9 +22,9 @@
  *---------------------------------------------------------------------------*/
 
 /*
- * PyRandom.cpp
+ * PyContainers.cpp
  *
- *  Created on: Jul 26, 2017
+ *  Created on: Jul 27, 2017
  *      Author: Antonio Augusto Alves Junior
  */
 
@@ -32,25 +32,27 @@
 /*
  * @file
  * 
- * @ingroup random
+ * @ingroup
  * 
- * @brief hydra::Random bindings
+ * @brief 
  *
- * @todo document.
+ * @todo 
  *
  */
 
 
-#include <hydra/Random.h>
+#include <hydra/Containers.h>
 #include <pybind11/pybind11.h>
 
 namespace py = pybind11;
 
 PYBIND11_MODULE(HydraPython, m) {
 
-    py::class_<hydra::Random<>>(m, "Random")
+    py::class_<hydra::mc_host_vector<double>>(m, "Random")
         .def(py::init<unsigned int>())
 		.def("SetSeed", &hydra::Random<>::SetSeed)
         .def("GetSeed", &hydra::Random<>::GetSeed)
 		;
 }
+
+
