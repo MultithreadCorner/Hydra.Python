@@ -46,13 +46,35 @@
 
 namespace py = pybind11;
 
+PYBIND11_MAKE_OPAQUE(hydra::mc_host_vector<double>);
+
 PYBIND11_MODULE(HydraPython, m) {
 
-    py::class_<hydra::mc_host_vector<double>>(m, "Random")
-        .def(py::init<unsigned int>())
-		.def("SetSeed", &hydra::Random<>::SetSeed)
-        .def("GetSeed", &hydra::Random<>::GetSeed)
-		;
+    py::class_<hydra::mc_host_vector<double>>(m, "host_vector_float")
+        .def(py::init<>())
+		.def(py::init<size_t>())
+		.def(py::init<size_t, double>())
+		.def("resize",	 &hydra::hydra::mc_host_vector<double>::resize)
+		.def("size", 	 &hydra::hydra::mc_host_vector<double>::size)
+		.def("max_size", &hydra::hydra::mc_host_vector<double>::max_size)
+		.def("reserve",  &hydra::hydra::mc_host_vector<double>::reserve)
+		.def("capacity", &hydra::hydra::mc_host_vector<double>::capacity)
+		.def("shrink_to_fit", &hydra::hydra::mc_host_vector<double>::shrink_to_fit)
+		.def("front", &hydra::hydra::mc_host_vector<double>::front )
+		.def("back",  &hydra::hydra::mc_host_vector<double>::back)
+		.def("data",  &hydra::hydra::mc_host_vector<double>::data)
+		.def("clear", &hydra::hydra::mc_host_vector<double>::clear)
+		.def("empty", &hydra::hydra::mc_host_vector<double>::empty)
+		.def("push_back", &hydra::hydra::mc_host_vector<double>::push_back)
+		.def("pop_back", &hydra::hydra::mc_host_vector<double>::)
+		//.def("swap", &hydra::hydra::mc_host_vector<double>::swap)
+		.def("erase", &hydra::hydra::mc_host_vector<double>::erase)
+		.def("insert", &hydra::hydra::mc_host_vector<double>::insert)
+		.def("assign", &hydra::hydra::mc_host_vector<double>::assign )
+		.def("assign", &hydra::hydra::mc_host_vector<double>::assign)
+
+
+								;
 }
 
 
