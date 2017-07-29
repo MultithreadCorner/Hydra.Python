@@ -184,9 +184,11 @@ endforeach()
 MESSAGE(STATUS "${BoldYellow}Install diretory: ${ColourReset}" ${CMAKE_INSTALL_PREFIX}  )
 MESSAGE(STATUS "${BoldGreen}=============================================================== ${ColourReset}")
 
+
+
 IF(OPENMP_FOUND)
-add_library(HydraPython src/PyRandom.cpp)
-set_target_properties(HydraPython PROPERTIES 
+add_library(HydraPython SHARED src/PyRandom.cpp)
+set_target_properties(HydraPython PROPERTIES  PREFIX ""
     COMPILE_FLAGS "-fopenmp -DTHRUST_HOST_SYSTEM=THRUST_HOST_SYSTEM_CPP -DTHRUST_DEVICE_SYSTEM=THRUST_DEVICE_SYSTEM_OMP -lgomp")
-target_link_libraries(HydraPython libpython2.7)
+target_link_libraries(HydraPython ${PYTHON_LIBRARIES})
 ENDIF(OPENMP_FOUND)

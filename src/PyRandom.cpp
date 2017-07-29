@@ -46,8 +46,9 @@
 
 namespace py = pybind11;
 
-PYBIND11_MODULE(HydraPyhton, mdl) {
-    py::class_<hydra::Random<> >(mdl, "Random")
+PYBIND11_MODULE(HydraPython, m) {
+
+    py::class_<hydra::Random<>>(m, "Random")
         .def(py::init<unsigned int>())
 		.def("SetSeed", &hydra::Random<>::SetSeed)
         .def("GetSeed", &hydra::Random<>::GetSeed)

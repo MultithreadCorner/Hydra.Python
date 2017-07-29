@@ -22,32 +22,27 @@
  *---------------------------------------------------------------------------*/
 
 /*
- * PyRandom.h
+ * bind_container.h
  *
- *  Created on: Jul 26, 2017
- *      Author: Antonio Augusto Alves Junior
+ *  Created on: 28 de jul de 2017
+ *      Author: augalves
  */
 
-
-/**
+/*
  * @file
  * 
- * @ingroup random
+ * @ingroup
  * 
- * @brief This file implements macros and typedefs for hydra::Random
+ * @brief 
  *
- * @todo everything.
+ * @todo 
  *
  */
+#ifndef BIND_CONTAINER_H_
+#define BIND_CONTAINER_H_
 
 
-#ifndef PYRANDOM_H_
-#define PYRANDOM_H_
 
 
-namespace hydra_python {
 
-
-}  // namespace hydra.python
-
-#endif /* PYRANDOM_H_ */
+#endif /* BIND_CONTAINER_H_ */
