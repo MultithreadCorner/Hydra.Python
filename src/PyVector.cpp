@@ -56,7 +56,7 @@
 namespace py = pybind11;
 
 
-OBPYBIND11_MODULE(HydraPython, m) {
+PYBIND11_MODULE(HydraPython, m) {
   py::class_< hydra::Vector3R >(m, "Vector3R")
     .def(py::init<>())
     .def(py::init<hydra::GReal_t, hydra::GReal_t, hydra::GReal_t>())
