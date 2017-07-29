@@ -61,6 +61,9 @@ include_directories(${THRUST_INCLUDE_DIR})
 
 #get CUDA
 find_package(CUDA 8.0) 
+if (CUDA_FOUND)
+include_directories("${CUDA_INCLUDE_DIRS}")
+endif(CUDA_FOUND)
 
 #get TBB
 find_package(TBB )
@@ -75,6 +78,13 @@ if(OPENMP_FOUND)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif(OPENMP_FOUND)
 
+# get ROOT
+find_package(ROOT)
+if(ROOT_FOUND)
+include_directories(${ROOT_INCLUDE_DIR})
+link_directories(${ROOT_LIBRARY_DIR})
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_ROOT_AVAILABLE_")
+endif(ROOT_FOUND)
 
 #generate API documentation with Doxygen
 find_package(Doxygen)
@@ -83,9 +93,8 @@ option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation 
 find_package(pybind11 REQUIRED)
 include_directories(${pybind11_INCLUDE_DIRS})
 
-
-set(Python_ADDITIONAL_VERSIONS 2.8 2.7 2.6)
-find_package(PythonLibs 2.7 REQUIRED)
+set(Python_ADDITIONAL_VERSIONS 3.5 2.8 2.7 2.6)
+find_package(PythonLibs 3.5 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 
@@ -175,3 +184,11 @@ endforeach()
 MESSAGE(STATUS "${BoldYellow}Install diretory: ${ColourReset}" ${CMAKE_INSTALL_PREFIX}  )
 MESSAGE(STATUS "${BoldGreen}=============================================================== ${ColourReset}")
 
+
+
+IF(OPENMP_FOUND)
+add_library(HydraPython SHARED src/PyVector.cpp)
+set_target_properties(HydraPython PROPERTIES  PREFIX ""
+    COMPILE_FLAGS "-fopenmp -DTHRUST_HOST_SYSTEM=THRUST_HOST_SYSTEM_CPP -DTHRUST_DEVICE_SYSTEM=THRUST_DEVICE_SYSTEM_OMP -lgomp")
+target_link_libraries(HydraPython ${PYTHON_LIBRARIES})
+ENDIF(OPENMP_FOUND)
