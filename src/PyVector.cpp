@@ -61,6 +61,15 @@ PYBIND11_MODULE(HydraPython, m) {
     .def(py::init<>())
     .def(py::init<hydra::GReal_t, hydra::GReal_t, hydra::GReal_t>())
     .def(py::init<hydra::Vector3R>())
+    .def("__init__", [](hydra::Vector3R& vec, std::vector<hydra::GReal_t>& lst) {
+	if (lst.size() == 3) {
+	  vec = hydra::Vector3R();
+	  for(int i = 0; i < 3; ++i)
+	    vec.set(i, lst[i]);
+	  return;
+	}
+	throw pybind11::type_error("list argument does not contain exactly 3 values!");
+      })
     .def("__imul__", &hydra::Vector3R::operator*=)
     .def("__itruediv__", &hydra::Vector3R::operator/=)
     //    .def("assign", [](hydra::Vector3R& v, hydra::Vector3R& other) {v = other;} )
