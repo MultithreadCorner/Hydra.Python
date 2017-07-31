@@ -61,9 +61,18 @@ PYBIND11_MODULE(HydraPython, m) {
     .def(py::init<>())
     .def(py::init<hydra::GReal_t, hydra::GReal_t, hydra::GReal_t>())
     .def(py::init<hydra::Vector3R>())
+    .def("__init__", [](hydra::Vector3R& vec, std::vector<hydra::GReal_t>& lst) {
+	if (lst.size() == 3) {
+	  vec = hydra::Vector3R();
+	  for(int i = 0; i < 3; ++i)
+	    vec.set(i, lst[i]);
+	  return;
+	}
+	throw pybind11::type_error("list argument does not contain exactly 3 values!");
+      })
     .def("__imul__", &hydra::Vector3R::operator*=)
     .def("__itruediv__", &hydra::Vector3R::operator/=)
-    //    .def("assign", [](hydra::Vector3R& v, hydra::Vector3R& other) {v = other;} )
+    .def("assign", [](hydra::Vector3R& v, hydra::Vector3R& other) {v = other;} )
     .def("__iadd__", &hydra::Vector3R::operator+=)
     .def("__isub__", &hydra::Vector3R::operator-=)
     .def("set", (void (hydra::Vector3R::*)(hydra::GInt_t, hydra::GReal_t)) &hydra::Vector3R::set)
@@ -103,6 +112,15 @@ PYBIND11_MODULE(HydraPython, m) {
     .def(py::init<>())
     .def(py::init<hydra::GReal_t, hydra::GReal_t, hydra::GReal_t, hydra::GReal_t>())
     .def(py::init<hydra::Vector4R>())
+    .def("__init__", [](hydra::Vector4R& vec, std::vector<hydra::GReal_t>& lst) {
+	if (lst.size() == 4) {
+	  vec = hydra::Vector4R();
+	  for(int i = 0; i < 4; ++i)
+	    vec.set(i, lst[i]);
+	  return;
+	}
+	throw pybind11::type_error("list argument does not contain exactly 4 values!");
+      })
     .def("set", (void (hydra::Vector4R::*)(hydra::GInt_t, hydra::GReal_t)) &hydra::Vector4R::set)
     .def("set", (void (hydra::Vector4R::*)(hydra::GReal_t, hydra::GReal_t, hydra::GReal_t, hydra::GReal_t)) &hydra::Vector4R::set)
     .def("__imul__", &hydra::Vector4R::operator*=)
