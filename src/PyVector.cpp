@@ -72,7 +72,7 @@ PYBIND11_MODULE(HydraPython, m) {
       })
     .def("__imul__", &hydra::Vector3R::operator*=)
     .def("__itruediv__", &hydra::Vector3R::operator/=)
-    //    .def("assign", [](hydra::Vector3R& v, hydra::Vector3R& other) {v = other;} )
+    .def("assign", [](hydra::Vector3R& v, hydra::Vector3R& other) {v = other;} )
     .def("__iadd__", &hydra::Vector3R::operator+=)
     .def("__isub__", &hydra::Vector3R::operator-=)
     .def("set", (void (hydra::Vector3R::*)(hydra::GInt_t, hydra::GReal_t)) &hydra::Vector3R::set)
