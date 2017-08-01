@@ -61,8 +61,9 @@ include_directories(${THRUST_INCLUDE_DIR})
 
 #get CUDA
 find_package(CUDA 8.0) 
+if(CUDA_FOUND)
 include_directories("${CUDA_INCLUDE_DIRS}")
-
+endif(CUDA_FOUND)
 
 #get TBB
 find_package(TBB )
