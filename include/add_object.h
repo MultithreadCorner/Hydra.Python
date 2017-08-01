@@ -22,35 +22,32 @@
  *---------------------------------------------------------------------------*/
 
 /*
- * PyRandom.cpp
+ * add_object.h
  *
- *  Created on: Jul 26, 2017
- *      Author: Antonio Augusto Alves Junior
+ *  Created on: 30 de jul de 2017
+ *      Author: augalves
  */
-
 
 /*
  * @file
  * 
- * @ingroup random
+ * @ingroup
  * 
- * @brief hydra::Random bindings
+ * @brief This file declare the add_object function
  *
- * @todo document.
+ * @todo 
  *
  */
+#ifndef ADD_OBJECT_H_
+#define ADD_OBJECT_H_
 
-
-#include <hydra/Random.h>
 #include <pybind11/pybind11.h>
 
-namespace py = pybind11;
+namespace hydra_python {
 
-PYBIND11_MODULE(HydraPython, m) {
+template<typename T>
+void add_object(pybind11::module& m);
 
-    py::class_<hydra::Random<>>(m, "Random")
-        .def(py::init<unsigned int>())
-		.def("SetSeed", &hydra::Random<>::SetSeed)
-        .def("GetSeed", &hydra::Random<>::GetSeed)
-		;
 }
+
+#endif /* ADD_OBJECT_H_ */
