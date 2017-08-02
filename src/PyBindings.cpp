@@ -109,7 +109,7 @@ PYBIND11_MAKE_OPAQUE(device_vector_float10 );
 
 PYBIND11_MODULE(HydraPython, m) {
 
-hypy::add_object< hydra::Random<> >(m);
+hypy::add_object< hydra::Random<thrust::random::default_random_engine> >(m);
 
 hypy::bind_vector< host_vector_float  >(m,"host_vector_float");
 hypy::bind_vector< host_vector_float2 >(m,"host_vector_float2");

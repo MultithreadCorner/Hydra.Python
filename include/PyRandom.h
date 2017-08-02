@@ -41,12 +41,13 @@
 #ifndef PYRANDOM_H_
 #define PYRANDOM_H_
 
-
+#include <functional>
 #include <hydra/Random.h>
 #include <pybind11/pybind11.h>
 #include <add_object.h>
 
 namespace py = pybind11;
+
 
 namespace hydra_python {
 
@@ -91,7 +92,13 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 				cobj.BreitWigner( mean, width, vect.begin(), vect.end());
 			}, py::call_guard<py::gil_scoped_release>(),
 			"Fill the container with random numbers distributed according a BreitWigner with mean and width.")
-
+	.def("Sample",
+			[](hydra::Random<>& cobj, hydra::mc_host_vector<double>& vect,
+					double min, double max, pybind11::object& funct){
+        std::function<double(double*)> *f = funct.cast<std::function<double(double*)>* >();
+		cobj.Sample(vect.begin(), vect.end(), min, max, *f );
+	}, py::call_guard<py::gil_scoped_release>(),
+	"Fill the container with random numbers distributed according a BreitWigner with mean and width."		)
     //-----------------------------------------------------
 	//device functions
 	//-----------------------------------------------------

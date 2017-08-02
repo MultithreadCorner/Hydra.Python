@@ -94,8 +94,8 @@ find_package(pybind11 REQUIRED)
 include_directories(${pybind11_INCLUDE_DIRS})
 
 
-set(Python_ADDITIONAL_VERSIONS 3)
-find_package(PythonLibs 3 REQUIRED)
+set(Python_ADDITIONAL_VERSIONS 2.7)
+find_package(PythonLibs 2.7 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 
