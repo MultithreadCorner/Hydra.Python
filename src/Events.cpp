@@ -1,4 +1,6 @@
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <pybind11/operators.h>
 #include "casters.h"
 #include "hydra/Events.h"
 #include "hydra/Types.h"
@@ -10,7 +12,7 @@
 
 namespace py = pybind11;
 
-py::tuple foo(thrust::detail::tuple_of_iterator_references<double&, double&, double&, double&> iter) {
+py::tuple foo(const thrust::detail::tuple_of_iterator_references<const double&, const double&, const double&, const double&> iter) {
   return py::make_tuple(thrust::get<0>(iter), thrust::get<1>(iter), thrust::get<2>(iter), thrust::get<3>(iter));
 }
 
@@ -20,7 +22,7 @@ PYBIND11_MODULE(HydraPython, m) {
     .def(py::init<>())
     .def(py::init< hydra::GLong_t > ())
     .def(py::init< hydra::Events<N, hydra::host::sys_t> >())
-    .def("__getitem__", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx) {
+    .def("__getitem__", [](const hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx) {
 	auto it = e.begin() + idx;
 	/*TODO: Here I need to make a template function for variable number of arguments
 	 * Say for N=4 we will have first tuple with 1 + 4 elements. [get<0>, get<1>, get<2>, get<3>, get<4>]
@@ -37,6 +39,9 @@ PYBIND11_MODULE(HydraPython, m) {
 	//auto first_second_third = thrust::get<2>(first_second);
 	//auto first_second_fourth = thrust::get<3>(first_second);
 	return foo(first_second);
+      }, py::is_operator())
+    .def("__setitem", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, hydra::GReal_t item){
+	// ???????????????????
       }, py::is_operator())
     .def("getFlag", [](const hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx){
 	auto i = e.FlagsBegin() + idx;
@@ -58,11 +63,14 @@ PYBIND11_MODULE(HydraPython, m) {
 	auto i = e.DaughtersBegin(idx);
 	return py::make_tuple(thrust::get<0>(*i), thrust::get<1>(*i), thrust::get<2>(*i), thrust::get<3>(*i));
       })
-    .def("setDaughter", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, hydra::GReal_t value) {
+    .def("setDaughter", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, std::vector<hydra::GReal_t>& value) {
 	auto i = e.DaughtersBegin(idx);
-	thrust::get<0>(*i) = value;
-	//*i = value;
-	//*(i + idx) = value;
+	if (value.size() != 4)
+	  throw py::type_error("List  argument does not contain exactly 4 values!");
+	thrust::get<0>(*i) = value[0];
+       	thrust::get<1>(*i) = value[1];
+	thrust::get<2>(*i) = value[2];
+	thrust::get<3>(*i) = value[3];	
       })
     ;
 }
