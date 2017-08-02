@@ -72,5 +72,12 @@ PYBIND11_MODULE(HydraPython, m) {
 	thrust::get<2>(*i) = value[2];
 	thrust::get<3>(*i) = value[3];	
       })
+    .def("getMaxWeight", &hydra::Events<N, hydra::host::sys_t>::GetMaxWeight)
+    .def("setMaxWeight", &hydra::Events<N, hydra::host::sys_t>::SetMaxWeight)
+    .def("getNEvents", &hydra::Events<N, hydra::host::sys_t>::GetNEvents)
+    .def("capacity", &hydra::Events<N, hydra::host::sys_t>::capacity)
+    .def("resize", &hydra::Events<N, hydra::host::sys_t>::resize)
+    .def("unweight", &hydra::Events<N, hydra::host::sys_t>::Unweight)
+    .def("size", &hydra::Events<N, hydra::host::sys_t>::size)
     ;
 }
