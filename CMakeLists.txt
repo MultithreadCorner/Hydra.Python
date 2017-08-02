@@ -93,8 +93,8 @@ option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation 
 find_package(pybind11 REQUIRED)
 include_directories(${pybind11_INCLUDE_DIRS})
 
-set(Python_ADDITIONAL_VERSIONS 3.5 2.8 2.7 2.6)
-find_package(PythonLibs 3.5 REQUIRED)
+set(Python_ADDITIONAL_VERSIONS 3)
+find_package(PythonLibs 3 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 
@@ -187,7 +187,7 @@ MESSAGE(STATUS "${BoldGreen}====================================================
 
 
 IF(OPENMP_FOUND)
-add_library(HydraPython SHARED src/PyVector.cpp)
+add_library(HydraPython SHARED src/PyBindings.cpp)
 set_target_properties(HydraPython PROPERTIES  PREFIX ""
     COMPILE_FLAGS "-fopenmp -DTHRUST_HOST_SYSTEM=THRUST_HOST_SYSTEM_CPP -DTHRUST_DEVICE_SYSTEM=THRUST_DEVICE_SYSTEM_OMP -lgomp")
 target_link_libraries(HydraPython ${PYTHON_LIBRARIES})
