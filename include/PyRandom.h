@@ -94,9 +94,14 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 			"Fill the container with random numbers distributed according a BreitWigner with mean and width.")
 	.def("Sample",
 			[](hydra::Random<>& cobj, hydra::mc_host_vector<double>& vect,
-					double min, double max, pybind11::object& funct){
-        std::function<double(double*)> *f = funct.cast<std::function<double(double*)>* >();
+					double min, double max, std::function<double(double)> f )
+		{
+          [=](double* hargs) { return f(hargs[1]) };
+
+		std::function<double(double*)> *f = funct.cast<std::function<double(double*)>* >();
 		cobj.Sample(vect.begin(), vect.end(), min, max, *f );
+
+
 	}, py::call_guard<py::gil_scoped_release>(),
 	"Fill the container with random numbers distributed according a BreitWigner with mean and width."		)
     //-----------------------------------------------------
