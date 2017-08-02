@@ -1,4 +1,5 @@
 #include <pybind11/pybind11.h>
+#include "casters.h"
 #include "hydra/Events.h"
 #include "hydra/Types.h"
 #include "thrust/tuple.h"
@@ -7,8 +8,11 @@
 #include <iostream>
 #include <memory>
 
-
 namespace py = pybind11;
+
+py::tuple foo(thrust::detail::tuple_of_iterator_references<double&, double&, double&, double&> iter) {
+  return py::make_tuple(thrust::get<0>(iter), thrust::get<1>(iter), thrust::get<2>(iter), thrust::get<3>(iter));
+}
 
 PYBIND11_MODULE(HydraPython, m) {
   const int N = 3;
@@ -16,29 +20,49 @@ PYBIND11_MODULE(HydraPython, m) {
     .def(py::init<>())
     .def(py::init< hydra::GLong_t > ())
     .def(py::init< hydra::Events<N, hydra::host::sys_t> >())
-    .def(py::init< hydra::Events<N, hydra::host::sys_t> >())
-    .def("FlagsBegin", [](hydra::Events<N, hydra::host::sys_t>& e){
-	auto i = e.FlagsBegin();
-	std::cout << std::boolalpha << *i << " " << *(i + 1) << std::endl;
-	})
-    .def("WeightsBegin", [](hydra::Events<N, hydra::host::sys_t>& e) {
-	auto i = e.WeightsBegin();
-	std::cout << *i << " " << *(i + 1) << std::endl;
-      })
-    .def("DaughtersBegin", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GInt_t a) {
-	auto i = e.DaughtersBegin(a);
-	std::cout << *i << " " << *(i + 1) << std::endl;
-      })
-    .def("begin", [](hydra::Events<N, hydra::host::sys_t>&e) {
-	auto it = e.begin();
+    .def("__getitem__", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx) {
+	auto it = e.begin() + idx;
+	/*TODO: Here I need to make a template function for variable number of arguments
+	 * Say for N=4 we will have first tuple with 1 + 4 elements. [get<0>, get<1>, get<2>, get<3>, get<4>]
+	 * but for N=3 we will have first tuple with 1 + 3 elements. [get<0>, get<1>, get<2>, get<3>]
+	 * So I need to replace this call with a template function to automate this process and I can do
+	 * that with TMP because the number N is fix.
+	 */
 	auto first = *it;
 	auto first_first = thrust::get<0>(first);
-	auto second = thrust::get<1>(first);
-	std::cout << first_first << std::endl;
-	std::cout << typeid(first).name() << std::endl;
-	for (auto i = second.begin(); i != second.end(); ++i)
-	  std::cout << *i << ", ";
-	return it;
+	auto first_second = thrust::get<1>(first);
+	//return first_second;
+	//auto first_second_first = thrust::get<0>(first_second);
+	//auto first_second_second = thrust::get<1>(first_second);
+	//auto first_second_third = thrust::get<2>(first_second);
+	//auto first_second_fourth = thrust::get<3>(first_second);
+	return foo(first_second);
+      }, py::is_operator())
+    .def("getFlag", [](const hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx){
+	auto i = e.FlagsBegin() + idx;
+	std::cout << std::boolalpha << *(i + idx) << std::endl;
+	})
+    .def("setFlag", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, bool flag) {
+	auto i = e.FlagsBegin() + idx;
+	*(i + idx) = flag;
+      })
+    .def("getWeight", [](const hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx){
+	auto i = e.WeightsBegin();
+	std::cout << *(i + idx) << std::endl;
+      })
+    .def("setWeight", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, hydra::GReal_t value) {
+	auto i = e.WeightsBegin();
+	*(i + idx) = value;
+      })
+    .def("getDaughter", [](const hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx) {
+	auto i = e.DaughtersBegin(idx);
+	return py::make_tuple(thrust::get<0>(*i), thrust::get<1>(*i), thrust::get<2>(*i), thrust::get<3>(*i));
+      })
+    .def("setDaughter", [](hydra::Events<N, hydra::host::sys_t>& e, hydra::GUInt_t idx, hydra::GReal_t value) {
+	auto i = e.DaughtersBegin(idx);
+	thrust::get<0>(*i) = value;
+	//*i = value;
+	//*(i + idx) = value;
       })
     ;
 }
