@@ -42,14 +42,14 @@ SET(CMAKE_VERBOSE_MAKEFILE  ON)
 
 #options to gcc
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("--std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("--std=c++14" COMPILER_SUPPORTS_CXX11)
 if(NOT COMPILER_SUPPORTS_CXX11)
  message(FATAL "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
 #options to gcc
 
-set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE --std=c++11  -march=native -fPIC -O4" CACHE STRING "compile flags" FORCE)
+set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++14  -fvisibility=hidden -march=native -fPIC " CACHE STRING "compile flags" FORCE)
 
 # get Hydra
 find_package(Hydra 1.0.0 REQUIRED)
@@ -79,12 +79,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif(OPENMP_FOUND)
 
 # get ROOT
-find_package(ROOT)
-if(ROOT_FOUND)
-include_directories(${ROOT_INCLUDE_DIR})
-link_directories(${ROOT_LIBRARY_DIR})
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_ROOT_AVAILABLE_")
-endif(ROOT_FOUND)
+#find_package(ROOT)
+#if(ROOT_FOUND)
+#include_directories(${ROOT_INCLUDE_DIR})
+#link_directories(${ROOT_LIBRARY_DIR})
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_ROOT_AVAILABLE_")
+#endif(ROOT_FOUND)
 
 #generate API documentation with Doxygen
 find_package(Doxygen)
@@ -106,7 +106,7 @@ if(CUDA_FOUND)
 
 	#set cuda flags
 	
-	SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} --cudart ;  static ; -O4 ;--expt-relaxed-constexpr; -ftemplate-backtrace-limit=0; --expt-extended-lambda;--relocatable-device-code=false ;
+	SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} --cudart ;  static ;--expt-relaxed-constexpr; -ftemplate-backtrace-limit=0; --expt-extended-lambda;--relocatable-device-code=false ;
 	-Xptxas -dlcm=ca; -Xptxas --opt-level=4 )
 
 	SET(CUDA_SEPARABLE_COMPILATION OFF)

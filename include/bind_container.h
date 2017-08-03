@@ -107,13 +107,19 @@ template <typename, typename, typename... Args> void vector_if_equal_operator(co
 template <typename, typename, typename... Args> void vector_if_insertion_operator(const Args &...) { }
 template <typename, typename, typename... Args> void vector_modifiers(const Args &...) { }
 
-template<typename Vector, typename Class_>
+/*
+
 void vector_if_copy_constructible(pybind11::detail::enable_if_t<
     std::is_copy_constructible<Vector>::value &&
     std::is_copy_constructible<typename Vector::value_type>::value, Class_> &cl) {
 
     cl.def(pybind11::init<const Vector &>(), "Copy constructor");
 }
+*/
+template<typename Vector, typename Class_>
+void vector_if_copy_constructible(pybind11::detail::enable_if_t<pybind11::detail::is_copy_constructible<Vector>::value, Class_> &cl) {
+     cl.def(pybind11::init<const Vector &>(), "Copy constructor");
+ }
 
 template<typename Vector, typename Class_>
 void vector_if_equal_operator(pybind11::detail::enable_if_t<is_comparable<Vector>::value, Class_> &cl) {
@@ -155,7 +161,7 @@ void vector_if_equal_operator(pybind11::detail::enable_if_t<is_comparable<Vector
 // (Technically, some of these (pop and __delitem__) don't actually require copyability, but it seems
 // silly to allow deletion but not insertion, so include them here too.)
 template <typename Vector, typename Class_>
-void vector_modifiers(pybind11::detail::enable_if_t<std::is_copy_constructible<typename Vector::value_type>::value, Class_> &cl) {
+void vector_modifiers(pybind11::detail::enable_if_t<pybind11::detail::is_copy_constructible<typename Vector::value_type>::value, Class_> &cl) {
     using T = typename Vector::value_type;
     using SizeType = typename Vector::size_type;
     using DiffType = typename Vector::difference_type;
@@ -428,7 +434,9 @@ pybind11::class_<Vector, holder_type> bind_vector(pybind11::module &m, std::stri
     // Declare the buffer interface if a buffer_protocol() is passed in
     detail::vector_buffer<Vector, Class_, Args...>(cl);
 
+
     cl.def(pybind11::init<>());
+
     cl.def(pybind11::init<size_t>());
 
     // Register copy constructor (if possible)
@@ -446,6 +454,7 @@ pybind11::class_<Vector, holder_type> bind_vector(pybind11::module &m, std::stri
     // Accessor and iterator; return by value if copyable, otherwise we return by ref + keep-alive
     detail::vector_accessor<Vector, Class_>(cl);
 
+
     cl.def("__bool__",
         [](const Vector &v) -> bool {
             return !v.empty();
@@ -453,11 +462,14 @@ pybind11::class_<Vector, holder_type> bind_vector(pybind11::module &m, std::stri
         "Check whether the list is nonempty"
     );
 
-    cl.def("__len__", &Vector::size);
+  cl.def("__len__", &Vector::size);
+
+    return cl;
 }
 
 
-}  // namespace hydra_python
+}
+
 
 
 #endif /* BIND_CONTAINER_H_ */
