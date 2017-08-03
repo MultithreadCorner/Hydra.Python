@@ -125,9 +125,6 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 	.def(RANDOM_SAMPLE_BODY(8,  host, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]))
 	.def(RANDOM_SAMPLE_BODY(9,  host, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8] ))
 	.def(RANDOM_SAMPLE_BODY(10, host, data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8],data[9] ))
-
-
-	//-----------------------------------------------------
 	//device functions
 	//-----------------------------------------------------
 	// uniform
