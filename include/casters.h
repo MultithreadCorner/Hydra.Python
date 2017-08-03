@@ -1,4 +1,3 @@
-
 /*----------------------------------------------------------------------------
  *
  *   Copyright (C) 2017 Antonio Augusto Alves Junior
@@ -44,12 +43,12 @@
 
 #include <pybind11/pybind11.h>
 #include <hydra/Tuple.h>
+#include <thrust/iterator/detail/tuple_of_iterator_references.h>
+#include <thrust/device_ptr.h>
 
 namespace pybind11 {
 
 namespace detail {
-
-
 
 
 
@@ -123,8 +122,81 @@ protected:
 template <typename... Ts> class type_caster<hydra::tuple<Ts...>>
     : public tuple_caster<hydra::tuple, Ts...> {};
 
+//===========================
 
 
+// Base implementation for thrust::detail::tuple_of_iterator_references
+template <typename... Ts>
+class tuple_caster<thrust::detail::tuple_of_iterator_references, Ts...> {
+    using type = thrust::detail::tuple_of_iterator_references<Ts...>;
+    static constexpr auto size = sizeof...(Ts);
+    using indices = make_index_sequence<size>;
+public:
+
+    bool load(handle src, bool convert) {
+        if (!isinstance<pybind11::sequence>(src))
+            return false;
+        const auto seq = reinterpret_borrow<sequence>(src);
+        if (seq.size() != size)
+            return false;
+        return load_impl(seq, convert, indices{});
+    }
+
+    template <typename T>
+    static handle cast(T&& src, return_value_policy policy, handle parent) {
+        return cast_impl(std::forward<T&>(src), policy, parent, indices{});
+    }
+
+    static PYBIND11_DESCR name() {
+        return type_descr(_("Tuple[") + concat(make_caster<Ts>::name()...) + _("]"));
+    }
+
+    template <typename T> using cast_op_type = type;
+
+    operator type() & { return implicit_cast(indices{}); }
+    operator type() && { return std::move(*this).implicit_cast(indices{}); }
+
+protected:
+    template <size_t... Is>
+    type implicit_cast(index_sequence<Is...>) & { return type(cast_op<Ts>(hydra::get<Is>(subcasters))...); }
+    template <size_t... Is>
+    type implicit_cast(index_sequence<Is...>) && { return type(cast_op<Ts>(std::move(hydra::get<Is>(subcasters)))...); }
+
+    static constexpr bool load_impl(const sequence &, bool, detail::index_sequence<>) { return true; }
+
+    template <size_t... Is>
+    bool load_impl(const sequence &seq, bool convert, index_sequence<Is...>) {
+        for (bool r : {hydra::get<Is>(subcasters).load(seq[Is], convert)...})
+            if (!r)
+                return false;
+        return true;
+    }
+
+    /* Implementation: Convert a C++ tuple into a Python tuple */
+    template <typename T, size_t... Is>
+    static handle cast_impl(T&& src, return_value_policy policy, handle parent, index_sequence<Is...>) {
+        std::array<object, size> entries{{
+        	reinterpret_steal<pybind11::object>(make_caster<Ts>::cast(hydra::get<Is>(std::forward<T&>(src)), policy, parent))...
+        }};
+        for (const auto &entry: entries)
+            if (!entry)
+                return handle();
+        tuple result(size);
+        int counter = 0;
+        for (auto & entry: entries)
+            PyTuple_SET_ITEM(result.ptr(), counter++, entry.release().ptr());
+        return result.release();
+    }
+
+    thrust::detail::tuple_of_iterator_references<make_caster<Ts>...> subcasters;
+};
+
+
+template <typename... Ts> class type_caster<thrust::detail::tuple_of_iterator_references<Ts...>>
+    : public tuple_caster<thrust::detail::tuple_of_iterator_references, Ts...> {};
+
+
+//===================================================
 // Base implementation for hydra::pair
 template <typename... Ts>
 class tuple_caster<hydra::pair, Ts...> {
@@ -197,9 +269,11 @@ template <typename T1, typename T2> class type_caster<hydra::pair<T1, T2>>
     : public tuple_caster<hydra::pair, T1, T2> {};
 
 
+
 }  // namespace detail
 
 }  // namespace pybind11
 
 
 #endif /* CASTERS_H_ */
+
