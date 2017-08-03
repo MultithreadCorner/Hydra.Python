@@ -42,14 +42,14 @@ SET(CMAKE_VERBOSE_MAKEFILE  ON)
 
 #options to gcc
 include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("--std=c++14" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("--std=c++11" COMPILER_SUPPORTS_CXX11)
 if(NOT COMPILER_SUPPORTS_CXX11)
  message(FATAL "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
 #options to gcc
 
-set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++14  -fvisibility=hidden -march=native -fPIC " CACHE STRING "compile flags" FORCE)
+set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++11  -fvisibility=hidden -march=native -fPIC -O4" CACHE STRING "compile flags" FORCE)
 
 # get Hydra
 find_package(Hydra 1.0.0 REQUIRED)
@@ -94,8 +94,8 @@ find_package(pybind11 REQUIRED)
 include_directories(${pybind11_INCLUDE_DIRS})
 
 
-set(Python_ADDITIONAL_VERSIONS 2.7)
-find_package(PythonLibs 2.7 REQUIRED)
+set(Python_ADDITIONAL_VERSIONS 3.5)
+find_package(PythonLibs 3.5 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 

@@ -45,6 +45,7 @@
 #include <pybind11/pybind11.h>
 #include <hydra/Tuple.h>
 #include <thrust/iterator/detail/tuple_of_iterator_references.h>
+#include <thrust/device_ptr.h>
 
 namespace pybind11 {
 
@@ -267,6 +268,7 @@ protected:
 
 template <typename T1, typename T2> class type_caster<hydra::pair<T1, T2>>
     : public tuple_caster<hydra::pair, T1, T2> {};
+
 
 
 }  // namespace detail

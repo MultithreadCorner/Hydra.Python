@@ -58,8 +58,9 @@ py::function& funct)\
 auto functor = [=](double* data) {return funct( __VA_ARGS__ ).cast<double>();}; \
 auto wfunctor = hydra::wrap_lambda( functor ); \
 auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, wfunctor ); \
-return py::make_iterator<py::return_value_policy::reference, decltype(vect.begin()),  decltype(vect.begin())>(vect.begin(), middle); \
-},\
+size_t pos= thrust::distance(vect.begin(), middle);\
+return pos; \
+},py::call_guard<py::gil_scoped_release>(),\
 "Sample a "#N"-dimensional distribution defined by function(...) in the hyper cube with limits min and max"
 
 namespace hydra_python {
