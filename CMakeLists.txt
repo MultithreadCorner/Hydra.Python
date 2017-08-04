@@ -188,7 +188,7 @@ MESSAGE(STATUS "${BoldGreen}====================================================
 
 IF(OPENMP_FOUND)
 
-add_library(HydraPython SHARED src/Events.cpp)
+add_library(HydraPython SHARED src/PyBindings.cpp)
 set_target_properties(HydraPython PROPERTIES  PREFIX ""
     COMPILE_FLAGS "-fopenmp -DTHRUST_HOST_SYSTEM=THRUST_HOST_SYSTEM_CPP -DTHRUST_DEVICE_SYSTEM=THRUST_DEVICE_SYSTEM_OMP -lgomp")
 target_link_libraries(HydraPython ${PYTHON_LIBRARIES})

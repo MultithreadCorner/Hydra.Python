@@ -50,6 +50,9 @@
 #include <make_opaque.h>
 //Hydra.Python hydra classes
 #include <PyRandom.h>
+#include <PyEvents.h>
+#include <PyVector3R.h>
+#include <PyVector4R.h>
 
 namespace py = pybind11;
 namespace hypy = hydra_python;
@@ -59,6 +62,9 @@ namespace hypy = hydra_python;
 PYBIND11_MODULE(HydraPython, m) {
 
 hypy::add_object< hydra::Random<thrust::random::default_random_engine> >(m);
+hypy::add_object< hydra::Events<4, hydra::host::sys_t> >(m);
+hypy::add_object< hydra::Vector3R >(m);
+hypy::add_object< hydra::Vector4R >(m);
 
 hypy::bind_vector< hypy::host_vector_float  >(m,"host_vector_float");
 hypy::bind_vector< hypy::host_vector_float2 >(m,"host_vector_float2");
@@ -85,5 +91,3 @@ hypy::bind_vector< hypy::device_vector_float10>(m,"device_vector_float10");
 
 
 }
-
-
