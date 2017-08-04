@@ -44,6 +44,7 @@
 #include <pybind11/stl_bind.h>
 #include <add_object.h>
 #include <typedefs.h>
+#include <string>
 
 namespace py = pybind11;
 
@@ -91,11 +92,11 @@ void add_object<hydra::Events<4, hydra::host::sys_t> >(pybind11::module& m) {
     .def("SetMaxWeight", &hydra::Events<4, hydra::host::sys_t>::SetMaxWeight,
     "Set the maximum weight.")
 
-    .def("get", [](hydra::Events<4, hydra::host::sys_t>& e, hydra::GInt_t idx){
+    .def("__getitem__", [](hydra::Events<4, hydra::host::sys_t>& e, hydra::GInt_t idx){
         if (idx >= e.size())
             throw py::index_error("list index out of range");
         return e[idx];
-    }, "Get the ith event state of all the particles and weight.")
+    }, py::is_operator(), "Get the ith event state of all the particles and weight.")
 
 //    .def("begin", [](const hydra::Events<4, hydra::host::sys_t>& e) {
 //        return py::make_iterator(e.begin(), e.end());

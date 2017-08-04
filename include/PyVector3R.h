@@ -80,9 +80,9 @@ void add_object<hydra::Vector3R>(pybind11::module &m) {
         .def("swap", &hydra::Vector3R::swap)
         .def("swap", [](hydra::Vector3R &v, hydra::Vector3R &other){ swap(v, other); })
         .def("cross", [](const hydra::Vector3R &v, const hydra::Vector3R &other){ return cross(v, other); })
-//        .def("rotateEuler", [](const hydra::Vector3R &v, hydra::GReal_t phi, hydra::GReal_t theta, hydra::GReal_t ksi) {
-//            return rotateEuler(v, phi, theta, ksi);
-//        })
+        .def("rotateEuler", [](const hydra::Vector3R &v, hydra::GReal_t phi, hydra::GReal_t theta, hydra::GReal_t ksi) {
+            return rotateEuler(v, phi, theta, ksi);
+        })
         .def("__repr__", [](const hydra::Vector3R &e) {
             std::stringstream ss;
             ss << e;
