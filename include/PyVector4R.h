@@ -36,7 +36,7 @@
  * 
  * @brief 
  *
- * @todo Uncomment the assignment binding after the actual implementation of `scalartripler3` in Hydra.
+ * @todo
  *
  */
 
@@ -88,7 +88,7 @@ void add_object<hydra::Vector4R>(pybind11::module &m) {
         .def("cross", &hydra::Vector4R::cross)
         .def("dot", &hydra::Vector4R::dot)
         .def("d3mag", &hydra::Vector4R::d3mag)
-        //    .def("scalartripler3", &hydra::Vector4R::scalartripler3)
+        .def("scalartripler3", &hydra::Vector4R::scalartripler3)
         .def("dotr3", &hydra::Vector4R::dotr3)
         .def("mag2r3", &hydra::Vector4R::mag2r3)
         .def("magr3", &hydra::Vector4R::magr3)
