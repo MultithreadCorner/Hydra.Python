@@ -48,6 +48,9 @@
 #include "hydra/Types.h"
 #include "hydra/PhaseSpace.h"
 #include "hydra/Vector4R.h"
+#include <hydra/device/System.h>
+#include <hydra/host/System.h>
+#include <vector>
 
 namespace py = pybind11;
 
@@ -65,6 +68,37 @@ void add_object< hydra::PhaseSpace<4, thrust::random::default_random_engine> >(p
         .def("Generate", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Events<4, hydra::host::sys_t>& e1, hydra::Events<4, hydra::host::sys_t>& e2) {
             p.Generate(e1.DaughtersBegin(0), e1.DaughtersEnd(0), e2.begin());
         })
+        .def("AverageOnHost", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Vector4R& v, py::function& fun, size_t nentries) {
+            auto functor = [=](hydra::Vector4R* data) {
+                std::vector<hydra::Vector4R> vec;
+                for (int i = 0; i < 3; ++i)
+                    vec.push_back(data[i]);
+                return fun(vec).cast<hydra::GReal_t>();
+            };
+            return p.AverageOn(hydra::host::sys, v, functor, nentries);
+        })
+        .def("AverageOnHost", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Events<4, hydra::host::sys_t>& e, py::function& fun) {
+            //Enter typical implementation of Functor.
+            //return p.AverageOn(e.begin(), e.end(), functor);
+            return 42.0;
+        })
+        .def("AverageOnDevice", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Vector4R& v, py::function& fun, size_t nentries) {
+            auto functor = [=](hydra::Vector4R* data) {
+                std::vector<hydra::Vector4R> vec;
+                for (int i = 0; i < 3; ++i)
+                    vec.push_back(data[i]);
+                return fun(vec).cast<hydra::GReal_t>();
+            };
+            return p.AverageOn(hydra::device::sys, v, functor, nentries);
+        })
+        .def("AverageOnDevice", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Events<4, hydra::host::sys_t>& e, py::function& fun) {
+            //Enter typical implementation of Functor.
+            //return p.AverageOn(e.begin(), e.end(), functor);
+            return 42.0;
+        })
+//        .def("Evaluate", [](hydra::PhaseSpace<4, thrust::random::default_random_engine>& p, hydra::Vector4R& v, hydra::Events<4, hydra::host::sys_t>& e, py::function& ... fun){
+//            return 42.0;
+//        })
     ;
 }
 }
