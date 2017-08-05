@@ -54,7 +54,7 @@ namespace hydra_python {
 	py::class_<hydra::Events<N, hydra::BACKEND::sys_t> >(                  \
 	    m, #BACKEND "Events" #N)                                           \
 	    .def(py::init<>(), "Zero state Event object")                      \
-	    .def(py::init<hydra::GLong_t>(), #N " partical events object")     \
+	    .def(py::init<hydra::GLong_t>(), #N " particle events object")     \
 	    .def(py::init<hydra::Events<N, hydra::BACKEND::sys_t> >(),         \
 		 "Copy construct from the " #BACKEND " Event object")          \
 	    .def(py::init<hydra::Events<N, hydra::BACKEND2::sys_t> >(),        \
@@ -71,7 +71,7 @@ namespace hydra_python {
 		    hydra::Events<N, hydra::BACKEND2::sys_t>& other) {         \
 			 e = other;                                            \
 		 },                                                            \
-		 "Assign device " #BACKEND2 " object into " #BACKEND           \
+		 "Assign " #BACKEND2 " Events object into " #BACKEND           \
 		 " Event object.")                                             \
 	    .def("GetMaxWeight",                                               \
 		 &hydra::Events<N, hydra::BACKEND::sys_t>::GetMaxWeight,       \
@@ -154,6 +154,61 @@ void add_object<hydra::Events<4, hydra::host::sys_t> >(pybind11::module& m) {
 	EVENTS_CLASS_BODY(8, host, device);
 	EVENTS_CLASS_BODY(9, host, device);
 	EVENTS_CLASS_BODY(10, host, device);
+
+	py::class_<hydra::Events<3, hydra::device::sys_t> >(m, "Events")
+	    .def(py::init<>(), "Zero state Event object")
+	    .def(py::init<hydra::GLong_t>(), " partical events object")
+	    .def(py::init<hydra::Events<3, hydra::device::sys_t> >())
+	    .def(py::init<hydra::Events<3, hydra::host::sys_t> >())
+		.def("assign", [](hydra::Events<3, hydra::device::sys_t>& e,
+		    const hydra::Events<3, hydra::device::sys_t>& other) {
+			 e = other;
+		}, "Assign one device Event object into another Event object.")
+	    .def("assign", [](hydra::Events<3, hydra::device::sys_t>& e,
+		    hydra::Events<3, hydra::host::sys_t>& other) {
+			 e = other;
+		 }, "Assign Events object into Event object.")
+		.def("GetMaxWeight", &hydra::Events<3, hydra::device::sys_t>::GetMaxWeight)
+	    .def("GetNEvents", &hydra::Events<3, hydra::device::sys_t>::GetNEvents)
+		.def("SetMaxWeight", &hydra::Events<3, hydra::device::sys_t>::SetMaxWeight, "Set the maximum weight.")
+
+//**********************************ERROR WITH DEVICE****************************************//
+//		.def("Flags", [](const hydra::Events<3, hydra::device::sys_t>& e) {
+//			 return py::make_iterator(e.FlagsBegin(), e.FlagsEnd());
+//		 }, py::keep_alive<0, 1>(), "Get the flags iterator.")
+		.def("Flags", [](const hydra::Events<3, hydra::device::sys_t>& e) {
+			 return e.FlagsBegin();
+		 }, "Get the flags iterator.")
+//		.def("Weights", [](const hydra::Events<3, hydra::device::sys_t>& e) {
+//			 return py::make_iterator(e.WeightsBegin(), e.WeightsEnd());
+//		 }, py::keep_alive<0, 1>(), "Particle weights iterator.")
+//	    .def("Daughters", [](const hydra::Events<3, hydra::device::sys_t>& e, hydra::GInt_t idx) {
+//			 return py::make_iterator(e.DaughtersBegin(idx),
+//						  e.DaughtersEnd(idx));
+//		 }, py::keep_alive<0, 1>(), "Daughter iterator. Iterate over the all N events of given particle")
+//		.def("__getitem__", [](hydra::Events<3, hydra::device::sys_t>& e, hydra::GInt_t idx) {
+//			 if (idx >= e.size())
+//				 throw py::index_error("list index out of range");
+//			 return e[idx];
+//		 }, py::is_operator(), "Get the ith event state of all the particles and weight.")
+
+		.def("capacity", &hydra::Events<3, hydra::device::sys_t>::capacity)
+	    .def("resize", &hydra::Events<3, hydra::device::sys_t>::resize, "Resize the number of Events.")
+	    .def("unweight", &hydra::Events<3, hydra::device::sys_t>::Unweight, "Unweight all Events with seed.")
+	    .def("size", &hydra::Events<3, hydra::device::sys_t>::size)
+		.def("setFlag", [](hydra::Events<3, hydra::device::sys_t>& e, hydra::GInt_t idx, bool value) {
+			if (idx >= e.size())
+				throw py::index_error("list index out of range");
+			 auto start = e.FlagsBegin();
+			 start[idx] = value;
+		 }, "Set the ith event flag.")
+	    .def("setWeight", [](hydra::Events<3, hydra::device::sys_t>& e, hydra::GInt_t idx, hydra::GReal_t value) {
+			if (idx >= e.size())
+				throw py::index_error("list index out of range");
+			 auto start = e.WeightsBegin();
+			 start[idx] = value;
+		 }, "Set the ith event's weight.")
+		;
 
 	//    EVENTS_CLASS_BODY(1,device,host);
 	//    EVENTS_CLASS_BODY(2,device,host);
