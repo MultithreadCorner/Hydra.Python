@@ -47,6 +47,13 @@
 #include <typedefs.h>
 #include <string>
 
+/*
+ hydra::Events<N, hydra::BACKEND::sys_t>::value_type   \
+			     v = e[idx];                                       \
+			 return v;                                             \
+
+ */
+
 namespace py = pybind11;
 
 namespace hydra_python {
@@ -126,9 +133,8 @@ namespace hydra_python {
 			 if (idx >= e.size())                                  \
 				 throw py::index_error(                        \
 				     "list index out of range");               \
-			 hydra::Events<N, hydra::BACKEND::sys_t>::value_type   \
-			     v = e[idx];                                       \
-			 return v;                                             \
+			 return (hydra::Events<                                \
+				 N, hydra::BACKEND::sys_t>::value_type)e[idx]; \
 		 })                                                            \
 	    .def("SetMaxWeight",                                               \
 		 &hydra::Events<N, hydra::BACKEND::sys_t>::SetMaxWeight,       \
