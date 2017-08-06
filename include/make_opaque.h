@@ -59,6 +59,7 @@ PYBIND11_MAKE_OPAQUE(hypy::host_vector_float7 );
 PYBIND11_MAKE_OPAQUE(hypy::host_vector_float8 );
 PYBIND11_MAKE_OPAQUE(hypy::host_vector_float9 );
 PYBIND11_MAKE_OPAQUE(hypy::host_vector_float10 );
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_2);
 
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float );
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float2 );
@@ -71,5 +72,6 @@ PYBIND11_MAKE_OPAQUE(hypy::device_vector_float8 );
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float9 );
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float10 );
 
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_2);
 
 #endif /* MAKE_OPAQUE_H_ */

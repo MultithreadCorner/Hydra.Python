@@ -43,6 +43,7 @@
 
 #include <hydra/Containers.h>
 #include <hydra/multiarray.h>
+#include <hydra/Decays.h>
 #include <hydra/device/System.h>
 #include <hydra/host/System.h>
 
@@ -71,6 +72,28 @@ typedef hydra::multiarray<7,  double, hydra::device::sys_t>  device_vector_float
 typedef hydra::multiarray<8,  double, hydra::device::sys_t>  device_vector_float8;
 typedef hydra::multiarray<9,  double, hydra::device::sys_t>  device_vector_float9;
 typedef hydra::multiarray<10, double, hydra::device::sys_t>  device_vector_float10;
+
+typedef hydra::Decays<2,  hydra::host::sys_t> host_decays_2;
+typedef hydra::Decays<3,  hydra::host::sys_t> host_decays_3;
+typedef hydra::Decays<4,  hydra::host::sys_t> host_decays_4;
+typedef hydra::Decays<5,  hydra::host::sys_t> host_decays_5;
+typedef hydra::Decays<6,  hydra::host::sys_t> host_decays_6;
+typedef hydra::Decays<7,  hydra::host::sys_t> host_decays_7;
+typedef hydra::Decays<8,  hydra::host::sys_t> host_decays_8;
+typedef hydra::Decays<9,  hydra::host::sys_t> host_decays_9;
+typedef hydra::Decays<10, hydra::host::sys_t> host_decays_10;
+
+
+typedef hydra::Decays<2,  hydra::device::sys_t> device_decays_2;
+typedef hydra::Decays<3,  hydra::device::sys_t> device_decays_3;
+typedef hydra::Decays<4,  hydra::device::sys_t> device_decays_4;
+typedef hydra::Decays<5,  hydra::device::sys_t> device_decays_5;
+typedef hydra::Decays<6,  hydra::device::sys_t> device_decays_6;
+typedef hydra::Decays<7,  hydra::device::sys_t> device_decays_7;
+typedef hydra::Decays<8,  hydra::device::sys_t> device_decays_8;
+typedef hydra::Decays<9,  hydra::device::sys_t> device_decays_9;
+typedef hydra::Decays<10, hydra::device::sys_t> device_decays_10;
+
 
 
 }  // namespace hydra_python

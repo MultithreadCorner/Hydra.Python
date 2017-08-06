@@ -60,6 +60,29 @@ PYBIND11_MODULE(HydraPython, m) {
 
 hypy::add_object< hydra::Random<thrust::random::default_random_engine> >(m);
 
+//decay container host
+hypy::bind_vector< hypy::host_decays_2>(m, "host_decays_2");
+hypy::bind_vector< hypy::host_decays_3>(m, "host_decays_3");
+hypy::bind_vector< hypy::host_decays_4>(m, "host_decays_4");
+hypy::bind_vector< hypy::host_decays_5>(m, "host_decays_5");
+hypy::bind_vector< hypy::host_decays_6>(m, "host_decays_6");
+hypy::bind_vector< hypy::host_decays_7>(m, "host_decays_7");
+hypy::bind_vector< hypy::host_decays_8>(m, "host_decays_8");
+hypy::bind_vector< hypy::host_decays_9>(m, "host_decays_9");
+hypy::bind_vector< hypy::host_decays_10>(m,"host_decays_10");
+
+//decay container device
+hypy::bind_vector< hypy::device_decays_2>(m, "device_decays_2");
+hypy::bind_vector< hypy::device_decays_3>(m, "device_decays_3");
+hypy::bind_vector< hypy::device_decays_4>(m, "device_decays_4");
+hypy::bind_vector< hypy::device_decays_5>(m, "device_decays_5");
+hypy::bind_vector< hypy::device_decays_6>(m, "device_decays_6");
+hypy::bind_vector< hypy::device_decays_7>(m, "device_decays_7");
+hypy::bind_vector< hypy::device_decays_8>(m, "device_decays_8");
+hypy::bind_vector< hypy::device_decays_9>(m, "device_decays_9");
+hypy::bind_vector< hypy::device_decays_10>(m,"device_decays_10");
+
+//host vectors
 hypy::bind_vector< hypy::host_vector_float  >(m,"host_vector_float");
 hypy::bind_vector< hypy::host_vector_float2 >(m,"host_vector_float2");
 hypy::bind_vector< hypy::host_vector_float3 >(m,"host_vector_float3");
@@ -71,7 +94,7 @@ hypy::bind_vector< hypy::host_vector_float8 >(m,"host_vector_float8");
 hypy::bind_vector< hypy::host_vector_float9 >(m,"host_vector_float9");
 hypy::bind_vector< hypy::host_vector_float10>(m,"host_vector_float10");
 
-
+//device vector
 hypy::bind_vector< hypy::device_vector_float  >(m,"device_vector_float");
 hypy::bind_vector< hypy::device_vector_float2 >(m,"device_vector_float2");
 hypy::bind_vector< hypy::device_vector_float3 >(m,"device_vector_float3");
