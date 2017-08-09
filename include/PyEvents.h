@@ -166,7 +166,27 @@ namespace hydra_python {
 			 auto start = e.WeightsBegin();                        \
 			 start[idx] = value;                                   \
 		 },                                                            \
-		 "Set the ith event's weight.");
+		 "Set the ith event's weight.")\
+	    .def("getFlag",                                                  \
+		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
+		    hydra::GInt_t idx) {                 \
+			 if (idx >= e.size())                                  \
+				 throw py::index_error(                        \
+				     "list index out of range");               \
+			 auto start = e.FlagsBegin();                        \
+			 return (bool)start[idx]     ;                              \
+		 },                                                            \
+		 "get the ith event's flag.")\
+	     .def("getWeight",                                                  \
+		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
+		    hydra::GInt_t idx) {                 \
+			 if (idx >= e.size())                                  \
+				 throw py::index_error(                        \
+				     "list index out of range");               \
+			 auto start = e.WeightsBegin();                        \
+			 return (hydra::GReal_t)start[idx] ;                                  \
+		 },                                                            \
+		 "get the ith event's weight.");
 
 template <>
 void add_object<hydra::Events<4, hydra::host::sys_t> >(pybind11::module& m) {
