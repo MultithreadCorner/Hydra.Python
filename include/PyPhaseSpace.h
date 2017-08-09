@@ -165,16 +165,16 @@ void add_object< hydra::PhaseSpace<4, thrust::random::default_random_engine> >(p
 //        })
     ;
     */
-    PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine, host);
-    PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine, host);
+//    PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine, host);
 
 }
 }
