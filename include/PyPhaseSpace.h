@@ -106,7 +106,7 @@ hydra::Events<N, hydra::BACKEND::sys_t>& e2) {\
 */
 
 #define PHASESPACE_CLASS_BODY(N, RNG, BACKEND)                      \
-	py::class_<hydra::PhaseSpace<N, RNG> >(m, "PhaseSpace_" #N) \
+	py::class_<hydra::PhaseSpace<N, RNG> >(m, "PhaseSpace" #N) \
 	    .def(py::init<hydra::GReal_t,                           \
 			  const std::array<hydra::GReal_t, N>&>())  \
 	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)    \
