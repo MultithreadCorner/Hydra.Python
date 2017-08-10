@@ -71,17 +71,25 @@ namespace hydra_python {
 			   e2.begin());                                        \
 	}
 
-#define PHASESPACE_AVERAGEON_BODY(N, RNG, BACKEND)                             \
-	"AverageON" #BACKEND, [](hydra::PhaseSpace<N, RNG>& p,                 \
-				 hydra::Vector4R& v, py::function& fun,        \
-				 size_t nentries) {                            \
-		auto functor = [=](hydra::Vector4R* data) {                    \
-			std::vector<hydra::Vector4R> vec;                      \
-			for (int i = 0; i < 3; ++i) vec.push_back(data[i]);    \
-			return fun(vec).cast<hydra::GReal_t>();                \
-		};                                                             \
-		return p.AverageOn(hydra::BACKEND::sys, v, functor, nentries); \
-	}
+#define ADD_FUNCTOR(...)                                  \
+	auto functor = [=](hydra::Vector4R* data) {       \
+		return funct(__VA_ARGS__).cast<double>(); \
+	};                                                \
+	auto wfunctor = hydra::wrap_lambda(functor);
+
+/*
+ * @todo: Make this ADD_FUNCTOR to pass arguments dynamic i.e. for any number N
+ * not data[0] .. data[2]
+ */
+
+#define PHASESPACE_AVERAGEON_BODY(N, RNG, BACKEND)                       \
+	"AverageON" #BACKEND,                                            \
+	    [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& v,         \
+	       py::function& funct, size_t nentries) {                   \
+		    ADD_FUNCTOR(data[0], data[1], data[2])               \
+		    return p.AverageOn(hydra::BACKEND::sys, v, wfunctor, \
+				       nentries);                        \
+	    }
 
 #define PHASESPACE_AVERAGEON_BODY_2(N, RNG, BACKEND)                         \
 	"AverageON" #BACKEND, [](hydra::PhaseSpace<N, RNG>& p,               \
