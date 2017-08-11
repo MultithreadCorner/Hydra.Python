@@ -58,7 +58,7 @@ result in the passed ``e_host`` container.
 
 Iterating over ``e_host`` will produced the output like this.
 
-..code-block:: python
+.. code-block:: python
 
     iterator = e_host.Events()
     for state in iterator:
@@ -66,7 +66,7 @@ Iterating over ``e_host`` will produced the output like this.
 
 The output is similar to this.
 
-..code-block:: bash
+.. code-block:: bash
 
     (0.0005371556105645586, (3.26523953659142, 0.8636638960657156, 0.0039751958746361005, -0.5700608675519644), (0.5205929150762441, 0.1361899815237809, 0.005650876525868165, -0.09338286473236444), (0.20194244730558714, -0.1422365383415909, 0.02243309740186762, 0.023800003783548303), (1.0705417836594209, -0.8576173392479055, -0.03205916980237188, 0.6396437285007806))
 
@@ -82,7 +82,7 @@ If you will closely follow the result, you will see that the each particle in
 every event has the mass specified by the list of daughter masses at the time
 of creation of PhaseSpace.
 
-..code-block:: python
+.. code-block:: python
 
     state1 = e_host[0]  # first state particle
     d_particle0, d_particle1, d_particle2, d_particle3 = state1[1], state1[2], state1[3], state1[4]
@@ -102,7 +102,7 @@ of creation of PhaseSpace.
 So this is a simple PhaseSpace example of 4 particle in final state.
 For the sake of completeness all the code showed in doc is below.
 
-..code-block:: python
+.. code-block:: python
 
     import HydraPython as hp
 
