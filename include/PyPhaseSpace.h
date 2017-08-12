@@ -77,16 +77,22 @@ namespace hydra_python {
 	};                                                \
 	auto wfunctor = hydra::wrap_lambda(functor);
 
-/*
- * @todo: Make this ADD_FUNCTOR to pass arguments dynamic i.e. for any number N
- * not data[0] .. data[2]
- */
+#define ADD1 data[0]
+#define ADD2 data[0], data[1]
+#define ADD3 data[0], data[1], data[2]
+#define ADD4 data[0], data[1], data[2], data[3]
+#define ADD5 data[0], data[1], data[2], data[3], data[4]
+#define ADD6 data[0], data[1], data[2], data[3], data[4], data[5]
+#define ADD7 data[0], data[1], data[2], data[3], data[4], data[5], data[6]
+#define ADD8 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
+#define ADD9 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8]
+#define ADD10 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]
 
 #define PHASESPACE_AVERAGEON_BODY(N, RNG, BACKEND)                       \
 	"AverageON" #BACKEND,                                            \
 	    [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& v,         \
 	       py::function& funct, size_t nentries) {                   \
-		    ADD_FUNCTOR(data[0], data[1], data[2])               \
+		    ADD_FUNCTOR(ADD##N)               \
 		    return p.AverageOn(hydra::BACKEND::sys, v, wfunctor, \
 				       nentries);                        \
 	    }
