@@ -49,7 +49,7 @@ endif()
 
 #options to gcc
 
-set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++11  -fvisibility=hidden -march=native -fPIC -O4" CACHE STRING "compile flags" FORCE)
+set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++11   -fvisibility=hidden -march=native -fPIC -O4" CACHE STRING "compile flags" FORCE)
 
 # get Hydra
 find_package(Hydra 1.0.0 REQUIRED)

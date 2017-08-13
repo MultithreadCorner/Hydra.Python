@@ -58,8 +58,8 @@ py::function& funct)\
 auto functor = [=](double* data) {return funct( __VA_ARGS__ ).cast<double>();}; \
 auto wfunctor = hydra::wrap_lambda( functor ); \
 auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, wfunctor ); \
-size_t pos= thrust::distance(vect.begin(), middle);\
-return pos; \
+typedef decltype(vect.begin()) iter_t;\
+return py::make_iterator<pybind11::return_value_policy::reference_internal,	iter_t, iter_t, typename iter_t::value_type>(vect.begin(),middle);\
 },\
 "Sample a "#N"-dimensional distribution defined by function(...) in the hyper cube with limits min and max"
 
@@ -113,9 +113,12 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 
 				auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, functor );
 
-				return (size_t) thrust::distance(vect.begin(), middle);
+				typedef decltype(vect.begin()) iter_t;
 
-			},"Sample a 1-dimensional distribution defined by function(...) in the interval with limits min and max" )
+				return py::make_iterator<pybind11::return_value_policy::reference_internal,iter_t, iter_t,
+							typename iter_t::value_type>(vect.begin(),middle);
+
+	},"Sample a 1-dimensional distribution defined by function(...) in the interval with limits min and max" )
 	.def(RANDOM_SAMPLE_BODY(2,  host, data[0], data[1]))
 	.def(RANDOM_SAMPLE_BODY(3,  host, data[0], data[1], data[2]))
 	.def(RANDOM_SAMPLE_BODY(4,  host, data[0], data[1], data[2], data[3]))
@@ -159,8 +162,10 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 		auto functor = [=](double* data) {return funct(data[0]).cast<double>();};
 
 		auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, functor );
-
-		return (size_t) thrust::distance(vect.begin(), middle);
+		typedef decltype(vect.begin()) iter_t;
+		return py::make_iterator<pybind11::return_value_policy::reference_internal,iter_t, iter_t,
+			typename iter_t::value_type>(vect.begin(),middle);
+		//(size_t) thrust::distance(vect.begin(), middle);
 
 	},"Sample a 1-dimensional distribution defined by function(...) in the interval with limits min and max" )
 	.def(RANDOM_SAMPLE_BODY(2,  device, data[0], data[1]))
