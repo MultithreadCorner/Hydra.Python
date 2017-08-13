@@ -22,6 +22,7 @@ Hydra Python --- The Python wrapper of Hydra C++
    Vectors
    Events
    PhaseSpace
+   Random
 
 .. toctree::
    :caption: PhaseSpace example
