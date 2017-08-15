@@ -3,8 +3,8 @@
 First steps
 ###########
 
-This sections demonstrates the basic features of HydraPython. Before getting
-started, make sure that development environment is set up to compile the
+This section demonstrates the basic features of HydraPython. Before getting
+started, make sure that the development environment is set up to compile the
 included set of test cases.
 
 
