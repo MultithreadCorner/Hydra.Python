@@ -9,7 +9,7 @@ Vector4R
 ========
 
 The Vector4R class is the wrapper of C++ Vector4R class. This class basically
-deals with the vector of 4 particals. We have three types of constructors
+deals with the vector of 4 particles. We have three types of constructors
 to instantiate the Vector4R class:
 
 - Default empty constructor
@@ -61,7 +61,7 @@ very handy and maintain more pythonic way to access and set the values.
     vec5[1] = 0.5678
     print (vec5)  # (0.1234,0.5678,0.9101,0.1121)
 
-Vector4R object can be multiplied or divided by a real value while it
+The Vector4R object can be multiplied or divided by a real value while it
 can be added or subtracted with another Vector4R object. One Vector4R
 object can be multiplied by another Vector4R object.
 
@@ -90,8 +90,8 @@ All above three are valid for any Vector4R object. There are various
 other methods available in Vector4R. The list of Vector4R
 methods can be found on [#f1]_.
 
-The Vector4R provides a ``assign`` method to assign or copy the Vector4R
-object. This is very useful method to avoid the nasty bugs for example:
+The Vector4R provides an ``assign`` method to assign or copy the Vector4R
+object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python
 
@@ -112,7 +112,7 @@ Vector3R
 ========
 
 The Vector3R class is the wrapper of C++ Vector3R class. This class basically
-deals with the vector of 3 particals. We have three types of constructors
+deals with the vector of 3 particles. We have three types of constructors
 to instantiate the Vector3R class:
 
 - Default empty constructor
@@ -164,7 +164,7 @@ very handy and maintain more pythonic way to access and set the values.
     vec5[1] = 0.5678
     print (vec5)  # (0.1234,0.5678,0.9101)
 
-Vector3R object can be multiplied or divided by a real value while it
+The Vector3R object can be multiplied or divided by a real value while it
 can be added or subtracted with another Vector3R object. One Vector3R
 object can be multiplied by another Vector3R object.
 
@@ -193,8 +193,8 @@ All above three are valid for any Vector3R object. There are various
 other methods available in Vector3R. The list of Vector3R
 methods can be found on [#f2]_.
 
-The Vector3R provides a ``assign`` method to assign or copy the Vector3R
-object. This is very useful method to avoid the nasty bugs for example:
+The Vector3R provides an ``assign`` method to assign or copy the Vector3R
+object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python
 

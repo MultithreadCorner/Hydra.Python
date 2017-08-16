@@ -3,9 +3,9 @@
 Events Class
 ##############
 
-There are two types of Events one that run on ``host`` and ``device``. Events
+There are two types of Events one that runs on ``host`` and ``device``. Events
 container currently supports up to (N=10) particles in any number of Events.
-Both Host and Device Event classes adds number (1 to 10) as their
+Both Host and Device Event classes add number (1 to 10) as their
 suffix to create Event for that number of particles and the type
 (host or device) is added as their prefix.
 
@@ -47,7 +47,7 @@ or ``deviceEventsN`` object.
     print(list(h_events_3_copy.Flags()))  # [False, True, False, False]
 
 The ``setFlags`` method as demonstrated above can be used to set the
-particular Flag value and the getFlag method can be used the get the
+particular Flag value and the ``getFlag`` method can be used the get the
 particular flag value with the index.
 
 .. code-block:: python
@@ -56,15 +56,15 @@ particular flag value with the index.
     h_event.setFlag(1, True)
     print (h_event.getFlag(1))  # True
 
-The host Events class provides a ``assign`` method to assign or copy the Events
-object. This is very useful method to avoid the nasty bugs for example:
+The host Events class provides an ``assign`` method to assign or copy the Events
+object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python
 
     h_event = hp.hostEvents5(10)
     h_event2 = hp.hostEvents5()
 
-    # Do things and later in code ...
+    # Do things and later in the code ...
     h_event2.assign(h_event)
     # This will create the exact same copy of the h_event in h_event2
 
@@ -73,7 +73,7 @@ Events. The method is useful to set the maximum weight. The complete method
 list provided by the Event classes can be found on [#f1]_.
 
 The Events classes also provide a pythonic way to access the events with the
-``[]`` operator. For example an event value can be access like this.
+``[]`` operator. For example, an event value can be access like this.
 
 .. code-block:: python
 
@@ -87,9 +87,9 @@ DEVICE
 The device is defined as the GPU and any other multicore CPU. The device Event
 class is exactly similar to the Host Events class but the only major difference
 is HOST Events class work on the single CPU while the DEVICE Events class work
-on the multiple CPU's or the GPU devices.
+on the multiple CPUs or the GPU devices.
 
-In HydraPython the device Events classes supports all the method defined by
+In HydraPython the device Events classes support all the method defined by
 the host Event classes. The device Event class have ``device`` as their prefix
 and the number of particle N (up to 10) as their suffix.
 
@@ -132,22 +132,22 @@ The complete list of the classes in the Events container can be found on [#f2]_.
 
   - ``Flags``  This method returns the iterator of flags. Syntax:
 
-      - iterator = event.Flags()  # event can be of host or device type and than can be used to iterator over the values.
+      - iterator = event.Flags()  # event can be of the host or device type and then can be used to iterator over the values.
         For example ``for flag in iterator: print(flag)``
 
   - ``Weights``  This method returns the iterator of weights. Syntax:
 
-      - iterator = event.Weights()  # event can be of host or device type and than can be used to iterator over the values.
+      - iterator = event.Weights()  # event can be of the host or device type and then can be used to iterator over the values.
         For example ``for weight in iterator: print(weight)``
 
-  - ``Daughters``  This method returns the iterator of daughter at given index (index <= number of particle). Syntax:
+  - ``Daughters``  This method returns the iterator of daughters at given index (index <= number of the particle). Syntax:
 
-      - iterator = event.Daughters(i)  # event can be of host or device type and than can be used to iterator over the values.
+      - iterator = event.Daughters(i)  # event can be of the host or device type and then can be used to iterator over the values.
         For example ``for daughter in iterator: print(daughter)`` Will print out the ith particle state in all the events.
 
   - ``Events``  This method returns the iterator of events. Syntax:
 
-      - iterator = event.Events()  # event can be of host or device type and than can be used to iterator over the values.
+      - iterator = event.Events()  # event can be of the host or device type and then can be used to iterator over the values.
         For example ``for e in iterator: print(e)`` Will print out all the events where each event will have the N daughters and the weight of the event.
 
   - ``SetMaxWeight``  Sets the maximum weight of the events. Syntax:

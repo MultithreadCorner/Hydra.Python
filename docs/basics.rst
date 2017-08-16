@@ -3,7 +3,7 @@
 First steps
 ###########
 
-This sections demonstrates the basic features of HydraPython. Before getting
+This section demonstrates the basic features of HydraPython. Before getting
 started, make sure that development environment is set up to compile the
 included set of test cases.
 
@@ -14,9 +14,9 @@ Compiling the test cases
 Linux/MacOS
 -----------
 
-On Linux  you'll need the `Hydra`_, `Pybind11`_ and the **cmake**. Also you will
+On Linux you'll need the `Hydra`_, `Pybind11`_ and the **cmake**. Also, you will
 be requiring the **python-dev** or **python3-dev** package. You can clone
-and fetch the latest code for both of the mentioned libraries. Than you could
+and fetch the latest code for both of the mentioned libraries. Then you could
 create a directory structure similar to below one.
 
 .. code-block:: bash
@@ -54,9 +54,9 @@ Let's start by creating importing the module:
     import HydraPython as hp
 
 
-The name ``HydraPython`` is quite long so generally we use it's alias as ``hp``.
+The name ``HydraPython`` is quite long so generally, we use its alias as ``hp``.
 
-Now that we have already imported the module let's just simple create a ``Vector4R``
+Now that we have already imported the module let's just simply create a ``Vector4R``
 object.
 
 .. code-block:: python

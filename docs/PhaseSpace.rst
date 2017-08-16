@@ -3,10 +3,10 @@
 PhaseSpace Class
 ################
 
-Ths class implements the phase-space monte carlo simulation where N is the number
-of particles in the Final state. Currently PhaseSpace class supports upto
+Ths class implements the phase-space Monte Carlo simulation where N is the number
+of particles in the Final state. Currently PhaseSpace class supports up-to
 N=10 number of particles in the Final state. Most of the PhaseSpace class
-methods can work on both ``HOST`` and ``DEVICE``. The number of particles are
+methods can work on both ``HOST`` and ``DEVICE``. The number of particles is
 associated with suffix with the class name.
 
 This class is a wrapper of C++ PhaseSpace class. The PhaseSpace class one constructor
@@ -24,8 +24,8 @@ to instantiate the PhaseSpace class:
     # class and the exactly 4 daughter masses in the list.
 
 
-The PhaseSpace classes provides the method to Generate a phase-space  given a mother particle and a output range
-or a phase-space  given a range of mother particles and a output range.
+The PhaseSpace classes provides the method to Generate a phase-space given a mother particle and an output range
+or a phase-space given a range of mother particles and an output range.
 
 .. code-block:: python
 
@@ -36,7 +36,7 @@ or a phase-space  given a range of mother particles and a output range.
     ps.Generatehost(vec4, e_host)  # Generate particle on host
     ps.Generatedevice(vec, e_device)  # Generate particle on device
 
-    ####### ADD EXAMPLE OF given a range of mother particles and a output range
+    ####### ADD EXAMPLE OF given a range of mother particles and an output range
 
 
 The ``AverageOn`` method by PhaseSpace classes calculate the ``mean`` and ``sqrt(variance)``

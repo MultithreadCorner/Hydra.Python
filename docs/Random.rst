@@ -3,9 +3,9 @@
 Random Class
 ############
 
-This class implements functionalities associated to random number generation
+This class implements functionalities associated with random number generation
 and pdf sampling. This class can sample and fill ranges with data corresponding
-to ``gaussian``, ``exponential``, ``uniform`` and ``Breit-Wigner`` distributions.
+to ``Gaussian``, ``Exponential``, ``Uniform`` and ``Breit-Wigner`` distributions.
 
 This class is a wrapper of ``hydra C++ Random class``. The Random class have
 two constructors to instantiate the Random class:
@@ -23,8 +23,8 @@ two constructors to instantiate the Random class:
     # one with the seed value 8385977
 
 
-Apart from seeting the seed value at the time of creation the seed can be
-setted or getted with setter and getter methods named ``SetSeed`` and ``GetSeed``.
+Apart from setting the seed value at the time of creation the seed can be
+set or get with setter and getter methods named ``SetSeed`` and ``GetSeed``.
 
 .. code-block:: python
 
@@ -36,10 +36,10 @@ setted or getted with setter and getter methods named ``SetSeed`` and ``GetSeed`
 
 The Random class provides a method named ``Uniform`` to generate the numbers
 between range (min, max) (both min and max exclusive) and
-fill them into the container according to the `Continuos Uniform
+fill them into the container according to the `Continuous Uniform
 distribution<https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)>`_.
 The container can be any of the ``host_vector_float`` or ``device_vector_float``.
-In below examples I have used device_vector_float extensively but they both
+In below examples, I have used device_vector_float extensively but they both
 can be used interchangeably in place of each other.
 
 .. code-block:: python
@@ -94,7 +94,7 @@ according to a BreitWigner with ``mean`` and ``width``.
     print (container)
 
 
-Apart from all these distribution, you can also define your own distribtuion
+Apart from all these distributions, you can also define your own distribution
 and pass it as a function to the method. The ``Sample`` method allows you to pass
 a function that will be sampled for the given sampling range (lower, upper) and
 store the result in the container.
@@ -122,8 +122,8 @@ store the result in the container.
     # [-6, -6, -6] is end range, gauss1 is the functor.
 
 
-In sample method the start range and end range should have the same number of
-arguments as in the container. So for example if you are using container of
+In sample method, the start range and end range should have the same number of
+arguments as in the container. So for example, if you are using container of
 ``float7`` than start range and end range each should contain ``7`` elements.
 
 
@@ -144,9 +144,9 @@ The container list that can be passed to ``Sample`` method can be found on [#f2]
 
       - r.SetSeed(seed)
 
-  - ``Guass``  Generate the Gauss distribution. Syntax:
+  - ``Gauss``  Generate the Gauss distribution. Syntax:
 
-      - r.Guass(mean, sigma, container)  # container can be [device/host]_vector_float
+      - r.Gauss(mean, sigma, container)  # container can be [device/host]_vector_float
 
   - ``Uniform`` Generate the Continuous Uniform distribution. Syntax:
 
