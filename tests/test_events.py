@@ -76,8 +76,8 @@ class TestEventsHost(unittest.TestCase):
 
     def test_get_max_weight(self):
         h_event = hp.hostEvents10(100)
-        h_event.SetMaxWeight(10.838597782598121)
-        self.assertAlmostEqual(h_event.GetMaxWeight(), 10.838597782598121)
+        h_event.SetMaxWeight(10.838597782598)
+        self.assertAlmostEqual(h_event.GetMaxWeight(), 10.838597782598)
 
     def test_flags(self):
         h_event = hp.hostEvents10(100)
@@ -191,8 +191,8 @@ class TestEventsDevice(unittest.TestCase):
 
     def test_get_max_weight(self):
         d_event = hp.deviceEvents10(100)
-        d_event.SetMaxWeight(10.838597782598121)
-        self.assertAlmostEqual(d_event.GetMaxWeight(), 10.838597782598121)
+        d_event.SetMaxWeight(10.838597782598)
+        self.assertAlmostEqual(d_event.GetMaxWeight(), 10.838597782598)
 
     def test_flags(self):
         d_event = hp.deviceEvents10(100)
