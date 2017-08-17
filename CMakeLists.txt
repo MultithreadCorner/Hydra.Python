@@ -1,4 +1,4 @@
-### CMakeList for Hydra.Python
+### CMakeLists.txt file for the Hydra.Python project
 
 cmake_minimum_required(VERSION 2.8)
 
@@ -8,7 +8,7 @@ project(Hydra.Python)
 
 # warn user if system is not UNIX
 if(NOT UNIX)
-  message(FATAL_ERROR "This is an unsupported system.")
+  message(FATAL_ERROR "This is an unsupported operating system!")
 endif()
 
 ##====================================================
@@ -40,14 +40,14 @@ SET(HydraPython_CMAKE_DIR "${PROJECT_SOURCE_DIR}/cmake")
 SET(CMAKE_MODULE_PATH "${HydraPython_CMAKE_DIR}" ${CMAKE_MODULE_PATH})
 SET(CMAKE_VERBOSE_MAKEFILE  ON)
 
-#options to gcc
+# options to gcc
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("--std=c++11" COMPILER_SUPPORTS_CXX11)
 if(NOT COMPILER_SUPPORTS_CXX11)
  message(FATAL "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-#options to gcc
+# options to gcc
 
 set(CMAKE_CXX_FLAGS "-DTHRUST_VARIADIC_TUPLE -flto --std=c++11   -fvisibility=hidden -march=native -fPIC -O4" CACHE STRING "compile flags" FORCE)
 
@@ -59,20 +59,20 @@ include_directories(${Hydra_INCLUDE_DIR})
 find_package(Thrust 1.8.3 REQUIRED)
 include_directories(${THRUST_INCLUDE_DIR})
 
-#get CUDA
+# get CUDA
 find_package(CUDA 8.0) 
 if(CUDA_FOUND)
 include_directories("${CUDA_INCLUDE_DIRS}")
 endif(CUDA_FOUND)
 
-#get TBB
+# get TBB
 find_package(TBB )
 if(TBB_FOUND)
 include_directories(${TBB_INCLUDE_DIRS})
 link_directories(${TBB_LIBRARY})
 endif(TBB_FOUND)
 
-#get OpenMP
+# get OpenMP
 find_package(OpenMP REQUIRED)
 if(OPENMP_FOUND)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
@@ -86,7 +86,7 @@ endif(OPENMP_FOUND)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_ROOT_AVAILABLE_")
 #endif(ROOT_FOUND)
 
-#generate API documentation with Doxygen
+# generate API documentation with Doxygen
 find_package(Doxygen)
 option(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" NO)
 
@@ -98,12 +98,12 @@ find_package(PythonLibs 3 REQUIRED)
 include_directories(${PYTHON_INCLUDE_DIRS})
 link_directories(${PYTHON_LIBRARIES})
 
-#including directories
+# including directories
 include_directories(${PROJECT_SOURCE_DIR}/include;  ${PROJECT_SOURCE_DIR})
 
 if(CUDA_FOUND)
 
-	#set cuda flags
+	# set cuda flags
 	
 	SET(CUDA_NVCC_FLAGS ${CUDA_NVCC_FLAGS} --cudart ;  static ;--expt-relaxed-constexpr; -ftemplate-backtrace-limit=0; --expt-extended-lambda;--relocatable-device-code=false ;
 	-Xptxas -dlcm=ca; -Xptxas --opt-level=4 )
