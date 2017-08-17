@@ -1,7 +1,17 @@
+# Licensed under a GNU general public license, see LICENSE.
+
+# -----------------------------------------------------------------------------
+# Import statements
+# -----------------------------------------------------------------------------
 import unittest
+
 import HydraPython as hp
 
 
+
+# -----------------------------------------------------------------------------
+# Actual tests
+# -----------------------------------------------------------------------------
 class TestEventsHost(unittest.TestCase):
     """
     TestEventsHost test class, which tests all the methods available in Host Events class.

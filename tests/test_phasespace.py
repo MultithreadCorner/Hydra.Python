@@ -1,7 +1,13 @@
+# Licensed under a GNU general public license, see LICENSE.
+
+# -----------------------------------------------------------------------------
+# Import statements
+# -----------------------------------------------------------------------------
 import unittest
-import HydraPython as hp
 import random
 import math
+
+import HydraPython as hp
 
 
 def foo(*data):
@@ -23,6 +29,9 @@ def random_floats(low, high, size):
     return [random.uniform(low, high) for _ in range(size)]
 
 
+# -----------------------------------------------------------------------------
+# Actual tests
+# -----------------------------------------------------------------------------
 class TestPhaseSpace(unittest.TestCase):
     """
     TestPhaseSpace test class, which tests all the methods available in PhaseSpace class.

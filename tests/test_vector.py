@@ -1,4 +1,10 @@
+# Licensed under a GNU general public license, see LICENSE.
+
+# -----------------------------------------------------------------------------
+# Import statements
+# -----------------------------------------------------------------------------
 import unittest
+
 from HydraPython import Vector4R, Vector3R
 
 
@@ -10,6 +16,9 @@ def raise_error_3R(*args, **kwargs):
     Vector4R(*args)
 
 
+# -----------------------------------------------------------------------------
+# Actual tests
+# -----------------------------------------------------------------------------
 class TestVector4R(unittest.TestCase):
     """
     Vector4R test class, which tests all the methods available in Vector4R class.
