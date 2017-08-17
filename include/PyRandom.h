@@ -76,7 +76,7 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 			[](hydra::Random<>& cobj, size_t seed) {cobj.SetSeed(seed);},
 			"Set seed of the underlying random number generator.")
 	//get seed
-	.def("GetSeed", [](hydra::Random<>& cobj) {cobj.GetSeed();},
+	.def("GetSeed", [](hydra::Random<>& cobj) {return cobj.GetSeed();},
 			"Get seed of the underlying random number generator.")
 	//-----------------------------------------------------
 	//host functions

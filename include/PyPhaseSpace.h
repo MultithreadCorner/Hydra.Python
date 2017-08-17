@@ -84,15 +84,20 @@ namespace hydra_python {
 #define ADD5 data[0], data[1], data[2], data[3], data[4]
 #define ADD6 data[0], data[1], data[2], data[3], data[4], data[5]
 #define ADD7 data[0], data[1], data[2], data[3], data[4], data[5], data[6]
-#define ADD8 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
-#define ADD9 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8]
-#define ADD10 data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]
+#define ADD8 \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
+#define ADD9                                                           \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+	    data[7], data[8]
+#define ADD10                                                          \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+	    data[7], data[8], data[9]
 
 #define PHASESPACE_AVERAGEON_BODY(N, RNG, BACKEND)                       \
 	"AverageON" #BACKEND,                                            \
 	    [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& v,         \
 	       py::function& funct, size_t nentries) {                   \
-		    ADD_FUNCTOR(ADD##N)               \
+		    ADD_FUNCTOR(ADD##N)                                  \
 		    return p.AverageOn(hydra::BACKEND::sys, v, wfunctor, \
 				       nentries);                        \
 	    }
@@ -111,17 +116,17 @@ hydra::Events<N, hydra::BACKEND::sys_t>& e2) {\
 }
 */
 
-#define PHASESPACE_CLASS_BODY(N, RNG, BACKEND)                      \
-	py::class_<hydra::PhaseSpace<N, RNG> >(m, "PhaseSpace" #N) \
-	    .def(py::init<hydra::GReal_t,                           \
-			  const std::array<hydra::GReal_t, N>&>())  \
-	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)    \
-	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)    \
-	    .def(PHASESPACE_GENERATE_BODY(N, RNG, host))            \
-	    .def(PHASESPACE_GENERATE_BODY(N, RNG, device))          \
-	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, host))           \
-	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, device))         \
-	    .def(PHASESPACE_AVERAGEON_BODY_2(N, RNG, host))         \
+#define PHASESPACE_CLASS_BODY(N, RNG, BACKEND)                     \
+	py::class_<hydra::PhaseSpace<N, RNG>>(m, "PhaseSpace" #N)  \
+	    .def(py::init<hydra::GReal_t,                          \
+			  const std::array<hydra::GReal_t, N>&>()) \
+	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)   \
+	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)   \
+	    .def(PHASESPACE_GENERATE_BODY(N, RNG, host))           \
+	    .def(PHASESPACE_GENERATE_BODY(N, RNG, device))         \
+	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, host))          \
+	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, device))        \
+	    .def(PHASESPACE_AVERAGEON_BODY_2(N, RNG, host))        \
 	    .def(PHASESPACE_AVERAGEON_BODY_2(N, RNG, device));
 /*
 	    .def(PHASESPACE_GENERATE_BODY_2(N, RNG, host))          \
@@ -129,7 +134,7 @@ hydra::Events<N, hydra::BACKEND::sys_t>& e2) {\
 */
 
 template <>
-void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine> >(
+void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
     pybind11::module& m) {
 	PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine, host);
 	PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine, host);

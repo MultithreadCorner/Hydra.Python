@@ -59,13 +59,13 @@ namespace py = pybind11;
 namespace hydra_python {
 
 #define EVENTS_CLASS_BODY(N, BACKEND, BACKEND2)                                \
-	py::class_<hydra::Events<N, hydra::BACKEND::sys_t> >(                  \
+	py::class_<hydra::Events<N, hydra::BACKEND::sys_t>>(                   \
 	    m, #BACKEND "Events" #N)                                           \
 	    .def(py::init<>(), "Zero state Event object")                      \
 	    .def(py::init<hydra::GLong_t>(), #N " particle events object")     \
-	    .def(py::init<hydra::Events<N, hydra::BACKEND::sys_t> >(),         \
+	    .def(py::init<hydra::Events<N, hydra::BACKEND::sys_t>>(),          \
 		 "Copy construct from the " #BACKEND " Event object")          \
-	    .def(py::init<hydra::Events<N, hydra::BACKEND2::sys_t> >(),        \
+	    .def(py::init<hydra::Events<N, hydra::BACKEND2::sys_t>>(),         \
 		 "Copy construct from the " #BACKEND2 " Event object")         \
 	    .def("assign",                                                     \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
@@ -166,30 +166,30 @@ namespace hydra_python {
 			 auto start = e.WeightsBegin();                        \
 			 start[idx] = value;                                   \
 		 },                                                            \
-		 "Set the ith event's weight.")\
-	    .def("getFlag",                                                  \
+		 "Set the ith event's weight.")                                \
+	    .def("getFlag",                                                    \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
-		    hydra::GInt_t idx) {                 \
+		    hydra::GInt_t idx) {                                       \
 			 if (idx >= e.size())                                  \
 				 throw py::index_error(                        \
 				     "list index out of range");               \
-			 auto start = e.FlagsBegin();                        \
-			 return (bool)start[idx]     ;                              \
+			 auto start = e.FlagsBegin();                          \
+			 return (bool)start[idx];                              \
 		 },                                                            \
-		 "get the ith event's flag.")\
-	     .def("getWeight",                                                  \
+		 "get the ith event's flag.")                                  \
+	    .def("getWeight",                                                  \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
-		    hydra::GInt_t idx) {                 \
+		    hydra::GInt_t idx) {                                       \
 			 if (idx >= e.size())                                  \
 				 throw py::index_error(                        \
 				     "list index out of range");               \
 			 auto start = e.WeightsBegin();                        \
-			 return (hydra::GReal_t)start[idx] ;                                  \
+			 return (hydra::GReal_t)start[idx];                    \
 		 },                                                            \
 		 "get the ith event's weight.");
 
 template <>
-void add_object<hydra::Events<4, hydra::host::sys_t> >(pybind11::module& m) {
+void add_object<hydra::Events<4, hydra::host::sys_t>>(pybind11::module& m) {
 	EVENTS_CLASS_BODY(1, host, device);
 	EVENTS_CLASS_BODY(2, host, device);
 	EVENTS_CLASS_BODY(3, host, device);
