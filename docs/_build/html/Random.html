@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Random Class &mdash; Hydra.Python 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hydra.Python 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Phase Space Example" href="PhaseSpaceExample.html" />
+    <link rel="prev" title="PhaseSpace Class" href="PhaseSpace.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="random-class">
+<h1>Random Class<a class="headerlink" href="#random-class" title="Permalink to this headline">¶</a></h1>
+<p>This class implements functionalities associated with random number generation
+and pdf sampling. This class can sample and fill ranges with data corresponding
+to <code class="docutils literal"><span class="pre">Gaussian</span></code>, <code class="docutils literal"><span class="pre">Exponential</span></code>, <code class="docutils literal"><span class="pre">Uniform</span></code> and <code class="docutils literal"><span class="pre">Breit-Wigner</span></code> distributions.</p>
+<p>This class is a wrapper of <code class="docutils literal"><span class="pre">hydra</span> <span class="pre">C++</span> <span class="pre">Random</span> <span class="pre">class</span></code>. The Random class have
+two constructors to instantiate the Random class:</p>
+<ul class="simple">
+<li>Constructor with empty seed. The default seed value is <code class="docutils literal"><span class="pre">7895123</span></code>.</li>
+<li>Constructor expecting the seed.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>          <span class="c1"># default seed</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">(</span><span class="mi">8385977</span><span class="p">)</span>  <span class="c1"># Seed value</span>
+<span class="c1"># This will construct the 2 Random class&#39;s object one with default seed and</span>
+<span class="c1"># one with the seed value 8385977</span>
+</pre></div>
+</div>
+<p>Apart from setting the seed value at the time of creation the seed can be
+set or get with setter and getter methods named <code class="docutils literal"><span class="pre">SetSeed</span></code> and <code class="docutils literal"><span class="pre">GetSeed</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">GetSeed</span><span class="p">())</span>         <span class="c1"># Give the seed value of object r. 7895123</span>
+<span class="n">r</span><span class="o">.</span><span class="n">SetSeed</span><span class="p">(</span><span class="mi">988763</span><span class="p">)</span>           <span class="c1"># New seed is 988763</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">GetSeed</span><span class="p">())</span>         <span class="c1"># 988763</span>
+</pre></div>
+</div>
+<p>The Random class provides a method named <code class="docutils literal"><span class="pre">Uniform</span></code> to generate the numbers
+between range (min, max) (both min and max exclusive) and
+fill them into the container according to the <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_distribution_(continuous)">Continuous Uniform
+distribution</a>.
+The container can be any of the <code class="docutils literal"><span class="pre">host_vector_float</span></code> or <code class="docutils literal"><span class="pre">device_vector_float</span></code>.
+In below examples, I have used device_vector_float extensively but they both
+can be used interchangeably in place of each other.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">container</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">device_vector_float</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>   <span class="c1"># Continer to hold 1000000 objects</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>                              <span class="c1"># Random number generator object</span>
+<span class="n">r</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span>  <span class="c1"># Minimum number 1.1, maximum 1.5 and container</span>
+<span class="c1"># Above will generate 1000000 numbers between (1.1, 1.5)</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">container</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>The Gauss random number generation method can also be used with the Random class.
+The <code class="docutils literal"><span class="pre">Gauss</span></code> method generate the numbers with the given <code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">sigma</span></code>
+values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">container</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">device_vector_float</span><span class="p">(</span><span class="mi">1000000</span><span class="p">)</span>   <span class="c1"># Continer to hold 1000000 objects</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>                              <span class="c1"># Random number generator object</span>
+<span class="n">r</span><span class="o">.</span><span class="n">Gauss</span><span class="p">(</span><span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span>
+<span class="c1"># Above will generate 1000000 with mean -2.0 and sigma as 1.0</span>
+</pre></div>
+</div>
+<p>The Exponential random number generation method or <code class="docutils literal"><span class="pre">Exp</span></code> method in Random class
+generates the numbers with the given <code class="docutils literal"><span class="pre">tau</span></code> value of the Exponential distribution.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">container</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_vector_float</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>   <span class="c1"># Continer to hold 100 objects.</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>                         <span class="c1"># Random number generator object</span>
+<span class="n">r</span><span class="o">.</span><span class="n">Exp</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span>                   <span class="c1"># tau is 1.0</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The Random class also provides a <code class="docutils literal"><span class="pre">BreitWigner</span></code> method to generate random number
+according to a BreitWigner with <code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">width</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">container</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">device_vector_float</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>   <span class="c1"># Continer to hold 10000 objects.</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>                             <span class="c1"># Random number generator object</span>
+<span class="n">r</span><span class="o">.</span><span class="n">BreitWigner</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">container</span><span class="p">)</span>          <span class="c1"># mean=2.0, width=0.2</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">container</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Apart from all these distributions, you can also define your own distribution
+and pass it as a function to the method. The <code class="docutils literal"><span class="pre">Sample</span></code> method allows you to pass
+a function that will be sampled for the given sampling range (lower, upper) and
+store the result in the container.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="c1"># The functon which will be sampled.</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">gauss1</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="o">-</span><span class="mf">2.0</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">m2</span> <span class="o">=</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span>
+        <span class="n">s2</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">sigma</span>
+        <span class="n">g</span> <span class="o">*=</span> <span class="n">math</span><span class="o">.</span><span class="n">e</span> <span class="o">**</span> <span class="p">((</span><span class="o">-</span><span class="n">m2</span><span class="o">/</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">s2</span> <span class="p">))</span><span class="o">/</span><span class="p">(</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">s2</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">g</span>
+
+<span class="n">container</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_vector_float3</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>  <span class="c1"># Container with 10000 objects each having 3 floats</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Random</span><span class="p">()</span>                           <span class="c1"># Random object</span>
+<span class="n">r</span><span class="o">.</span><span class="n">Sample</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">],</span> <span class="n">gauss1</span><span class="p">)</span>
+<span class="c1"># d is container, [6, 6, 6] is the start range (1 for each float in container),</span>
+<span class="c1"># [-6, -6, -6] is end range, gauss1 is the functor.</span>
+</pre></div>
+</div>
+<p>In sample method, the start range and end range should have the same number of
+arguments as in the container. So for example, if you are using container of
+<code class="docutils literal"><span class="pre">float7</span></code> than start range and end range each should contain <code class="docutils literal"><span class="pre">7</span></code> elements.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Any of device containers will not work with <code class="docutils literal"><span class="pre">Sample</span></code> method.</p>
+</div>
+<p>The complete method list supported by Random class can be found on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
+<p>The container list that can be passed to <code class="docutils literal"><span class="pre">Sample</span></code> method can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The method list for Random classes</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">GetSeed</span></code>  Get the seed. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>seed = r.GetSeed()</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">SetSeed</span></code>  Set seed. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r.SetSeed(seed)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Gauss</span></code>  Generate the Gauss distribution. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r.Gauss(mean, sigma, container)  # container can be [device/host]_vector_float</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Uniform</span></code> Generate the Continuous Uniform distribution. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r.Uniform(min, max, container)   # container can be [device/host]_vector_float</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Exp</span></code> Generate the Exponential distribution. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r.Exp(tau, container)   # container can be [device/host]_vector_float</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">BreitWigner</span></code> Generate the BreitWigner distribution. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>r.BreitWigner(mean, width, container)  # container can be [device/host]_vector_float</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Sample</span></code> sample the given function. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>iterator_accepted_events = r.Sample(container, [min_values_list], [max_limit_list], function)  # Container could be any of the container listed below</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The list of available containers to use with Random.</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float</span></code>  host container with 1 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container1 = hp.host_vector_float(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float2</span></code>  host container with 2 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container2 = hp.host_vector_float2(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float3</span></code>  host container with 3 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container3 = hp.host_vector_float3(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float4</span></code>  host container with 4 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container4 = hp.host_vector_float4(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float5</span></code>  host container with 5 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container5 = hp.host_vector_float5(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float6</span></code>  host container with 6 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container6 = hp.host_vector_float6(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float7</span></code>  host container with 7 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container7 = hp.host_vector_float7(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float8</span></code>  host container with 8 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container8 = hp.host_vector_float8(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float9</span></code>  host container with 9 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container9 = hp.host_vector_float9(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_vector_float10</span></code>  host container with 10 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_container10 = hp.host_vector_float10(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float</span></code>  device container with 1 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container1 = hp.device_vector_float(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float2</span></code>  device container with 2 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container2 = hp.device_vector_float2(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float3</span></code>  device container with 3 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container3 = hp.device_vector_float3(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float4</span></code>  device container with 4 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container4 = hp.device_vector_float4(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float5</span></code>  device container with 5 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container5 = hp.device_vector_float5(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float6</span></code>  device container with 6 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container6 = hp.device_vector_float6(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float7</span></code>  device container with 7 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container7 = hp.device_vector_float7(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float8</span></code>  device container with 8 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container8 = hp.device_vector_float8(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float9</span></code>  device container with 9 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container9 = hp.device_vector_float9(size)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_vector_float10</span></code>  device container with 10 float. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_container10 = hp.device_vector_float10(size)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">The basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpace.html">PhaseSpace Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Random Class</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpaceExample.html">Phase Space Example</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="PhaseSpace.html" title="previous chapter">PhaseSpace Class</a></li>
+      <li>Next: <a href="PhaseSpaceExample.html" title="next chapter">Phase Space Example</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Antonio Augusto Alves Junior.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/Random.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

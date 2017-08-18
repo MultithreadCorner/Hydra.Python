@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PhaseSpace Class &mdash; Hydra.Python 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hydra.Python 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Random Class" href="Random.html" />
+    <link rel="prev" title="Events Class" href="Events.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="phasespace-class">
+<h1>PhaseSpace Class<a class="headerlink" href="#phasespace-class" title="Permalink to this headline">¶</a></h1>
+<p>Ths class implements the phase-space Monte Carlo simulation where N is the number
+of particles in the Final state. Currently PhaseSpace class supports up-to
+N=10 number of particles in the Final state. Most of the PhaseSpace class
+methods can work on both <code class="docutils literal"><span class="pre">HOST</span></code> and <code class="docutils literal"><span class="pre">DEVICE</span></code>. The number of particles is
+associated with suffix with the class name.</p>
+<p>This class is a wrapper of C++ PhaseSpace class. The PhaseSpace class one constructor
+to instantiate the PhaseSpace class:</p>
+<ul class="simple">
+<li>Constructor with mother mass and N number of daughter masses.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="c1"># This will construct the PhaseSpace object with the mass provided by the vector4R</span>
+<span class="c1"># class and the exactly 4 daughter masses in the list.</span>
+</pre></div>
+</div>
+<p>The PhaseSpace classes provides the method to Generate a phase-space given a mother particle and an output range
+or a phase-space given a range of mother particles and an output range.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="n">e_host</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">e_device</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">deviceEvents4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">Generatehost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">e_host</span><span class="p">)</span>  <span class="c1"># Generate particle on host</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">Generatedevice</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">e_device</span><span class="p">)</span>  <span class="c1"># Generate particle on device</span>
+
+<span class="c1">####### ADD EXAMPLE OF given a range of mother particles and an output range</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">AverageOn</span></code> method by PhaseSpace classes calculate the <code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">sqrt(variance)</span></code>
+of a functor over the phase-space with n-samples or of a functor over the phase-space given a
+list of mother particles.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">p1</span> <span class="o">+</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">p2</span> <span class="o">+</span> <span class="n">p3</span>
+    <span class="n">pd</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">p2</span>
+    <span class="n">pq</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>
+    <span class="n">qd</span> <span class="o">=</span> <span class="n">q</span> <span class="o">*</span> <span class="n">p2</span>
+    <span class="n">mp2</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">mass2</span><span class="p">()</span>
+    <span class="n">mq2</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">mass2</span><span class="p">()</span>
+    <span class="n">md2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">mass2</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">pd</span> <span class="o">*</span> <span class="n">mq2</span> <span class="o">-</span> <span class="n">pq</span> <span class="o">*</span> <span class="n">qd</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">pq</span> <span class="o">*</span> <span class="n">pq</span> <span class="o">-</span> <span class="n">mq2</span> <span class="o">*</span> <span class="n">mp2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">qd</span> <span class="o">*</span> <span class="n">qd</span> <span class="o">-</span> <span class="n">mq2</span> <span class="o">*</span> <span class="n">md2</span><span class="p">))</span>
+
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="n">tup1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AverageONhost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Average of host, currently passing functor to device will fail</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Mean</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># sqrt of variance</span>
+
+<span class="c1">####### ADD EXAMPLE of a functor over the phase-space given a list of mother particles.</span>
+</pre></div>
+</div>
+<p>#### TODO ####
+Add example and documentation of <code class="docutils literal"><span class="pre">Evaluate</span></code> methods.</p>
+<p>The complete method list supported by PhaseSpace Events classes can be found
+on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
+<p>The complete list of the classes in the PhaseSpace can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The method list for PhaseSpace classes</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">GetSeed</span></code>  Get the seed. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p.GetSeed()</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">SetSeed</span></code>  Set seed. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p.SetSeed(seed)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">generate</span></code>  Generate the phase-space. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p.generate(vector4R, event)  # event1&#8217;s content will be assigned to event2.</li>
+<li>### SECOND EXAMPLE</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">AverageON</span></code> Get the mean and sqrt of variance. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p.AverageON(vector4R, functor, entires)</li>
+<li>### SECOND EXAMPLE</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Evaluate</span></code> dummy Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>dummy</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The list of PhaseSpace classes</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace1</span></code>  Generate the phase-space with 1 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace1(mass, [1 daughter mass])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace2</span></code>  Generate the phase-space with 2 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace2(mass, [2 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace3</span></code>  Generate the phase-space with 3 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace3(mass, [3 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace4</span></code>  Generate the phase-space with 4 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace4(mass, [4 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace5</span></code>  Generate the phase-space with 5 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace5(mass, [5 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace6</span></code>  Generate the phase-space with 6 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace6(mass, [6 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace7</span></code>  Generate the phase-space with 7 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace7(mass, [7 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace8</span></code>  Generate the phase-space with 8 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace8(mass, [8 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace9</span></code>  Generate the phase-space with 9 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace9(mass, [9 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace10</span></code>  Generate the phase-space with 10 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hp.PhaseSpace10(mass, [10 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">The basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events Class</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">PhaseSpace Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random.html">Random Class</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpaceExample.html">Phase Space Example</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Events.html" title="previous chapter">Events Class</a></li>
+      <li>Next: <a href="Random.html" title="next chapter">Random Class</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Antonio Augusto Alves Junior.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/PhaseSpace.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

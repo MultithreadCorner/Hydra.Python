@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>First steps &mdash; Hydra.Python 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hydra.Python 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Vector Classes" href="Vector.html" />
+    <link rel="prev" title="About this project" href="intro.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="first-steps">
+<span id="basics"></span><h1>First steps<a class="headerlink" href="#first-steps" title="Permalink to this headline">¶</a></h1>
+<p>This section demonstrates the basic features of HydraPython. Before getting
+started, make sure that the development environment is set up to compile the
+included set of test cases.</p>
+<div class="section" id="compiling-the-test-cases">
+<h2>Compiling the test cases<a class="headerlink" href="#compiling-the-test-cases" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="linux-macos">
+<h3>Linux/MacOS<a class="headerlink" href="#linux-macos" title="Permalink to this headline">¶</a></h3>
+<p>On Linux you&#8217;ll need the <a class="reference external" href="https://github.com/MultithreadCorner/Hydra">Hydra</a>, <a class="reference external" href="https://github.com/pybind/pybind11.git">Pybind11</a> and the <strong>cmake</strong>. Also, you will
+be requiring the <strong>python-dev</strong> or <strong>python3-dev</strong> package. You can clone
+and fetch the latest code for both of the mentioned libraries. Then you could
+create a directory structure similar to below one.</p>
+<div class="highlight-bash"><div class="highlight"><pre>Project root -
+  - Hydra.Python            <span class="o">(</span>latest code of Hydra Python<span class="o">)</span>
+  - Hydra                   <span class="o">(</span>latest code of Hydra<span class="o">)</span>
+  - Pybind11                <span class="o">(</span>latest code of Pybind11<span class="o">)</span>
+  - build                   <span class="o">(</span>build directory<span class="o">)</span>
+</pre></div>
+</div>
+<p>After downloading the prerequisites, run</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">cd</span> build
+cmake -DHYDRA_INSTALL_PATH<span class="o">=</span>../Hydra -DPYBIND11_INSTALL_PATH<span class="o">=</span>../pybind11/include -DTHRUST_INSTALL_PATH<span class="o">=</span>../Hydra ../Hydra.Python
+make all
+</pre></div>
+</div>
+<p>The last line will both compile and create a shared <code class="docutils literal"><span class="pre">.so</span></code> file which can be
+imported in the python.</p>
+<p>The best way to check if the installation is correct or not is to run the test
+cases provided in the Hydra.Python/tests.</p>
+</div>
+</div>
+<div class="section" id="creating-simple-vector4r-particle-and-calculate-it-s-mass">
+<h2>Creating simple Vector4R particle and calculate it&#8217;s mass<a class="headerlink" href="#creating-simple-vector4r-particle-and-calculate-it-s-mass" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start by creating importing the module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+</pre></div>
+</div>
+<p>The name <code class="docutils literal"><span class="pre">HydraPython</span></code> is quite long so generally, we use its alias as <code class="docutils literal"><span class="pre">hp</span></code>.</p>
+<p>Now that we have already imported the module let&#8217;s just simply create a <code class="docutils literal"><span class="pre">Vector4R</span></code>
+object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">vec4</span><span class="p">)</span>  <span class="c1"># (0, 0, 0, 0)</span>
+</pre></div>
+</div>
+<p>So this is it. You just created a Vector4R object. The Vector4R object in Hydra
+is used as a <code class="docutils literal"><span class="pre">particle</span></code>. This understanding is important when
+you will use the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class to generate the Events over N particles.</p>
+<p>The next 3 pages explain the Vector classes (<code class="docutils literal"><span class="pre">Vector4R</span></code> and <code class="docutils literal"><span class="pre">Vector3R</span></code>), <code class="docutils literal"><span class="pre">Events</span></code>
+classes and the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class in more detail.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">The basics</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="">First steps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#compiling-the-test-cases">Compiling the test cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-simple-vector4r-particle-and-calculate-it-s-mass">Creating simple Vector4R particle and calculate it&#8217;s mass</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpace.html">PhaseSpace Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random.html">Random Class</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpaceExample.html">Phase Space Example</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="intro.html" title="previous chapter">About this project</a></li>
+      <li>Next: <a href="Vector.html" title="next chapter">Vector Classes</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Antonio Augusto Alves Junior.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/basics.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
