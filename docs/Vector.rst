@@ -3,18 +3,18 @@
 Vector Classes
 ##############
 
-There are two Vector classes available that are ``Vector4R`` and ``Vector3R``.
+There are two vector classes available in Hydra, namely ``Vector4R`` and ``Vector3R``.
 
 Vector4R
 ========
 
-The Vector4R class is the wrapper of C++ Vector4R class. This class basically
-deals with the vector of 4 particles. We have three types of constructors
-to instantiate the Vector4R class:
+The ``Vector4R`` class available in Python wraps the C++ ``Vector4R`` class representing
+four-dimensional relativistic vectors.
+Three types of constructors allow to instantiate the ``Vector4R`` class:
 
-- Default empty constructor
-- Copy constructor
-- Constructor with 4 real (``float``) numbers
+- Default empty constructor.
+- Copy constructor.
+- Constructor from 4 real (``float``) numbers.
 
 .. code-block:: python
 
@@ -28,19 +28,18 @@ to instantiate the Vector4R class:
     print (vec2)  # (0.8385,0.1242,0.9821,1.2424)
     print (vec3)  # (0.8385,0.1242,0.9821,1.2424)
 
-The Vector4R class also provides a pretty convenient method to create an
-object from python list.
+The ``Vector4R`` class also provides a pretty convenient method to create an instance from a python list.
 
 .. code-block:: python
 
     list_ = [0.9241, 0.13223, 0.13121, 1.1141]
     vec4 = hp.Vector4R(list_)
 
-This will construct a new Vector4R object with the values passed within
+This will construct a new ``Vector4R`` object with the values passed within
 a list. The list should contain exactly 4 elements otherwise a ``TypeError``
 will be raised.
 The ``set`` methods can be used to set all 4 values or a particular value
-in a Vector4R object, while the ``get`` method can be used with Vector4R
+in a ``Vector4R`` object, while the ``get`` method can be used with ``Vector4R``
 to get the value of a particular index. The ``__getitem__`` and
 ``__setitem`` methods can also be used to get or set the value which comes
 very handy and maintain more pythonic way to access and set the values.
@@ -61,9 +60,9 @@ very handy and maintain more pythonic way to access and set the values.
     vec5[1] = 0.5678
     print (vec5)  # (0.1234,0.5678,0.9101,0.1121)
 
-The Vector4R object can be multiplied or divided by a real value while it
-can be added or subtracted with another Vector4R object. One Vector4R
-object can be multiplied by another Vector4R object.
+The ``Vector4R`` object can be multiplied or divided by a real value while it
+can be added or subtracted with another ``Vector4R`` object. One Vector4R
+object can be multiplied by another ``Vector4R`` object.
 
 .. code-block:: python
 
@@ -80,17 +79,17 @@ object can be multiplied by another Vector4R object.
     vec6 -= vec7
     print (vec6)  # (1.50608,1.69418,0.01925,2.1989)
 
-Two Vector4R objects can be easily added, subtracted or multiplied so:
+Two ``Vector4R`` objects can easily be added, subtracted or multiplied:
 
  - ``v = v1 + v2`` # Returns a Vector4R object
  - ``v = v1 - v2`` # Returns a Vector4R object
  - ``v = v1 * v2`` # Returns a real number
 
-All above three are valid for any Vector4R object. There are various
-other methods available in Vector4R. The list of Vector4R
+All above three are valid for any ``Vector4R`` object. There are various
+other methods available in ``Vector4R``. The list of ``Vector4R``
 methods can be found on [#f1]_.
 
-The Vector4R provides an ``assign`` method to assign or copy the Vector4R
+The ``Vector4R`` provides an ``assign`` method to assign or copy the Vector4R
 object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python
@@ -111,13 +110,13 @@ object. This is a very useful method to avoid the nasty bugs for example:
 Vector3R
 ========
 
-The Vector3R class is the wrapper of C++ Vector3R class. This class basically
-deals with the vector of 3 particles. We have three types of constructors
-to instantiate the Vector3R class:
+The ``Vector43`` class available in Python wraps the C++ ``Vector3R`` class representing
+three-dimensional Euclidian vectors.
+Three types of constructors allow to instantiate the ``Vector3R`` class:
 
-- Default empty constructor
-- Copy constructor
-- Constructor with 3 real (``float``) numbers
+- Default empty constructor.
+- Copy constructor.
+- Constructor from 3 real (``float``) numbers.
 
 .. code-block:: python
 
@@ -131,7 +130,7 @@ to instantiate the Vector3R class:
     print (vec2)  # (0.8385,0.1242,0.9821)
     print (vec3)  # (0.8385,0.1242,0.9821)
 
-The Vector3R class also provides a pretty convenient method to create an
+The ``Vector3R`` class also provides a pretty convenient method to create an
 object from python list.
 
 .. code-block:: python
@@ -139,11 +138,11 @@ object from python list.
     list_ = [0.9241, 0.13223, 0.13121]
     vec4 = hp.Vector3R(list_)
 
-This will construct a new Vector3R object with the values passed within
+This will construct a new ``Vector3R`` object with the values passed within
 a list. The list should contain exactly 3 elements otherwise a ``TypeError``
 will be raised.
 The ``set`` methods can be used to set all 3 values or a particular value
-in a Vector3R object, while the ``get`` method can be used with Vector3R
+in a ``Vector3R`` object, while the ``get`` method can be used with ``Vector3R``
 to get the value of a particular index. The ``__getitem__`` and
 ``__setitem`` methods can also be used to get or set the value which comes
 very handy and maintain more pythonic way to access and set the values.
@@ -164,9 +163,9 @@ very handy and maintain more pythonic way to access and set the values.
     vec5[1] = 0.5678
     print (vec5)  # (0.1234,0.5678,0.9101)
 
-The Vector3R object can be multiplied or divided by a real value while it
-can be added or subtracted with another Vector3R object. One Vector3R
-object can be multiplied by another Vector3R object.
+The ``Vector3R`` object can be multiplied or divided by a real value while it
+can be added or subtracted with another ``Vector3R`` object. One ``Vector3R``
+object can be multiplied by another ``Vector3R`` object.
 
 .. code-block:: python
 
@@ -183,17 +182,17 @@ object can be multiplied by another Vector3R object.
     vec6 -= vec7
     print (vec6)  # (1.50608,1.69418,0.01925)
 
-Two Vector3R objects can be easily added, subtracted or multiplied so:
+Two ``Vector3R`` objects can easily be added, subtracted or multiplied:
 
  - ``v = v1 + v2`` # Returns a Vector3R object
  - ``v = v1 - v2`` # Returns a Vector3R object
  - ``v = v1 * v2`` # Returns a real number
 
-All above three are valid for any Vector3R object. There are various
-other methods available in Vector3R. The list of Vector3R
+All above three are valid for any ``Vector3R`` object. There are various
+other methods available in ``Vector3R``. The list of ``Vector3R``
 methods can be found on [#f2]_.
 
-The Vector3R provides an ``assign`` method to assign or copy the Vector3R
+The ``Vector3R`` provides an ``assign`` method to assign or copy the Vector3R
 object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python

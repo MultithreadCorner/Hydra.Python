@@ -2,8 +2,8 @@
 
     .. image:: hydra_mini_logo.png
 
-Hydra Python --- The Python wrapper of Hydra C++
-================================================
+Hydra.Python --- Python bindings for the Hydra C++ library
+==========================================================
 
 .. only: not latex
 
@@ -15,7 +15,7 @@ Hydra Python --- The Python wrapper of Hydra C++
    intro
 
 .. toctree::
-   :caption: The Basics
+   :caption: The basics
    :maxdepth: 2
 
    basics
@@ -25,7 +25,7 @@ Hydra Python --- The Python wrapper of Hydra C++
    Random
 
 .. toctree::
-   :caption: PhaseSpace example
+   :caption: Examples
    :maxdepth: 2
 
    PhaseSpaceExample

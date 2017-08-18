@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Hydra Python documentation build configuration file, created by
+# Hydra.Python documentation build configuration file, created by
 # sphinx-quickstart on Fri Aug 11 18:15:40 2017.
 #
 # This file is execfile()d with the current directory set to its
@@ -48,8 +48,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Hydra Python'
-copyright = '2017, Deepanshu Thakur'
+project = 'Hydra.Python'
+copyright = '2017, Antonio Augusto Alves Junior'
 author = 'Deepanshu Thakur'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -144,7 +144,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'HydraPython.tex', 'Hydra Python Documentation',
+    (master_doc, 'HydraPython.tex', 'Hydra.Python Documentation',
      'Deepanshu Thakur', 'manual'),
 ]
 
@@ -154,7 +154,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'hydrapython', 'Hydra Python Documentation',
+    (master_doc, 'hydrapython', 'Hydra.Python Documentation',
      [author], 1)
 ]
 
@@ -165,10 +165,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'HydraPython', 'Hydra Python Documentation',
-     author, 'HydraPython', 'One line description of project.',
+    (master_doc, 'HydraPython', 'Hydra.Python Documentation',
+     author, 'HydraPython', 'Python bindings for the Hydra C++ header-only library.',
      'Miscellaneous'),
 ]
-
-
-

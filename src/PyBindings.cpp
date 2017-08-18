@@ -1,4 +1,3 @@
-
 /*----------------------------------------------------------------------------
  *
  *   Copyright (C) 2017 Antonio Augusto Alves Junior
@@ -24,8 +23,8 @@
 /*
  * PyBindings.cpp
  *
- *  Created on: 30 de jul de 2017
- *      Author: augalves
+ *  Created on: July 30, 2017
+ *      Author: Antonio Augusto Alves Junior
  */
 
 /*
@@ -39,21 +38,23 @@
  *
  */
 
-//pybind11
+// pybind11
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
-//Hydra.Python
+
+//Hydra.Python helpers
 #include <add_object.h>
 #include <bind_container.h>
 #include <casters.h>
 #include <typedefs.h>
 #include <make_opaque.h>
-//Hydra.Python hydra classes
+// Hydra.Python binded Hydra classes
 #include <PyRandom.h>
 #include <PyEvents.h>
 #include <PyVector3R.h>
 #include <PyVector4R.h>
 #include <PyPhaseSpace.h>
+
 
 namespace py = pybind11;
 namespace hypy = hydra_python;
@@ -62,10 +63,10 @@ namespace hypy = hydra_python;
 
 PYBIND11_MODULE(HydraPython, m) {
 
-hypy::add_object< hydra::Random<thrust::random::default_random_engine> >(m);
-hypy::add_object< hydra::Events<4, hydra::host::sys_t> >(m);
 hypy::add_object< hydra::Vector3R >(m);
 hypy::add_object< hydra::Vector4R >(m);
+hypy::add_object< hydra::Random<thrust::random::default_random_engine> >(m);
+hypy::add_object< hydra::Events<4, hydra::host::sys_t> >(m);
 hypy::add_object< hydra::PhaseSpace<4, thrust::random::default_random_engine> >(m);
 
 //decay container host
