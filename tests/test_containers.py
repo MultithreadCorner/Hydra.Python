@@ -41,21 +41,21 @@ class Test(unittest.TestCase):
         self.test_device_vector_float2()
 
     def test_host_vector_float(self):
-	v1 = host_vector_float()
+        v1 = host_vector_float()
         self.assertEqual(len(v1), 0)
-	v1 = host_vector_float([i for i in range(100)])
+        v1 = host_vector_float([i for i in range(100)])
         self.assertEqual(len(v1), 100)
         self.assertEqual(sum(v1), 4950.)
 
     def test_host_vector_float2(self):
-	v2 = host_vector_float2()
+        v2 = host_vector_float2()
         self.assertEqual(len(v2), 0)
         v2 = host_vector_float2([(i,i) for i in range(100)])
         self.assertEqual(len(v2), 100)
         self.assertEqual(v2.count((1,1)),1)
         
     def test_device_vector_float(self):
-	v1 = device_vector_float([i for i in range(10)])
+        v1 = device_vector_float([i for i in range(10)])
         self.assertEqual(len(v1), 10)
         self.assertEqual(sum(v1), 45.)
         self.assertEqual(9 in v1,True)
