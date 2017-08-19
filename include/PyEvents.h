@@ -1,6 +1,7 @@
+
 /*----------------------------------------------------------------------------
  *
- *   Copyright (C) 2017 Deepanshu Thakur
+ *   Copyright (C) 2017 Antonio Augusto Alves Junior
  *
  *
  *   This file is part of Hydra.Python Analysis Framework.
@@ -60,7 +61,7 @@ namespace hydra_python {
 
 #define EVENTS_CLASS_BODY(N, BACKEND, BACKEND2)                                \
 	py::class_<hydra::Events<N, hydra::BACKEND::sys_t>>(                   \
-	    m, #BACKEND "Events" #N)                                           \
+	    m, #BACKEND "_events_" #N)                                           \
 	    .def(py::init<>(), "Zero state Event object")                      \
 	    .def(py::init<hydra::GLong_t>(), #N " particle events object")     \
 	    .def(py::init<hydra::Events<N, hydra::BACKEND::sys_t>>(),          \
@@ -71,14 +72,14 @@ namespace hydra_python {
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
 		    const hydra::Events<N, hydra::BACKEND::sys_t>& other) {    \
 			 e = other;                                            \
-		 },                                                            \
+		 }, #BACKEND "_events_"#N##_a,                                                           \
 		 "Assign one " #BACKEND " Event object into another " #BACKEND \
 		 " Event object.")                                             \
 	    .def("assign",                                                     \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
 		    hydra::Events<N, hydra::BACKEND2::sys_t>& other) {         \
 			 e = other;                                            \
-		 },                                                            \
+		 }, #BACKEND2 "_events_"#N##_a,                                                           \
 		 "Assign " #BACKEND2 " Events object into " #BACKEND           \
 		 " Event object.")                                             \
 	    .def("GetMaxWeight",                                               \
@@ -113,9 +114,9 @@ namespace hydra_python {
 			     py::return_value_policy::reference_internal,      \
 			     iter_t, iter_t, typename iter_t::value_type>(     \
 			     e.DaughtersBegin(idx), e.DaughtersEnd(idx));      \
-		 },                                                            \
+		 }, "idx"_a,                                                           \
 		 "Daughter iterator. Iterate over the all N events of given "  \
-		 "particle")                                                   \
+		 "particle idx.")                                                   \
 	    .def("Events",                                                     \
 		 [](const hydra::Events<N, hydra::BACKEND::sys_t>& e) {        \
 			 typedef decltype(e.begin()) iter_t;                   \
@@ -135,9 +136,9 @@ namespace hydra_python {
 				     "list index out of range");               \
 			 return (hydra::Events<                                \
 				 N, hydra::BACKEND::sys_t>::value_type)e[idx]; \
-		 })                                                            \
+		 }, "idx"_a)                                                            \
 	    .def("SetMaxWeight",                                               \
-		 &hydra::Events<N, hydra::BACKEND::sys_t>::SetMaxWeight,       \
+		 &hydra::Events<N, hydra::BACKEND::sys_t>::SetMaxWeight, "weight"_a,       \
 		 "Set the maximum weight.")                                    \
 	    .def("capacity",                                                   \
 		 &hydra::Events<N, hydra::BACKEND::sys_t>::capacity)           \
@@ -155,7 +156,7 @@ namespace hydra_python {
 				     "list index out of range");               \
 			 auto start = e.FlagsBegin();                          \
 			 start[idx] = value;                                   \
-		 },                                                            \
+		 }, "idx"_a, "flag"_a,                                                           \
 		 "Set the ith event flag.")                                    \
 	    .def("setWeight",                                                  \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
@@ -165,7 +166,7 @@ namespace hydra_python {
 				     "list index out of range");               \
 			 auto start = e.WeightsBegin();                        \
 			 start[idx] = value;                                   \
-		 },                                                            \
+		 }, "idx"_a, "weight"_a,                                                           \
 		 "Set the ith event's weight.")                                \
 	    .def("getFlag",                                                    \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
@@ -175,7 +176,7 @@ namespace hydra_python {
 				     "list index out of range");               \
 			 auto start = e.FlagsBegin();                          \
 			 return (bool)start[idx];                              \
-		 },                                                            \
+		 }, "idx"_a,                                                           \
 		 "get the ith event's flag.")                                  \
 	    .def("getWeight",                                                  \
 		 [](hydra::Events<N, hydra::BACKEND::sys_t>& e,                \
@@ -185,11 +186,12 @@ namespace hydra_python {
 				     "list index out of range");               \
 			 auto start = e.WeightsBegin();                        \
 			 return (hydra::GReal_t)start[idx];                    \
-		 },                                                            \
+		 }, "idx"_a,                                                           \
 		 "get the ith event's weight.");
 
 template <>
 void add_object<hydra::Events<4, hydra::host::sys_t>>(pybind11::module& m) {
+	using namespace pybind11::literals;
 	EVENTS_CLASS_BODY(1, host, device);
 	EVENTS_CLASS_BODY(2, host, device);
 	EVENTS_CLASS_BODY(3, host, device);

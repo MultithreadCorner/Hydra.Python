@@ -3,8 +3,11 @@
 Events Class
 ##############
 
+The Event class is a container class that holds the information corresponding to generated events.
+The Event class will not store the mother particle and store the N particle tuples with the
+element 0 storing the weight and rest of the elements storing the ``Vector4R`` of each particle.
 There are two types of Events one that runs on ``host`` and ``device``. Events
-container currently supports up to (N=10) particles in any number of Events.
+container currently supports up to (N=10) particles in final state with any number of Events.
 Both Host and Device Event classes add number (1 to 10) as their
 suffix to create Event for that number of particles and the type
 (host or device) is added as their prefix.
@@ -26,24 +29,24 @@ to instantiate the Events class:
 
     import HydraPython as hp
 
-    h_events_5 = hp.hostEvents5()  # construc host Event with 5 particles and 0 Events
+    h_events_5 = hp.host_events_5()  # construct host Event with 5 particles and 0 Events
     print (h_events_5.size())  # 0
 
-    h_events_7_100 = hp.hostEvents7(100)
+    h_events_7_100 = hp.host_events_7(100)
     print (h_events_7_100.size())  # 100
 
 
-The ``hostEventsN`` object can be copy constructed with the ``hostEventsN``
-or ``deviceEventsN`` object.
+The ``host_events_N`` object can be copy constructed with the ``host_events_N``
+or ``device_events_N`` object.
 
 .. code-block:: python
 
     import HydraPython as hp
-    h_events_3 = hp.hostEvents3(4)
+    h_events_3 = hp.host_events_3(4)
     print (list(h_events_3.Flags()))  # [False, False, False, False]
 
     h_events_3.setFlag(1, True)
-    h_events_3_copy = hp.hostEvents3(h_events_3)
+    h_events_3_copy = hp.host_events_3(h_events_3)
     print(list(h_events_3_copy.Flags()))  # [False, True, False, False]
 
 The ``setFlags`` method as demonstrated above can be used to set the
@@ -52,7 +55,7 @@ particular flag value with the index.
 
 .. code-block:: python
 
-    h_event = hp.hostEvents5(8)
+    h_event = hp.host_events_5(8)
     h_event.setFlag(1, True)
     print (h_event.getFlag(1))  # True
 
@@ -61,23 +64,24 @@ object. This is a very useful method to avoid the nasty bugs for example:
 
 .. code-block:: python
 
-    h_event = hp.hostEvents5(10)
-    h_event2 = hp.hostEvents5()
+    h_event = hp.host_events_5(10)
+    h_event2 = hp.host_events_5()
 
     # Do things and later in the code ...
     h_event2.assign(h_event)
     # This will create the exact same copy of the h_event in h_event2
 
 The host Events class also provides a method to set the Maximum weight of the
-Events. The method is useful to set the maximum weight. The complete method
-list provided by the Event classes can be found on [#f1]_.
+Events. The method is useful to set the maximum weight. The complete list of the classes
+in the Events container can be found on [#f1]_. The complete method
+list provided by the Event classes can be found on [#f2]_.
 
 The Events classes also provide a pythonic way to access the events with the
 ``[]`` operator. For example, an event value can be access like this.
 
 .. code-block:: python
 
-    event = hp.hostEvents5(5)
+    event = hp.host_events_5(5)
     print(event[1])  # (0.0, (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0))
 
 
@@ -101,14 +105,95 @@ device object of particle 7 you will do something like this,
 .. code-block:: python
 
     import HydraPython
-    device_event_with_7_particle = HydraPython.deviceEvents7()
+    device_event_with_7_particle = HydraPython.device_events_7()
 
     # This will create a device Events with 0 states and 7 particles.
 
 
-The complete list of the classes in the Events container can be found on [#f2]_.
+.. [#f1] The list of Events classes
 
-.. [#f1] The method list for Events classes
+  - ``host_events_1``  Generate 1 particle Event. Syntax:
+
+      - h_event = hp.host_events_1(entries)
+
+  - ``host_events_2``  Generate 2 particle Event. Syntax:
+
+      - h_event = hp.host_events_2(entries)
+
+  - ``host_events_3``  Generate 3 particle Event. Syntax:
+
+      - h_event = hp.host_events_3(entries)
+
+  - ``host_events_4``  Generate 4 particle Event. Syntax:
+
+      - h_event = hp.host_events_4(entries)
+
+  - ``host_events_5``  Generate 5 particle Event. Syntax:
+
+      - h_event = hp.host_events_5(entries)
+
+  - ``host_events_6``  Generate 6 particle Event. Syntax:
+
+      - h_event = hp.host_events_6(entries)
+
+  - ``host_events_7``  Generate 7 particle Event. Syntax:
+
+      - h_event = hp.host_events_7(entries)
+
+  - ``host_events_8``  Generate 8 particle Event. Syntax:
+
+      - h_event = hp.host_events_8(entries)
+
+  - ``host_events_9``  Generate 9 particle Event. Syntax:
+
+      - h_event = hp.host_events_9(entries)
+
+  - ``host_events_10``  Generate 10 particle Event. Syntax:
+
+      - h_event = hp.host_events_10(entries)
+
+  - ``device_events_1``  Generate 1 particle Event. Syntax:
+
+      - d_event = hp.device_events_1(entries)
+
+  - ``device_events_2``  Generate 2 particle Event. Syntax:
+
+      - d_event = hp.device_events_2(entries)
+
+  - ``device_events_3``  Generate 3 particle Event. Syntax:
+
+      - d_event = hp.device_events_3(entries)
+
+  - ``device_events_4``  Generate 4 particle Event. Syntax:
+
+      - d_event = hp.device_events_4(entries)
+
+  - ``device_events_5``  Generate 5 particle Event. Syntax:
+
+      - d_event = hp.device_events_5(entries)
+
+  - ``device_events_6``  Generate 6 particle Event. Syntax:
+
+      - d_event = hp.device_events_6(entries)
+
+  - ``device_events_7``  Generate 7 particle Event. Syntax:
+
+      - d_event = hp.device_events_7(entries)
+
+  - ``device_events_8``  Generate 8 particle Event. Syntax:
+
+      - d_event = hp.device_events_8(entries)
+
+  - ``device_events_9``  Generate 9 particle Event. Syntax:
+
+      - d_event = hp.device_events_9(entries)
+
+  - ``device_events_10``  Generate 10 particle Event. Syntax:
+
+      - d_event = hp.device_events_10(entries)
+
+
+.. [#f2] The method list for Events classes
 
   - ``assign``  Assigns one Events content to other Events. Syntax:
 
@@ -181,87 +266,3 @@ The complete list of the classes in the Events container can be found on [#f2]_.
   - ``getWeight``  Gets the particular event's weight. Syntax:
 
       - event.getWeight(idx)
-
-
-
-.. [#f2] The list of Events classes
-
-  - ``hostEvents1``  Generate 1 particle Event. Syntax:
-
-      - h_event = hp.hostEvents1(entries)
-
-  - ``hostEvents2``  Generate 2 particle Event. Syntax:
-
-      - h_event = hp.hostEvents2(entries)
-
-  - ``hostEvents3``  Generate 3 particle Event. Syntax:
-
-      - h_event = hp.hostEvents3(entries)
-
-  - ``hostEvents4``  Generate 4 particle Event. Syntax:
-
-      - h_event = hp.hostEvents4(entries)
-
-  - ``hostEvents5``  Generate 5 particle Event. Syntax:
-
-      - h_event = hp.hostEvents5(entries)
-
-  - ``hostEvents6``  Generate 6 particle Event. Syntax:
-
-      - h_event = hp.hostEvents6(entries)
-
-  - ``hostEvents7``  Generate 7 particle Event. Syntax:
-
-      - h_event = hp.hostEvents7(entries)
-
-  - ``hostEvents8``  Generate 8 particle Event. Syntax:
-
-      - h_event = hp.hostEvents8(entries)
-
-  - ``hostEvents9``  Generate 9 particle Event. Syntax:
-
-      - h_event = hp.hostEvents9(entries)
-
-  - ``hostEvents10``  Generate 10 particle Event. Syntax:
-
-      - h_event = hp.hostEvents10(entries)
-
-  - ``deviceEvents1``  Generate 1 particle Event. Syntax:
-
-      - d_event = hp.hostEvents1(entries)
-
-  - ``deviceEvents2``  Generate 2 particle Event. Syntax:
-
-      - d_event = hp.hostEvents2(entries)
-
-  - ``deviceEvents3``  Generate 3 particle Event. Syntax:
-
-      - d_event = hp.hostEvents3(entries)
-
-  - ``deviceEvents4``  Generate 4 particle Event. Syntax:
-
-      - d_event = hp.hostEvents4(entries)
-
-  - ``deviceEvents5``  Generate 5 particle Event. Syntax:
-
-      - d_event = hp.hostEvents5(entries)
-
-  - ``deviceEvents6``  Generate 6 particle Event. Syntax:
-
-      - d_event = hp.hostEvents6(entries)
-
-  - ``deviceEvents7``  Generate 7 particle Event. Syntax:
-
-      - d_event = hp.hostEvents7(entries)
-
-  - ``deviceEvents8``  Generate 8 particle Event. Syntax:
-
-      - d_event = hp.hostEvents8(entries)
-
-  - ``deviceEvents9``  Generate 9 particle Event. Syntax:
-
-      - d_event = hp.hostEvents9(entries)
-
-  - ``devicevents10``  Generate 10 particle Event. Syntax:
-
-      - d_event = hp.hostEvents10(entries)
