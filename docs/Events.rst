@@ -230,6 +230,10 @@ device object of particle 7 you will do something like this,
       - iterator = event.Daughters(i)  # event can be of the host or device type and then can be used to iterator over the values.
         For example ``for daughter in iterator: print(daughter)`` Will print out the ith particle state in all the events.
 
+  - ``getDaughters``  This method returns the daughter particles at given index.
+
+      - vector_float4 = event.getDaughters(i)
+
   - ``Events``  This method returns the iterator of events. Syntax:
 
       - iterator = event.Events()  # event can be of the host or device type and then can be used to iterator over the values.
