@@ -60,6 +60,14 @@ PYBIND11_MAKE_OPAQUE(hypy::host_vector_float8 );
 PYBIND11_MAKE_OPAQUE(hypy::host_vector_float9 );
 PYBIND11_MAKE_OPAQUE(hypy::host_vector_float10 );
 PYBIND11_MAKE_OPAQUE(hypy::host_decays_2);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_3);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_4);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_5);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_6);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_7);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_8);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_9);
+PYBIND11_MAKE_OPAQUE(hypy::host_decays_10);
 
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float );
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float2 );
@@ -73,5 +81,13 @@ PYBIND11_MAKE_OPAQUE(hypy::device_vector_float9 );
 PYBIND11_MAKE_OPAQUE(hypy::device_vector_float10 );
 
 PYBIND11_MAKE_OPAQUE(hypy::device_decays_2);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_3);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_4);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_5);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_6);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_7);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_8);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_9);
+PYBIND11_MAKE_OPAQUE(hypy::device_decays_10);
 
 #endif /* MAKE_OPAQUE_H_ */

@@ -112,6 +112,22 @@ namespace hydra_python {
 			   event_container.begin());                   \
 	})
 
+#define GENERATE_ON_DECAY(N, RNG, BACKEND)                                     \
+	.def("GenerateOn" #BACKEND,                                            \
+	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother,         \
+		hypy::BACKEND##_decays_##N& decays_container) {    \
+		     p.Generate(mother, decays_container.begin(),               \
+				decays_container.end());                        \
+	     })                                                                \
+	.def(                                                              \
+	"GenerateOn" #BACKEND,                                         \
+	[](hydra::PhaseSpace<N, RNG>& p,                               \
+	   hypy::BACKEND##_vector_float4& mothers,                     \
+	   hypy::BACKEND##_decays_##N& decays_container) { \
+		p.Generate(mothers.begin(), mothers.end(),             \
+			   decays_container.begin());                   \
+	})
+
 #define AVERAGE_ON_EVENT(N, RNG, BACKEND)                                      \
 	.def("AverageOn" #BACKEND,                                             \
 	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother,         \
@@ -154,26 +170,32 @@ namespace hydra_python {
 			  const std::array<hydra::GReal_t, N>&>())             \
 	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)               \
 	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)               \
-		GENERATE_ON_EVENT(N, RNG, host)\
-		AVERAGE_ON_EVENT(N, RNG, host) \
-		EVALUATE_ON_EVENT(N, RNG, host)                            \
+		GENERATE_ON_EVENT(N, RNG, host) \
 		GENERATE_ON_EVENT(N, RNG, device)                      \
+\
+		AVERAGE_ON_EVENT(N, RNG, host) \
 		AVERAGE_ON_EVENT(N, RNG, device)                   \
-		EVALUATE_ON_EVENT(N, RNG, device);
+\
+		EVALUATE_ON_EVENT(N, RNG, host)                            \
+		EVALUATE_ON_EVENT(N, RNG, device)\
+\
+		GENERATE_ON_DECAY(N, RNG, host) \
+		GENERATE_ON_DECAY(N, RNG, device)                      \
+	;
 
-template <>
-void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
-    pybind11::module& m) {
-	PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine);
-	PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine);
+	template <>
+	void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
+	pybind11::module& m) {
+//PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine);
+PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine);
 }
 }
 #endif /* PYPHASESPACE_H_ */
