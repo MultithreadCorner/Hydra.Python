@@ -112,6 +112,26 @@ class TestPhaseSpace(unittest.TestCase):
         phsp.GenerateOndevice(vec4, e_device)
         self.check_equals(e_device, tup)
 
+    def test_generator_2(self):
+        nentries = 5
+        B0_mass = 5.27955
+        Jpsi_mass = 3.0969
+        K_mass = 0.493677
+        pi_mass = 0.13957061
+        mu_mass = 0.1056583745
+
+        B0 = hypy.Vector4R(B0_mass, 0.0, 0.0, 0.0)
+        masses1 = [Jpsi_mass, K_mass, pi_mass]
+        masses2 = [mu_mass, mu_mass]
+
+        phsp1 = hypy.PhaseSpace3(B0_mass, masses1)
+        phsp2 = hypy.PhaseSpace2(Jpsi_mass, masses2)
+
+        daughters_d = hypy.host_events_3(nentries)
+        grand_daughters_d = hypy.host_events_2(nentries)
+
+        phsp1.GenerateOnhost(B0, daughters_d)
+        phsp2.GenerateOnhost(daughters_d.getDaughters(0), grand_daughters_d
     def test_average_on(self):
         vec4 = hypy.Vector4R(5.2795, 0.0, 0.0, 0.0)
         p = hypy.PhaseSpace4(vec4.mass(), [3.096916, 0.493677, 0.13957018, 0.0195018])
