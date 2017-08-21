@@ -130,10 +130,10 @@ class TestEventsHost(unittest.TestCase):
         test = (0.0, (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0))
         self.assertAlmostEqual(item, test)
 
-    def test_unweight(self):
+    def test_Unweight(self):
         h_event = host_events_2(10)
         h_event.setFlag(1, True)
-        self.assertEqual(h_event.unweight(123), 10)
+        self.assertEqual(h_event.Unweight(123), 10)
 
     def test_setFlag(self):
         h_event = host_events_10(100)
@@ -245,10 +245,10 @@ class TestEventsDevice(unittest.TestCase):
         test = (0.0, (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0))
         self.assertAlmostEqual(item, test)
 
-    def test_unweight(self):
+    def test_Unweight(self):
         d_event = device_events_2(10)
         d_event.setFlag(1, True)
-        self.assertEqual(d_event.unweight(123), 10)
+        self.assertEqual(d_event.Unweight(123), 10)
 
     def test_setFlag(self):
         d_event = device_events_10(100)
