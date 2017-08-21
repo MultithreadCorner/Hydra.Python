@@ -44,7 +44,7 @@
 #define BIND_CONTAINER_H_
 
 
-#include "pybind11/common.h"
+#include "pybind11/detail/common.h"
 #include "pybind11/operators.h"
 
 #include <thrust/find.h>
@@ -454,6 +454,9 @@ pybind11::class_<Vector, holder_type> bind_vector(pybind11::module &m, std::stri
     // Accessor and iterator; return by value if copyable, otherwise we return by ref + keep-alive
     detail::vector_accessor<Vector, Class_>(cl);
 
+    cl.def("get_range", [](Vector& v){return std::make_pair(v.begin(),v.end());},"get_range function"
+
+    );
 
     cl.def("__bool__",
         [](const Vector &v) -> bool {

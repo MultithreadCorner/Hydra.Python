@@ -55,7 +55,7 @@ std::array<double,N>const& min,\
 std::array<double,N>const& max,\
 py::function& funct)\
 {\
-auto functor = [=](double* data) {return funct( __VA_ARGS__ ).cast<double>();}; \
+auto functor = [=](unsigned int n, double* data) {return funct( __VA_ARGS__ ).cast<double>();}; \
 auto wfunctor = hydra::wrap_lambda( functor ); \
 auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, wfunctor ); \
 typedef decltype(vect.begin()) iter_t;\
@@ -76,7 +76,7 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 			[](hydra::Random<>& cobj, size_t seed) {cobj.SetSeed(seed);},
 			"Set seed of the underlying random number generator.")
 	//get seed
-	.def("GetSeed", [](hydra::Random<>& cobj) {return cobj.GetSeed();},
+	.def("GetSeed", [](hydra::Random<>& cobj) {cobj.GetSeed();},
 			"Get seed of the underlying random number generator.")
 	//-----------------------------------------------------
 	//host functions
@@ -109,9 +109,9 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 			[](hydra::Random<>& cobj, host_vector_float& vect,
 					double min, double max, py::function& funct) {
 
-				auto functor = [=](double* data) {return funct(data[0]).cast<double>();};
-
-				auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, functor );
+				auto functor = [=](unsigned int n, double* data) {return funct(data[0]).cast<double>();};
+				auto wfunctor = hydra::wrap_lambda( functor );
+				auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, wfunctor );
 
 				typedef decltype(vect.begin()) iter_t;
 
@@ -159,9 +159,9 @@ void add_object<hydra::Random<> >(pybind11::module& m) {
 			[](hydra::Random<>& cobj, device_vector_float& vect,
 					double min, double max, py::function& funct) {
 
-		auto functor = [=](double* data) {return funct(data[0]).cast<double>();};
-
-		auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, functor );
+		auto functor = [=](unsigned int n, double* data) {return funct(data[0]).cast<double>();};
+		auto wfunctor = hydra::wrap_lambda( functor );
+		auto middle = cobj.Sample(vect.begin(), vect.end(), min, max, wfunctor );
 		typedef decltype(vect.begin()) iter_t;
 		return py::make_iterator<pybind11::return_value_policy::reference_internal,iter_t, iter_t,
 			typename iter_t::value_type>(vect.begin(),middle);

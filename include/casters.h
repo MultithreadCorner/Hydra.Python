@@ -1,3 +1,4 @@
+
 /*----------------------------------------------------------------------------
  *
  *   Copyright (C) 2017 Antonio Augusto Alves Junior
@@ -276,4 +277,3 @@ template <typename T1, typename T2> class type_caster<hydra::pair<T1, T2>>
 
 
 #endif /* CASTERS_H_ */
-

@@ -56,25 +56,10 @@ namespace py = pybind11;
 
 namespace hydra_python {
 
-#define PHASESPACE_GENERATE_BODY(N, RNG, BACKEND)                  \
-	"Generate" #BACKEND,                                       \
-	    [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& vec, \
-	       hydra::Events<N, hydra::BACKEND::sys_t>& e) {       \
-		    p.Generate(vec, e.begin(), e.end());           \
-	    }
-
-#define PHASESPACE_GENERATE_BODY_2(N, RNG, BACKEND)                            \
-	"Generate" #BACKEND, [](hydra::PhaseSpace<N, RNG>& p,                  \
-				hydra::Events<N, hydra::BACKEND::sys_t>& e1,   \
-				hydra::Events<N, hydra::BACKEND::sys_t>& e2) { \
-		p.Generate(e1.DaughtersBegin(0), e1.DaughtersEnd(0),           \
-			   e2.begin());                                        \
-	}
-
-#define ADD_FUNCTOR(...)                                  \
-	auto functor = [=](hydra::Vector4R* data) {       \
-		return funct(__VA_ARGS__).cast<double>(); \
-	};                                                \
+#define ADD_FUNCTOR(...)                                            \
+	auto functor = [=](unsigned int n, hydra::Vector4R* data) { \
+		return funct(__VA_ARGS__).cast<double>();           \
+	};                                                          \
 	auto wfunctor = hydra::wrap_lambda(functor);
 
 #define ADD1 data[0]
@@ -93,59 +78,102 @@ namespace hydra_python {
 	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
 	    data[7], data[8], data[9]
 
-#define PHASESPACE_AVERAGEON_BODY(N, RNG, BACKEND)                       \
-	"AverageON" #BACKEND,                                            \
-	    [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& v,         \
-	       py::function& funct, size_t nentries) {                   \
-		    ADD_FUNCTOR(ADD##N)                                  \
-		    return p.AverageOn(hydra::BACKEND::sys, v, wfunctor, \
-				       nentries);                        \
-	    }
+#define ADDAVG1 data[0], data[1]
+#define ADDAVG2 data[0], data[1], data[2]
+#define ADDAVG3 data[0], data[1], data[2], data[3]
+#define ADDAVG4 data[0], data[1], data[2], data[3], data[4]
+#define ADDAVG5 data[0], data[1], data[2], data[3], data[4], data[5]
+#define ADDAVG6 data[0], data[1], data[2], data[3], data[4], data[5], data[6]
+#define ADDAVG7 \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7]
+#define ADDAVG8                                                        \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+	    data[7], data[8]
+#define ADDAVG9                                                        \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+	    data[7], data[8], data[9]
+#define ADDAVG10                                                       \
+	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
+	    data[7], data[8], data[9], data[10]
 
-#define PHASESPACE_AVERAGEON_BODY_2(N, RNG, BACKEND)                         \
-	"AverageON" #BACKEND, [](hydra::PhaseSpace<N, RNG>& p,               \
-				 hydra::Events<N, hydra::BACKEND::sys_t>& e, \
-				 py::function& fun) { return 42.0; }
+#define GENERATE_ON_EVENT(N, RNG, BACKEND)                                     \
+	.def("GenerateOn" #BACKEND,                                            \
+	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother,         \
+		hydra::Events<N, hydra::BACKEND::sys_t>& event_container) {    \
+		     p.Generate(mother, event_container.begin(),               \
+				event_container.end());                        \
+	     })                                                                \
+	.def(                                                              \
+	"GenerateOn" #BACKEND,                                         \
+	[](hydra::PhaseSpace<N, RNG>& p,                               \
+	   hypy::BACKEND##_vector_float4& mothers,                     \
+	   hydra::Events<N, hydra::BACKEND::sys_t>& event_container) { \
+		p.Generate(mothers.begin(), mothers.end(),             \
+			   event_container.begin());                   \
+	})
 
-/*
+#define AVERAGE_ON_EVENT(N, RNG, BACKEND)                                      \
+	.def("AverageOn" #BACKEND,                                             \
+	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother,         \
+		py::function& funct, size_t nentries) {                        \
+		     ADD_FUNCTOR(ADD##N)                                       \
+		     return p.AverageOn(hydra::BACKEND::sys, mother, wfunctor, \
+					nentries);                             \
+	     })                                                                \
+	.def("AverageOn" #BACKEND,                                         \
+	 [](hydra::PhaseSpace<N, RNG>& p,                              \
+		hypy::BACKEND##_vector_float4& mothers,                    \
+		py::function& funct) {                                     \
+		 ADD_FUNCTOR(ADDAVG##N)                                \
+		 return p.AverageOn(mothers.begin(), mothers.end(),    \
+					wfunctor);                         \
+	 })
 
- #define PHASESPACE_GENERATE_BODY_2(N, RNG, BACKEND) "Generate"#BACKEND,
-[](hydra::PhaseSpace<N, RNG>& p, hydra::Events<N, hydra::BACKEND::sys_t>& e1,
-hydra::Events<N, hydra::BACKEND::sys_t>& e2) {\
-    p.Generate(e1.DaughtersBegin(0), e1.DaughtersEnd(0), e2.begin());\
-}
-*/
+#define EVALUATE_ON_EVENT(N, RNG, BACKEND)                             \
+	.def("EvaluateOn" #BACKEND,                                    \
+	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother, \
+		hypy::BACKEND##_vector_float2& container,              \
+		py::function& funct) {                                 \
+		     ADD_FUNCTOR(ADD5)                                 \
+		     return p.Evaluate(mother, container.begin(),      \
+				       container.end(), wfunctor);     \
+	     })                                                        \
+	.def("EvaluateOn" #BACKEND,                                \
+	 [](hydra::PhaseSpace<N, RNG>& p,                      \
+		hypy::BACKEND##_vector_float4& mothers,            \
+		hypy::BACKEND##_vector_float2& container,          \
+		py::function& funct) {                             \
+		 ADD_FUNCTOR(ADD5)                             \
+		 p.Evaluate(mothers.begin(), mothers.end(),    \
+				container.begin(), wfunctor);      \
+	 })
 
-#define PHASESPACE_CLASS_BODY(N, RNG, BACKEND)                     \
-	py::class_<hydra::PhaseSpace<N, RNG>>(m, "PhaseSpace" #N)  \
-	    .def(py::init<hydra::GReal_t,                          \
-			  const std::array<hydra::GReal_t, N>&>()) \
-	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)   \
-	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)   \
-	    .def(PHASESPACE_GENERATE_BODY(N, RNG, host))           \
-	    .def(PHASESPACE_GENERATE_BODY(N, RNG, device))         \
-	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, host))          \
-	    .def(PHASESPACE_AVERAGEON_BODY(N, RNG, device))        \
-	    .def(PHASESPACE_AVERAGEON_BODY_2(N, RNG, host))        \
-	    .def(PHASESPACE_AVERAGEON_BODY_2(N, RNG, device));
-/*
-	    .def(PHASESPACE_GENERATE_BODY_2(N, RNG, host))          \
-	    .def(PHASESPACE_GENERATE_BODY_2(N, RNG, device));
-*/
+#define PHASESPACE_CLASS_BODY(N, RNG)                                          \
+	py::class_<hydra::PhaseSpace<N, RNG>>(m, "PhaseSpace" #N)              \
+	    .def(py::init<hydra::GReal_t,                                      \
+			  const std::array<hydra::GReal_t, N>&>())             \
+	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)               \
+	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)               \
+		GENERATE_ON_EVENT(N, RNG, host)\
+		AVERAGE_ON_EVENT(N, RNG, host) \
+		EVALUATE_ON_EVENT(N, RNG, host)                            \
+		GENERATE_ON_EVENT(N, RNG, device)                      \
+		AVERAGE_ON_EVENT(N, RNG, device)                   \
+		EVALUATE_ON_EVENT(N, RNG, device);
 
 template <>
 void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
     pybind11::module& m) {
-	PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine, host);
-	PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine, host);
+	PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine);
+	PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine);
 }
 }
 #endif /* PYPHASESPACE_H_ */
