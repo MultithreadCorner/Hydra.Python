@@ -117,6 +117,16 @@ namespace hydra_python {
 		 }, "idx"_a,                                                           \
 		 "Daughter iterator. Iterate over the all N events of given "  \
 		 "particle idx.")                                                   \
+	    .def("getDaughters",                                                  \
+		 [](const hydra::Events<N, hydra::BACKEND::sys_t>& e,          \
+		    hydra::GInt_t idx) {                                       \
+			hypy::BACKEND##_vector_float4 daughters(e.size()); \
+			for (auto i = e.DaughtersBegin(idx); i != e.DaughtersEnd(idx); ++i) \
+				daughters[idx] = *i; \
+			return daughters;\
+		 }, "idx"_a,                                                           \
+		 "Daughters. Get all N daughters of given "  \
+		 "particle idx.")                                                   \
 	    .def("Events",                                                     \
 		 [](const hydra::Events<N, hydra::BACKEND::sys_t>& e) {        \
 			 typedef decltype(e.begin()) iter_t;                   \
@@ -144,7 +154,7 @@ namespace hydra_python {
 		 &hydra::Events<N, hydra::BACKEND::sys_t>::capacity)           \
 	    .def("resize", &hydra::Events<N, hydra::BACKEND::sys_t>::resize,   \
 		 "Resize the number of Events.")                               \
-	    .def("unweight",                                                   \
+	    .def("Unweight",                                                   \
 		 &hydra::Events<N, hydra::BACKEND::sys_t>::Unweight,           \
 		 "Unweight all Events with seed.")                             \
 	    .def("size", &hydra::Events<N, hydra::BACKEND::sys_t>::size)       \
