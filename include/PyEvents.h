@@ -121,8 +121,9 @@ namespace hydra_python {
 		 [](const hydra::Events<N, hydra::BACKEND::sys_t>& e,          \
 		    hydra::GInt_t idx) {                                       \
 			hypy::BACKEND##_vector_float4 daughters(e.size()); \
+			int counter = 0;\
 			for (auto i = e.DaughtersBegin(idx); i != e.DaughtersEnd(idx); ++i) \
-				daughters[idx] = *i; \
+				daughters[counter++] = *i; \
 			return daughters;\
 		 }, "idx"_a,                                                           \
 		 "Daughters. Get all N daughters of given "  \
