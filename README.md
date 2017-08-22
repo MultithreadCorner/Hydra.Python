@@ -18,3 +18,6 @@ Work-in-progress instructions:
 4. go to build directory: `cd build`
 5. `cmake -DHYDRA_INSTALL_PATH=/path2sw/Hydra/ -DTHRUST_INSTALL_PATH=/path2sw/Hydra/ -DPYBIND11_INSTALL_PATH=/path2sw/pybind11/include/ ..`
 6. `make`
+
+These instructions create a library .so to be imported from Python.
+Comprehensive documentation is to be found under the `docs/` folder.
