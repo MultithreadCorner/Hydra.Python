@@ -12,7 +12,7 @@ Both Host and Device Event classes add number (1 to 10) as their
 suffix to create Event for that number of particles and the type
 (host or device) is added as their prefix.
 
-HOST
+Host
 ====
 
 The host is generally defined as the CPU. This class is a wrapper of C++
@@ -85,7 +85,7 @@ The Events classes also provide a pythonic way to access the events with the
     print(event[1])  # (0.0, (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0))
 
 
-DEVICE
+Device
 ======
 
 The device is defined as the GPU and any other multicore CPU. The device Event
