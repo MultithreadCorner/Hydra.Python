@@ -15,7 +15,7 @@ import HydraPython as hypy
 
 def main():
     nentries = 1000000
-    B0_mass = 5.27955    # All masses ar given in GeV/c^2
+    B0_mass = 5.27955    # All masses are given in GeV/c^2
     Jpsi_mass = 3.0969
     K_mass = 0.493677
     pi_mass = 0.13957061
@@ -23,7 +23,7 @@ def main():
         nentries = int(sys.argv[1])
 
     B0 = hypy.Vector4R(B0_mass, 0.0, 0.0, 0.0)
-    masses = [Jpsi_mass, K_mass, pi_mass]  # list of final-state particles
+    masses = [Jpsi_mass, K_mass, pi_mass]  # List of final-state particles
     phsp = hypy.PhaseSpace3(B0_mass, masses)
 
     #     Device    #
