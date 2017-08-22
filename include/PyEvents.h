@@ -22,7 +22,7 @@
  *---------------------------------------------------------------------------*/
 
 /*
- * PyRandom.h
+ * PyEvents.h
  *
  *  Created on: 4 August 2017
  *      Author: Deepanshu

@@ -1,7 +1,6 @@
-
 /*----------------------------------------------------------------------------
  *
- *   Copyright (C) 2017 Deepanshu Thakur
+ *   Copyright (C) 2017 Antonio Augusto Alves Junior
  *
  *
  *   This file is part of Hydra.Python Analysis Framework.
@@ -22,9 +21,9 @@
  *---------------------------------------------------------------------------*/
 
 /*
- * Vector.cpp
+ * PyPhaseSpace.h
  *
- *  Created on: Aug 4, 2017
+ *  Created on: Aug 12, 2017
  *      Author: Deepanshu Thakur
  */
 
@@ -38,6 +37,7 @@
  * @todo
  *
  */
+
 #ifndef PYPHASESPACE_H_
 #define PYPHASESPACE_H_
 #include <hydra/device/System.h>
@@ -96,21 +96,22 @@ namespace hydra_python {
 	data[0], data[1], data[2], data[3], data[4], data[5], data[6], \
 	    data[7], data[8], data[9], data[10]
 
+
 #define GENERATE_ON_EVENT(N, RNG, BACKEND)                                     \
 	.def("GenerateOn" #BACKEND,                                            \
 	     [](hydra::PhaseSpace<N, RNG>& p, hydra::Vector4R& mother,         \
 		hydra::Events<N, hydra::BACKEND::sys_t>& event_container) {    \
 		     p.Generate(mother, event_container.begin(),               \
 				event_container.end());                        \
-	     })                                                                \
-	.def(                                                              \
-	"GenerateOn" #BACKEND,                                         \
-	[](hydra::PhaseSpace<N, RNG>& p,                               \
-	   hypy::BACKEND##_vector_float4& mothers,                     \
-	   hydra::Events<N, hydra::BACKEND::sys_t>& event_container) { \
-		p.Generate(mothers.begin(), mothers.end(),             \
-			   event_container.begin());                   \
-	})
+	     }, "mother"_a, "event_container"_a, "Generate the " #N " particle phasespace with given mother particle and store it in passed events container" ) \
+	.def("GenerateOn" #BACKEND,                                         \
+        [](hydra::PhaseSpace<N, RNG>& p,                               \
+           hypy::BACKEND##_vector_float4& mothers,                     \
+           hydra::Events<N, hydra::BACKEND::sys_t>& event_container) { \
+            p.Generate(mothers.begin(), mothers.end(),             \
+                   event_container.begin());                   \
+        }, "mothers"_a, "event_container"_a, "Generate the " #N " particle phasespace with given mother particles list and store it in passed events container" )
+
 
 #define GENERATE_ON_DECAY(N, RNG, BACKEND)                                     \
 	.def("GenerateOn" #BACKEND,                                            \
@@ -118,15 +119,15 @@ namespace hydra_python {
 		hypy::BACKEND##_decays_##N& decays_container) {    \
 		     p.Generate(mother, decays_container.begin(),               \
 				decays_container.end());                        \
-	     })                                                                \
-	.def(                                                              \
-	"GenerateOn" #BACKEND,                                         \
-	[](hydra::PhaseSpace<N, RNG>& p,                               \
-	   hypy::BACKEND##_vector_float4& mothers,                     \
-	   hypy::BACKEND##_decays_##N& decays_container) { \
-		p.Generate(mothers.begin(), mothers.end(),             \
-			   decays_container.begin());                   \
-	})
+	     }, "mother"_a, "decays_container"_a, "Generate the " #N " particle phasespace with given mother particle and store it in passed decays container" ) \
+	.def("GenerateOn" #BACKEND,                                         \
+        [](hydra::PhaseSpace<N, RNG>& p,                               \
+           hypy::BACKEND##_vector_float4& mothers,                     \
+           hypy::BACKEND##_decays_##N& decays_container) { \
+            p.Generate(mothers.begin(), mothers.end(),             \
+                   decays_container.begin());                   \
+        }, "mothers"_a, "decays_container"_a, "Generate the " #N " particle phasespace with given mother particles list and store it in passed decays container" )
+
 
 #define AVERAGE_ON_EVENT(N, RNG, BACKEND)                                      \
 	.def("AverageOn" #BACKEND,                                             \
@@ -135,15 +136,16 @@ namespace hydra_python {
 		     ADD_FUNCTOR(ADD##N)                                       \
 		     return p.AverageOn(hydra::BACKEND::sys, mother, wfunctor, \
 					nentries);                             \
-	     })                                                                \
+	     }, "mother"_a, "funct"_a, "nentries"_a, "Get the mean and sqrt(variance) with the passed function and a single mother particle.")\
 	.def("AverageOn" #BACKEND,                                         \
-	 [](hydra::PhaseSpace<N, RNG>& p,                              \
-		hypy::BACKEND##_vector_float4& mothers,                    \
-		py::function& funct) {                                     \
-		 ADD_FUNCTOR(ADDAVG##N)                                \
-		 return p.AverageOn(mothers.begin(), mothers.end(),    \
-					wfunctor);                         \
-	 })
+         [](hydra::PhaseSpace<N, RNG>& p,                              \
+            hypy::BACKEND##_vector_float4& mothers,                    \
+            py::function& funct) {                                     \
+             ADD_FUNCTOR(ADDAVG##N)                                \
+             return p.AverageOn(mothers.begin(), mothers.end(),    \
+                        wfunctor);                         \
+         }, "mothers"_a, "funct"_a, "Get the mean and sqrt(variance) with the passed function and a list mother particles.")
+
 
 #define EVALUATE_ON_EVENT(N, RNG, BACKEND)                             \
 	.def("EvaluateOn" #BACKEND,                                    \
@@ -153,7 +155,7 @@ namespace hydra_python {
 		     ADD_FUNCTOR(ADD5)                                 \
 		     return p.Evaluate(mother, container.begin(),      \
 				       container.end(), wfunctor);     \
-	     })                                                        \
+	     }, "mother"_a, "container"_a, "funct"_a, "Evaluate a function with a single mother particle.")\
 	.def("EvaluateOn" #BACKEND,                                \
 	 [](hydra::PhaseSpace<N, RNG>& p,                      \
 		hypy::BACKEND##_vector_float4& mothers,            \
@@ -162,12 +164,12 @@ namespace hydra_python {
 		 ADD_FUNCTOR(ADD5)                             \
 		 p.Evaluate(mothers.begin(), mothers.end(),    \
 				container.begin(), wfunctor);      \
-	 })
+	 }, "mothers"_a, "container"_a, "funct"_a, "Evaluate a function with a list mother particles.")
 
 #define PHASESPACE_CLASS_BODY(N, RNG)                                          \
 	py::class_<hydra::PhaseSpace<N, RNG>>(m, "PhaseSpace" #N)              \
 	    .def(py::init<hydra::GReal_t,                                      \
-			  const std::array<hydra::GReal_t, N>&>())             \
+			  const std::array<hydra::GReal_t, N>&>(), "Construct a PhaseSpace"#N "Object with mother mass and " #N " daughter masses")             \
 	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)               \
 	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)               \
 		GENERATE_ON_EVENT(N, RNG, host) \
@@ -183,19 +185,20 @@ namespace hydra_python {
 		GENERATE_ON_DECAY(N, RNG, device)                      \
 	;
 
-	template <>
-	void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
-	pybind11::module& m) {
-//PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine);
-PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine);
+template <>
+void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
+pybind11::module& m) {
+    using namespace pybind11::literals;
+    //PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(5, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(6, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(7, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(8, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(9, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(10, thrust::random::default_random_engine);
 }
 }
 #endif /* PYPHASESPACE_H_ */
