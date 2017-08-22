@@ -179,17 +179,18 @@ namespace hydra_python {
 		AVERAGE_ON_EVENT(N, RNG, device)                   \
 \
 		EVALUATE_ON_EVENT(N, RNG, host)                            \
-		EVALUATE_ON_EVENT(N, RNG, device)\
-\
-		GENERATE_ON_DECAY(N, RNG, host) \
-		GENERATE_ON_DECAY(N, RNG, device)                      \
-	;
+		EVALUATE_ON_EVENT(N, RNG, device)
+    ;
+//\
+//		GENERATE_ON_DECAY(N, RNG, host) \
+//		GENERATE_ON_DECAY(N, RNG, device)                      \
+//	;
 
 template <>
 void add_object<hydra::PhaseSpace<4, thrust::random::default_random_engine>>(
 pybind11::module& m) {
     using namespace pybind11::literals;
-    //PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
+    PHASESPACE_CLASS_BODY(1, thrust::random::default_random_engine);
     PHASESPACE_CLASS_BODY(2, thrust::random::default_random_engine);
     PHASESPACE_CLASS_BODY(3, thrust::random::default_random_engine);
     PHASESPACE_CLASS_BODY(4, thrust::random::default_random_engine);

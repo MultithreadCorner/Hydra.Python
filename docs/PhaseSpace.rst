@@ -38,8 +38,6 @@ or a phase-space given a range of mother particles and an output range.
     ps.GenerateOndevice(vec, e_device)  # Generate particle on device
 
 
-We can also generate the decay from list of mother particles instead of one mother particle.
-
 .. code-block:: python
 
 
@@ -152,21 +150,18 @@ by PhaseSpace Events classes can be found on [#f2]_.
 
       - p.GenerateOnhost(vector4R, event)
       - p.GenerateOnhost(hypy.host_vector_float4& mothers, event)
-      - p.GenerateOnhost(vector4R, decays)
-      - p.GenerateOnhost(hypy.host_vector_float4& mothers, decays)
 
   - ``GenerateOndevice``  Generate the phase-space. Syntax:
 
       - p.GenerateOndevice(vector4R, event)
       - p.GenerateOndevice(hypy.device_vector_float4& mothers, event)
-      - p.GenerateOndevice(vector4R, decays)
-      - p.GenerateOndevice(hypy.device_vector_float4& mothers, decays)
 
   - ``AverageOnhost`` Get the mean and sqrt of variance. Syntax:
 
       - p.AverageOnhost(vector4R, functor, number_of_entires)
       - p.AverageOnhost(hypy.host_vector_float4& mothers, functor)
 
+  - ``AverageOndevice`` Get the mean and sqrt of variance. Syntax:
   - ``AverageOndevice`` Get the mean and sqrt of variance. Syntax:
 
       - p.AverageOndevice(vector4R, functor, number_of_entires)
