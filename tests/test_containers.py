@@ -1,7 +1,7 @@
 # Licensed under a GNU general public license, see LICENSE.
 """
-Author: Deepanshu Thakur
-Date  : Aug 21, 2017
+Author: Eduardo Rodrigues
+Date  : Aug 2, 2017
 """
 
 # -----------------------------------------------------------------------------
