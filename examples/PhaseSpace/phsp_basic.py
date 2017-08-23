@@ -3,6 +3,9 @@
 This example shows how to use the Hydra's phase space Monte Carlo algorithms
 to generate a sample of B0 -> J/psi K pi decays.
 
+This example is the python version of Hydra's
+https://github.com/AAAlvesJr/Hydra/blob/master/examples/phase_space/phsp_basic.cpp
+
 Author: Deepanshu Thakur
 Date  : Aug 21, 2017
 """
@@ -14,6 +17,7 @@ import HydraPython as hypy
 
 
 def main():
+
     nentries = 1000000
     B0_mass = 5.27955    # All masses are given in GeV/c^2
     Jpsi_mass = 3.0969

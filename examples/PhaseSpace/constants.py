@@ -1,3 +1,9 @@
+"""
+This file defines some color values to be shown on the Linux terminal.
+
+Author: Deepanshu Thakur
+Date  : Aug 22, 2017
+"""
 RED = "\033[1;31m"
 BLUE = "\033[1;34m"
 CYAN = "\033[1;36m"

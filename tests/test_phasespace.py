@@ -1,4 +1,8 @@
 # Licensed under a GNU general public license, see LICENSE.
+"""
+Author: Deepanshu Thakur
+Date  : Aug 21, 2017
+"""
 
 # -----------------------------------------------------------------------------
 # Import statements
@@ -60,7 +64,7 @@ class TestPhaseSpace(unittest.TestCase):
 
     def test_N_PhaseSpace(self):
         vector_mass = 9629.140252
-        # ps1 = hypy.PhaseSpace1(vector_mass, random_floats(0.1, 2.2, 1))
+        ps1 = hypy.PhaseSpace1(vector_mass, random_floats(0.1, 2.2, 1))
         ps2 = hypy.PhaseSpace2(vector_mass, random_floats(0.1, 2.2, 2))
         ps3 = hypy.PhaseSpace3(vector_mass, random_floats(0.1, 2.2, 3))
         ps4 = hypy.PhaseSpace4(vector_mass, random_floats(0.1, 2.2, 4))
@@ -70,7 +74,7 @@ class TestPhaseSpace(unittest.TestCase):
         ps8 = hypy.PhaseSpace8(vector_mass, random_floats(0.1, 2.2, 8))
         ps9 = hypy.PhaseSpace9(vector_mass, random_floats(0.1, 2.2, 9))
         ps10 = hypy.PhaseSpace10(vector_mass, random_floats(0.1, 2.2, 10))
-        # self.assertIsInstance(ps1, hypy.PhaseSpace1, 'Failure: Not an instance of PhaseSpace1')
+        self.assertIsInstance(ps1, hypy.PhaseSpace1, 'Failure: Not an instance of PhaseSpace1')
         self.assertIsInstance(ps2, hypy.PhaseSpace2, 'Failure: Not an instance of PhaseSpace2')
         self.assertIsInstance(ps3, hypy.PhaseSpace3, 'Failure: Not an instance of PhaseSpace3')
         self.assertIsInstance(ps4, hypy.PhaseSpace4, 'Failure: Not an instance of PhaseSpace4')

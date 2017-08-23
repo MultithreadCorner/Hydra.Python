@@ -1,4 +1,8 @@
 # Licensed under a GNU general public license, see LICENSE.
+"""
+Author: Deepanshu Thakur
+Date  : Aug 21, 2017
+"""
 
 # -----------------------------------------------------------------------------
 # Import statements
