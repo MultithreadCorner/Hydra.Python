@@ -135,7 +135,8 @@ class TestPhaseSpace(unittest.TestCase):
         grand_daughters_d = hypy.host_events_2(nentries)
 
         phsp1.GenerateOnhost(B0, daughters_d)
-        phsp2.GenerateOnhost(daughters_d.getDaughters(0), grand_daughters_d
+        phsp2.GenerateOnhost(daughters_d.getDaughters(0), grand_daughters_d)
+
     def test_average_on(self):
         vec4 = hypy.Vector4R(5.2795, 0.0, 0.0, 0.0)
         p = hypy.PhaseSpace4(vec4.mass(), [3.096916, 0.493677, 0.13957018, 0.0195018])
