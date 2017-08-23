@@ -11,6 +11,7 @@ Author: Deepanshu Thakur
 Date  : Aug 21, 2017
 """
 
+from __future__ import print_function
 import HydraPython as hypy
 import sys
 import time
@@ -57,15 +58,9 @@ def main():
 
     #     Device    #
 
-    if sys.version_info.major == 2:
-        print
-        sys.stdout.write(constants.RED)
-        print "ERROR: device is not supported with custom functors in current HydraPython version."
-        sys.stdout.write(constants.RESET)
-    else:
-        print()
-        print(constants.RED, "ERROR: device is not supported with custom functors in current HydraPython version.")
-        print(constants.RESET)
+    print()
+    print(constants.RED, "ERROR: device is not supported with custom functors in current HydraPython version.")
+    print(constants.RESET)
 
     #     Host    #
     start = time.time()
