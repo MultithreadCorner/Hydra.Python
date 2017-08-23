@@ -7,13 +7,15 @@ The **Hydra.Python** package provides the Python bindings for the header-only C+
 This library is an abstraction over the C++ library, so that daily work can be code and run with the much simpler Python language,
 concentrating on the logic and leaving all the complex memory management and optimisations to the C++ library.
 
-The bindings are produced with [pybind11](http://pybind11.readthedocs.io/). The project makes use of [CMAKE](https://cmake.org/).
+The bindings are produced with `pybind11`_. The project makes use of `CMAKE`_.
 
 The  library is written with ``Linux`` systems in mind, but compatibility with other platforms may be achieved with "hacks".
 Python 2.7, and 3.x are supported.
 
 
 .. _Hydra: https://github.com/MultithreadCorner/Hydra
+.. _pybind11: http://pybind11.readthedocs.io/
+.. _CMAKE: https://cmake.org/
 
 
 Core features
@@ -37,5 +39,6 @@ Supported compilers
 History
 *******
 The development of **Hydra.Python** started as a
-[2017 Google Summer of Code project](https://summerofcode.withgoogle.com/projects/#6669304945704960)
-with student Deepanshu Thakur.
+2017 Google Summer of Code project (`GSoC`_) with student Deepanshu Thakur.
+
+.. _GSoC: https://summerofcode.withgoogle.com/projects/#6669304945704960
