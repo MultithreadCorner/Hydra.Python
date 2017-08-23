@@ -56,9 +56,16 @@ def main():
 
     #     Device    #
 
-    print()
-    print(constants.RED, "ERROR: device is not supported with custom functors in current HydraPython version.", sep='')
-    print(constants.RESET)
+    if sys.version_info.major == 2:
+        print
+        sys.stdout.write(constants.RED)
+        print "ERROR: device is not supported with custom functors in current HydraPython version."
+        sys.stdout.write(constants.RESET)
+    else:
+        print()
+        print(sys.version_info.major)
+        print(constants.RED, "ERROR: device is not supported with custom functors in current HydraPython version.")
+        print(constants.RESET)
 
     #     Host    #
     result = hypy.host_vector_float2(nentries)
