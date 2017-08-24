@@ -1,10 +1,10 @@
 .. image:: hydra_logo.png
    :scale: 25 %
-	   
+
 About this project
 ==================
 The **Hydra.Python** package provides the Python bindings for the header-only C++ `Hydra`_ library.
-This library is an abstraction over the C++ library, so that daily work can be code and run with the much simpler Python language,
+This library is an abstraction over the C++ library, so that daily work can be code and run with the Python language,
 concentrating on the logic and leaving all the complex memory management and optimisations to the C++ library.
 
 The bindings are produced with `pybind11`_. The project makes use of `CMAKE`_.
