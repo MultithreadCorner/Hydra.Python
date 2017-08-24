@@ -41,6 +41,10 @@ bindings for the ``Data Fitting``, ``Random Number Generation``,
 not have time left under the current scope of GSoC, so I have decided to
 continue with the project outside the scope of GSoC.)
 
+
+Choosing proper tools
+*********************
+
 Let me take you to my 3 months journey. First step was to find a tool or
 package to write the bindings. Several options were in principle available to
 write the bindings for example in the beginning we tried to evaluate the
@@ -73,6 +77,9 @@ to go ahead with pybind11. Next step was to `familiarize myself`_ with pybind11.
 .. _familiarize myself: https://github.com/Deepanshu2017/pybind11_practise
 
 
+The Basic design problem
+************************
+
 Now we needed to solve the basic design problem which is the `CRTP idiom`_.
 Hydra library relies on the CRTP idiom to avoid runtime overhead. I
 investigated a lot about CRTP and it took a little while to finally come up
@@ -92,6 +99,10 @@ as our binding code is written within a macro, so it is just a matter of
 writing additional 1 extra call to make it use with extra value of N.
 
 .. _CRTP idiom: https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern
+
+
+The Hydra Binding
+*****************
 
 Now that the approach was decided, we jump into the bindings of Hydra.
 (Finally after so many complications but unfortunately this was not the
@@ -158,6 +169,10 @@ series of test cases and documentation and of-course the example of
 PhaseSpace class in action. The remaining algorithms that I named at the
 start of the article are left to implement.
 
+
+The happy learning
+******************
+
 GSoC 2017 was a really very learning experience for me. I learned a lot of
 things not only related with programming but related with high energy physics.
 I learned about *Monte Carlo Simulations*, and how they can be used to solve
@@ -168,6 +183,10 @@ wrote a blog about CRTP ( #TODO insert blog link), learned how to compile a
 python function and why simple python functions cannot be used in
 multithreaded environments. Most importantly I learned how to structure
 a project from scratch, how important documentation and test cases are.
+
+
+Special Thanks
+**************
 
 Shoutout to my amazing mentors. I would like to thank
 Dr. Antonio Augusto Alaves Jr. and Eduardo Rodrigues for being awesome
