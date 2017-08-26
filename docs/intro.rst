@@ -35,6 +35,7 @@ Supported compilers
 History
 *******
 The development of **Hydra.Python** started as a
-2017 Google Summer of Code project (`GSoC`_) with student Deepanshu Thakur.
+2017 Google Summer of Code project (`GSoC`_) with student `Deepanshu Thakur`.
 
 .. _GSoC: https://summerofcode.withgoogle.com/projects/#6669304945704960
+.. _Deepanshu Thakur: https://github.com/Deepanshu2017
