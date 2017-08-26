@@ -1,13 +1,13 @@
 About this project
 ==================
 The **Hydra.Python** package provides the Python bindings for the header-only C++ `Hydra`_ library.
-This library is an abstraction over the C++ library, so that daily work can be code and run with the Python language,
+This library is an abstraction over the C++ library, so that daily work can be coded and run with the Python language,
 concentrating on the logic and leaving all the complex memory management and optimisations to the C++ library.
 
-The bindings are produced with `pybind11`_. The project makes use of `CMAKE`_.
+The bindings are produced with `pybind11`_. The project makes use of `CMAKE`_ for what concerns the building of the Hydra.Python library.
 
 The  library is written with ``Linux`` systems in mind, but compatibility with other platforms may be achieved with "hacks".
-Python 2.7, and 3.x are supported.
+Python versions 2.7, and 3.x are supported.
 
 
 .. _Hydra: https://github.com/MultithreadCorner/Hydra
@@ -18,11 +18,10 @@ Python 2.7, and 3.x are supported.
 Core features
 *************
 The core functionality of Hydra has been exposed to Python.
-
 The following core C++ features of Hydra can be mapped to Python:
 
 - The continuous expansion of the original Hydra library.
-- Support for ``particles`` with ``Vector4R`` class.
+- Support for particles with ``Vector4R`` class.
 - Support for containers like ``Events`` or ``Decay``.
 
 

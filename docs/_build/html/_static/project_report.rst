@@ -192,7 +192,7 @@ Special Thanks
 **************
 
 Shoutout to my amazing mentors. I would like to thank
-Dr. Antonio Augusto Alves Jr. and Dr. Eduardo Rodrigues for being awesome
+Dr. Antonio Augusto Alaves Jr. and Eduardo Rodrigues for being awesome
 mentors and for all the time they invested in me during GSoC. I also would
 like to thank the CERN-HSF community for their time and helping me whenever I
 had a problem. Thank you!

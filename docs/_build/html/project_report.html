@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Project Report: &mdash; Hydra.Python 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hydra.Python 0.1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="project-report">
+<h1>Project Report:<a class="headerlink" href="#project-report" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="google-summer-of-code-2017">
+<h2>Google Summer of Code 2017<a class="headerlink" href="#google-summer-of-code-2017" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="umbrella-organization-cern-hsf-cerns-hep-software-foundation">
+<h3>Umbrella Organization: CERN-HSF, CERN’s HEP software foundation<a class="headerlink" href="#umbrella-organization-cern-hsf-cerns-hep-software-foundation" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="project-efficient-python-routines-for-analysis-on-massively-multi-threaded-platforms-python-bindings-for-the-hydra-c-library">
+<h3>Project: Efficient Python routines for analysis on massively multi-threaded platforms-Python bindings for the Hydra C++ library<a class="headerlink" href="#project-efficient-python-routines-for-analysis-on-massively-multi-threaded-platforms-python-bindings-for-the-hydra-c-library" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="submitted-by-deepanshu-thakur">
+<h4>Submitted by- Deepanshu Thakur<a class="headerlink" href="#submitted-by-deepanshu-thakur" title="Permalink to this headline">¶</a></h4>
+<p>I spend my last 3 months working on <a class="reference external" href="https://summerofcode.withgoogle.com/projects/#6669304945704960">GSoC project</a>. My GSoC project was
+related with writing the bindings of the Hydra C++ library. Hydra is a header
+only C++ library designed and used to run on Linux platforms. Hydra is a
+templated C++11 library designed to perform common High Energy Physics data
+analyses on massively parallel platforms. The idea of this GSoC project is to
+provide the bindings of the Hydra library, so that the python support for
+Hydra library can be added and python can be used for the prototyping or
+development.</p>
+<p>My original proposal deliverables and my final output looks a little bit
+different and there are some very good reasons for it. The change of
+deliverables will become evident in the discussion of the design challenges
+and choices later in the report. In the beginning the goal was to write the
+bindings for the <code class="docutils literal"><span class="pre">Data</span> <span class="pre">Fitting</span></code>, <code class="docutils literal"><span class="pre">Random</span> <span class="pre">Number</span> <span class="pre">Generation</span></code>,
+<code class="docutils literal"><span class="pre">Phase-Space</span> <span class="pre">Monte</span> <span class="pre">Carlo</span> <span class="pre">Simulation</span></code>, <code class="docutils literal"><span class="pre">Functor</span> <span class="pre">Arithmetic</span></code> and
+<code class="docutils literal"><span class="pre">Numerical</span> <span class="pre">integration</span></code>, but we ended up having the bindings for
+<code class="docutils literal"><span class="pre">Random</span> <span class="pre">Number</span> <span class="pre">Generation</span></code> and <code class="docutils literal"><span class="pre">Phase-Space</span> <span class="pre">Monte</span> <span class="pre">Carlo</span> <span class="pre">Simulation</span></code> only.
+(Though remaining classes can be binded with some extra efforts but we do
+not have time left under the current scope of GSoC, so I have decided to
+continue with the project outside the scope of GSoC.)</p>
+</div>
+<div class="section" id="choosing-proper-tools">
+<h4>Choosing proper tools<a class="headerlink" href="#choosing-proper-tools" title="Permalink to this headline">¶</a></h4>
+<p>Let me take you to my 3 months journey. First step was to find a tool or
+package to write the bindings. Several options were in principle available to
+write the bindings for example in the beginning we tried to evaluate the
+<a class="reference external" href="http://swig.org">SWIG</a>.
+But the problem with SWIG is, it is very complicated to use and second it
+does not support the <code class="docutils literal"><span class="pre">variadic</span> <span class="pre">templates</span></code> while Hydra underlying
+<a class="reference external" href="https://github.com/andrewcorrigan/thrust-multi-permutation-iterator">Thrust library</a> depends heavily on variadic templates. After trying hands
+with SWIG and realizing it cannot fulfill our requirements, we turned our
+attention to <a class="reference external" href="http://www.boost.org/doc/libs/1_65_0/libs/python/doc/html/index.html">Boost.Python</a> which looks quite promising and a very large
+project but this large and complex suite project have so many tweaks and
+hacks so that it can work on almost any compiler but with added so many
+complexities and cost. Finally we turned our attention to use <a class="reference external" href="https://github.com/pybind/pybind11">pybind11</a>.
+A quote taken from pybind11 documentation,</p>
+<blockquote>
+<div>Boost is an enormously large and complex suite of utility libraries
+that works with almost every C++ compiler in existence. This compatibility
+has its cost: arcane template tricks and workarounds are necessary to
+support the oldest and buggiest of compiler specimens. Now
+that C++11-compatible compilers are widely available, this heavy
+machinery has become an excessively large and unnecessary dependency.</div></blockquote>
+<p>After investigating a lot of things and trying <a class="reference external" href="https://github.com/Deepanshu2017/boost.python_practise">various programs</a> we decided
+to go ahead with pybind11. Next step was to <a class="reference external" href="https://github.com/Deepanshu2017/pybind11_practise">familiarize myself</a> with pybind11.</p>
+</div>
+<div class="section" id="the-basic-design-problem">
+<h4>The Basic design problem<a class="headerlink" href="#the-basic-design-problem" title="Permalink to this headline">¶</a></h4>
+<p>Now we needed to solve the basic design problem which is the <a class="reference external" href="https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern">CRTP idiom</a>.
+Hydra library relies on the CRTP idiom to avoid runtime overhead. I
+investigated a lot about CRTP and it took a little while to finally come up
+with a solution that can work with any number N. It means our class can accept
+any number of particles at final states. (denoted by N) If you know about
+CRTP, it is a type of static polymorphism or compile time polymorphism. The
+idea that I implemented was to take a parameter from python and based on that
+parameter, I was writing the bindings in a new file, compiling and generating
+them on runtime with system calls. Unfortunately generating bindings at
+runtime and compiling them would take a lot of time and so, it is not
+feasible for user to each time wait for few minutes before actually be
+able to use the generated package. We decided to go ahead with fixed number
+of values. Means we generate bindings for a limited number of particles.
+Currently python bindings for classes supports up to 10 (N = 10) number of
+particles at final state. We can make that to work with any number we want,
+as our binding code is written within a macro, so it is just a matter of
+writing additional 1 extra call to make it use with extra value of N.</p>
+</div>
+<div class="section" id="the-hydra-binding">
+<h4>The Hydra Binding<a class="headerlink" href="#the-hydra-binding" title="Permalink to this headline">¶</a></h4>
+<p>Now that the approach was decided, we jump into the bindings of Hydra.
+(Finally after so many complications but unfortunately this was not the
+end of them.) We decided to bind the most important classes first,
+<code class="docutils literal"><span class="pre">Random</span> <span class="pre">Number</span> <span class="pre">Generation</span></code> and <code class="docutils literal"><span class="pre">Phase-Space</span> <span class="pre">Monte</span> <span class="pre">Carlo</span> <span class="pre">Simulation</span></code>.
+My mentors decided that they will bind the <code class="docutils literal"><span class="pre">Random</span> <span class="pre">Number</span> <span class="pre">Generation</span></code> while
+<code class="docutils literal"><span class="pre">Phase-Space</span> <span class="pre">Monte</span> <span class="pre">Carlo</span> <span class="pre">Simulation</span></code> was my responsibility. Rest of the
+report will explain more about Phase-Space Monte Carlo Simulation.</p>
+<p>“Phase-Space Monte Carlo Simulation” or PhaseSpace C++ Hydra class is useful
+to generate the phase space monte carlo simulation.</p>
+<blockquote>
+<div>The events are generated in the center-of-mass frame, but the decay products
+are finally boosted using the betas of the original particle. The code is
+based on the Raubold and Lynch method as documentd in
+[F. James, Monte Carlo Phase Space, CERN 68-15 (1968)]
+(<a class="reference external" href="https://cds.cern/ch/record/275743">https://cds.cern/ch/record/275743</a>).</div></blockquote>
+<p>The Momentum and Energy units are GeV/C, GeV/C^2. The PhaseSpace monte
+carlo class depends on the <code class="docutils literal"><span class="pre">Vector3R</span></code>,  <code class="docutils literal"><span class="pre">Vector4R</span></code> and <code class="docutils literal"><span class="pre">Events</span></code> classes.
+Thus PhaseSpace class cannot be binded before without any of the above classes.</p>
+<p>The <code class="docutils literal"><span class="pre">Vector3R</span></code> and <code class="docutils literal"><span class="pre">Vector4R</span></code> classes were binded. There were some problems
+like generating <code class="docutils literal"><span class="pre">__eq__</span></code> and <code class="docutils literal"><span class="pre">__nq__</span></code> methods for python side but I solved
+them by creating <code class="docutils literal"><span class="pre">lambda</span> <span class="pre">function</span></code> and iterating over values and checking
+if they satisfy the conditions or not. The <code class="docutils literal"><span class="pre">Vector4R</span></code> or four-vector class
+represents a particle. The idea is I first bind the particles class
+(the four-vector class) than I had to bind the <code class="docutils literal"><span class="pre">Events</span></code> class that will
+hold the Phase Space generated by the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class, and then bind the
+actual <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class. The <code class="docutils literal"><span class="pre">Events</span></code> class were not so easy to bind
+because they were dependent on the <code class="docutils literal"><span class="pre">hydra::multiarray</span></code> and without their
+bindings, the <code class="docutils literal"><span class="pre">Events</span></code> class was impossible to bind. Thanks to my mentor
+who had already binded these bindings for <code class="docutils literal"><span class="pre">Random</span></code> class with some tweaks on
+the pybind11’s bind_container itself. We even faced some design issues of
+Events class in Hydra itself. But eventually after solving these problems,
+I now had Events class working and I therefore converted the binding code
+into a macro, so that we can use Events class with up-to 10 particles.</p>
+<p>Now came the actual bindings for the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class. The <code class="docutils literal"><span class="pre">PhaseSpace</span></code>
+class have constructors and methods like <code class="docutils literal"><span class="pre">GetSeed</span></code>, <code class="docutils literal"><span class="pre">SetSeed</span></code>, <code class="docutils literal"><span class="pre">AverageOn</span></code>, <code class="docutils literal"><span class="pre">Evaluate</span></code> and <code class="docutils literal"><span class="pre">Generate</span></code>.</p>
+<p>The <code class="docutils literal"><span class="pre">GetSeed</span></code> and <code class="docutils literal"><span class="pre">SetSeed</span></code> were easy to implement. The remaining 3 methods
+have two version, one which accept single mother particle and one which accept
+a list of mother particle. I got the success of bindings methods which accept
+the single mother particle but was unable to bind the methods that accepts
+the list of mother particles. I was trying to pass the list of events object
+along with the list of mother particles. I was successfully able to pass the
+list of mother particles but wasn’t getting any way to pass the list of Events
+without casting each Event object from python object in my bindings code.
+(Later I realized that is impossible to do) My mentor wrote the bindings for
+methods that accept the list of mother particles. After looking at binding
+code I realized. Alas! I was making a very stupid mistake. I had to pass the
+<code class="docutils literal"><span class="pre">single</span> <span class="pre">Events</span> <span class="pre">object,</span> <span class="pre">not</span> <span class="pre">the</span> <span class="pre">list</span> <span class="pre">of</span> <span class="pre">Events</span> <span class="pre">object</span></code> which I already did
+but never showed to my mentor, thought I’m making a mistake. Well learned a
+lesson from this, always show your mentor what you did, even though if you
+believe you are wrong. Maybe it could save some of your time. ;)</p>
+<p>After completing the PhaseSpace code, I quickly converted the code into macro
+for supporting up-to 10 particles.</p>
+<p>Now the PhaseSpace class was working perfectly! Next step was to create a
+series of test cases and documentation and of-course the example of
+PhaseSpace class in action. The remaining algorithms that I named at the
+start of the article are left to implement.</p>
+</div>
+<div class="section" id="the-happy-learning">
+<h4>The happy learning<a class="headerlink" href="#the-happy-learning" title="Permalink to this headline">¶</a></h4>
+<p>GSoC 2017 was a really very learning experience for me. I learned a lot of
+things not only related with programming but related with high energy physics.
+I learned about <em>Monte Carlo Simulations</em>, and how they can be used to solve
+challenging real life problems. I read and studied a research paper
+( <a class="reference external" href="https://cds.cern.ch/record/275743/files/CERN-68-15.pdf">https://cds.cern.ch/record/275743/files/CERN-68-15.pdf</a> ), learned about
+particle decays, learned the insights of C++ varidiac templates,
+wrote a blog about <a class="reference external" href="https://medium.com/&#64;deepanshu2017/a-curiously-recurring-python-d3a441a58174">CRTP</a>, learned how to compile a
+python function and why simple python functions cannot be used in
+multithreaded environments. Most importantly I learned how to structure
+a project from scratch, how important documentation and test cases are.</p>
+</div>
+<div class="section" id="special-thanks">
+<h4>Special Thanks<a class="headerlink" href="#special-thanks" title="Permalink to this headline">¶</a></h4>
+<p>Shoutout to my amazing mentors. I would like to thank
+Dr. Antonio Augusto Alaves Jr. and Eduardo Rodrigues for being awesome
+mentors and for all the time they invested in me during GSoC. I also would
+like to thank the CERN-HSF community for their time and helping me whenever I
+had a problem. Thank you!</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/hydra_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">The basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basics.html">First steps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpace.html">PhaseSpace Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random.html">Random Class</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpaceExample.html">Phase Space Example</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Antonio Augusto Alves Junior.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/project_report.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

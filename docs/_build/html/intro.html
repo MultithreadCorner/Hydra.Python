@@ -41,18 +41,18 @@
   <div class="section" id="about-this-project">
 <h1>About this project<a class="headerlink" href="#about-this-project" title="Permalink to this headline">¶</a></h1>
 <p>The <strong>Hydra.Python</strong> package provides the Python bindings for the header-only C++ <a class="reference external" href="https://github.com/MultithreadCorner/Hydra">Hydra</a> library.
-This library is an abstraction over the C++ library, so that daily work can be code and run with the Python language,
+This library is an abstraction over the C++ library, so that daily work can be coded and run with the Python language,
 concentrating on the logic and leaving all the complex memory management and optimisations to the C++ library.</p>
-<p>The bindings are produced with <a class="reference external" href="http://pybind11.readthedocs.io/">pybind11</a>. The project makes use of <a class="reference external" href="https://cmake.org/">CMAKE</a>.</p>
+<p>The bindings are produced with <a class="reference external" href="http://pybind11.readthedocs.io/">pybind11</a>. The project makes use of <a class="reference external" href="https://cmake.org/">CMAKE</a> for what concerns the building of the Hydra.Python library.</p>
 <p>The  library is written with <code class="docutils literal"><span class="pre">Linux</span></code> systems in mind, but compatibility with other platforms may be achieved with &#8220;hacks&#8221;.
-Python 2.7, and 3.x are supported.</p>
+Python versions 2.7, and 3.x are supported.</p>
 <div class="section" id="core-features">
 <h2>Core features<a class="headerlink" href="#core-features" title="Permalink to this headline">¶</a></h2>
-<p>The core functionality of Hydra has been exposed to Python.</p>
-<p>The following core C++ features of Hydra can be mapped to Python:</p>
+<p>The core functionality of Hydra has been exposed to Python.
+The following core C++ features of Hydra can be mapped to Python:</p>
 <ul class="simple">
 <li>The continuous expansion of the original Hydra library.</li>
-<li>Support for <code class="docutils literal"><span class="pre">particles</span></code> with <code class="docutils literal"><span class="pre">Vector4R</span></code> class.</li>
+<li>Support for particles with <code class="docutils literal"><span class="pre">Vector4R</span></code> class.</li>
 <li>Support for containers like <code class="docutils literal"><span class="pre">Events</span></code> or <code class="docutils literal"><span class="pre">Decay</span></code>.</li>
 </ul>
 </div>
