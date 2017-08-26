@@ -1,7 +1,5 @@
 .. only: not latex
 
-    .. image:: hydra_mini_logo.png
-
 Hydra.Python --- Python bindings for the Hydra C++ library
 ==========================================================
 

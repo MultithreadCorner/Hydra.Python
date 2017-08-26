@@ -43,12 +43,10 @@
 <p>This section demonstrates the basic features of HydraPython. Before getting
 started, make sure that the development environment is set up to compile the
 included set of test cases.</p>
-<div class="section" id="compiling-the-test-cases">
-<h2>Compiling the test cases<a class="headerlink" href="#compiling-the-test-cases" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="linux-macos">
-<h3>Linux/MacOS<a class="headerlink" href="#linux-macos" title="Permalink to this headline">¶</a></h3>
-<p>On Linux you&#8217;ll need the <a class="reference external" href="https://github.com/MultithreadCorner/Hydra">Hydra</a>, <a class="reference external" href="https://github.com/pybind/pybind11.git">Pybind11</a> and the <strong>cmake</strong>. Also, you will
-be requiring the <strong>python-dev</strong> or <strong>python3-dev</strong> package. You can clone
+<div class="section" id="quick-start">
+<h2>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h2>
+<p>On Linux you&#8217;ll need the <a class="reference external" href="https://github.com/MultithreadCorner/Hydra">Hydra</a> and <a class="reference external" href="https://github.com/pybind/pybind11.git">Pybind11</a> projects as well as <strong>cmake</strong> to build. The <strong>python-dev</strong> or <strong>python3-dev</strong> package is required too.
+You can clone
 and fetch the latest code for both of the mentioned libraries. Then you could
 create a directory structure similar to below one.</p>
 <div class="highlight-bash"><div class="highlight"><pre>Project root -
@@ -64,30 +62,26 @@ cmake -DHYDRA_INSTALL_PATH<span class="o">=</span>../Hydra -DPYBIND11_INSTALL_PA
 make all
 </pre></div>
 </div>
-<p>The last line will both compile and create a shared <code class="docutils literal"><span class="pre">.so</span></code> file which can be
-imported in the python.</p>
+<p>The last line will both compile and create a shared <code class="docutils literal"><span class="pre">.so</span></code> file which is the library imported in python.</p>
 <p>The best way to check if the installation is correct or not is to run the test
-cases provided in the Hydra.Python/tests.</p>
+cases provided in the <code class="docutils literal"><span class="pre">Hydra.Python/tests/</span></code> directory.</p>
 </div>
-</div>
-<div class="section" id="creating-simple-vector4r-particle-and-calculate-it-s-mass">
-<h2>Creating simple Vector4R particle and calculate it&#8217;s mass<a class="headerlink" href="#creating-simple-vector4r-particle-and-calculate-it-s-mass" title="Permalink to this headline">¶</a></h2>
-<p>Let&#8217;s start by creating importing the module:</p>
+<div class="section" id="creating-a-simple-lorentz-vector-and-calculating-the-particle-s-mass">
+<h2>Creating a simple Lorentz vector and calculating the particle&#8217;s mass<a class="headerlink" href="#creating-a-simple-lorentz-vector-and-calculating-the-particle-s-mass" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s start by importing the module:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
 </pre></div>
 </div>
 <p>The name <code class="docutils literal"><span class="pre">HydraPython</span></code> is quite long so generally, we use its alias as <code class="docutils literal"><span class="pre">hp</span></code>.</p>
-<p>Now that we have already imported the module let&#8217;s just simply create a <code class="docutils literal"><span class="pre">Vector4R</span></code>
-object.</p>
+<p>Now that we have already imported the module let&#8217;s just simply create the particle Lorentz vector, i.e. the <code class="docutils literal"><span class="pre">Vector4R</span></code> instance.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
 <span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">vec4</span><span class="p">)</span>  <span class="c1"># (0, 0, 0, 0)</span>
 </pre></div>
 </div>
-<p>So this is it. You just created a Vector4R object. The Vector4R object in Hydra
-is used as a <code class="docutils literal"><span class="pre">particle</span></code>. This understanding is important when
-you will use the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class to generate the Events over N particles.</p>
-<p>The next 3 pages explain the Vector classes (<code class="docutils literal"><span class="pre">Vector4R</span></code> and <code class="docutils literal"><span class="pre">Vector3R</span></code>), <code class="docutils literal"><span class="pre">Events</span></code>
+<p>So this is it. We&#8217;ve just created a <code class="docutils literal"><span class="pre">Vector4R</span></code> object represending the 4-momentum vector of a particle.
+This matter is important when the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class will be used to generate Events with N particles.</p>
+<p>The next 3 pages explain the Vector classes (<code class="docutils literal"><span class="pre">Vector4R</span></code> and <code class="docutils literal"><span class="pre">Vector3R</span></code>), the <code class="docutils literal"><span class="pre">Events</span></code>
 classes and the <code class="docutils literal"><span class="pre">PhaseSpace</span></code> class in more detail.</p>
 </div>
 </div>
@@ -98,7 +92,12 @@ classes and the <code class="docutils literal"><span class="pre">PhaseSpace</spa
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/hydra_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
 
 
 
@@ -114,8 +113,8 @@ classes and the <code class="docutils literal"><span class="pre">PhaseSpace</spa
 <p class="caption"><span class="caption-text">The basics</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="">First steps</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#compiling-the-test-cases">Compiling the test cases</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#creating-simple-vector4r-particle-and-calculate-it-s-mass">Creating simple Vector4R particle and calculate it&#8217;s mass</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-simple-lorentz-vector-and-calculating-the-particle-s-mass">Creating a simple Lorentz vector and calculating the particle&#8217;s mass</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>

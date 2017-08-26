@@ -50,30 +50,47 @@ to instantiate the PhaseSpace class:</p>
 <ul class="simple">
 <li>Constructor with mother mass and N number of daughter masses.</li>
 </ul>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hypy</span>
 
-<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
 <span class="c1"># This will construct the PhaseSpace object with the mass provided by the vector4R</span>
 <span class="c1"># class and the exactly 4 daughter masses in the list.</span>
 </pre></div>
 </div>
 <p>The PhaseSpace classes provides the method to Generate a phase-space given a mother particle and an output range
 or a phase-space given a range of mother particles and an output range.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-<span class="n">ps</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
-<span class="n">e_host</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">e_device</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">deviceEvents4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">ps</span><span class="o">.</span><span class="n">Generatehost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">e_host</span><span class="p">)</span>  <span class="c1"># Generate particle on host</span>
-<span class="n">ps</span><span class="o">.</span><span class="n">Generatedevice</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">e_device</span><span class="p">)</span>  <span class="c1"># Generate particle on device</span>
-
-<span class="c1">####### ADD EXAMPLE OF given a range of mother particles and an output range</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="c1"># The below example generates and fills 3 states of 4 particle host events</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">ps</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="n">e_host</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">host_events_4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">e_device</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">device_events_4</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">GenerateOnhost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">e_host</span><span class="p">)</span>  <span class="c1"># Generate particle on host</span>
+<span class="n">ps</span><span class="o">.</span><span class="n">GenerateOndevice</span><span class="p">(</span><span class="n">vec</span><span class="p">,</span> <span class="n">e_device</span><span class="p">)</span>  <span class="c1"># Generate particle on device</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">AverageOn</span></code> method by PhaseSpace classes calculate the <code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">sqrt(variance)</span></code>
-of a functor over the phase-space with n-samples or of a functor over the phase-space given a
-list of mother particles.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">B0_mass</span> <span class="o">=</span> <span class="mf">5.27955</span>
+<span class="n">B0</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="n">B0_mass</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+<span class="n">mothers</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">host_vector_float4</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="c1"># Fill mother with some particles</span>
+<span class="n">mothers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.326536152819228</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.7376241292510032</span><span class="p">,</span> <span class="mf">0.9527533342879685</span><span class="p">,</span> <span class="mf">0.15239715864543849</span><span class="p">)</span>
+<span class="n">mothers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.3327060111834546</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.44741166640978447</span><span class="p">,</span> <span class="mf">1.012640505284964</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5390007001803998</span><span class="p">)</span>
+<span class="n">mothers</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.4673036097962844</span><span class="p">,</span> <span class="mf">0.6781637974979919</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.4020213115136253</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.0763859825560801</span><span class="p">)</span>
+<span class="n">mothers</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.5042443315560945</span><span class="p">,</span> <span class="mf">1.5383404921780213</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1442073504412384</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5492280905481964</span><span class="p">)</span>
+<span class="n">mothers</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">3.4406218104833015</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.16339927010014546</span><span class="p">,</span> <span class="mf">1.363729549941791</span><span class="p">,</span> <span class="mf">0.6005257912194031</span><span class="p">)</span>
+
+<span class="n">phsp2</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">PhaseSpace2</span><span class="p">(</span><span class="mf">3.0969</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.1056583745</span><span class="p">,</span> <span class="mf">0.1056583745</span><span class="p">])</span>
+<span class="n">container</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">host_events_2</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">phsp2</span><span class="o">.</span><span class="n">GenerateOnhost</span><span class="p">(</span><span class="n">mothers</span><span class="p">,</span> <span class="n">grand_daughter</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">grand_daughter</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">AverageOnhost</span></code> and <code class="docutils literal"><span class="pre">AverageOndevice</span></code> method by PhaseSpace classes calculate the
+<code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">sqrt(variance)</span></code> of a functor over the phase-space with n-samples or
+of a functor over the phase-space given a list of mother particles.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hypy</span>
 <span class="kn">import</span> <span class="nn">math</span>
 <span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="o">*</span><span class="n">data</span><span class="p">):</span>
     <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="n">p3</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -87,24 +104,95 @@ list of mother particles.</p>
     <span class="n">md2</span> <span class="o">=</span> <span class="n">p2</span><span class="o">.</span><span class="n">mass2</span><span class="p">()</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">pd</span> <span class="o">*</span> <span class="n">mq2</span> <span class="o">-</span> <span class="n">pq</span> <span class="o">*</span> <span class="n">qd</span><span class="p">)</span> <span class="o">/</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">pq</span> <span class="o">*</span> <span class="n">pq</span> <span class="o">-</span> <span class="n">mq2</span> <span class="o">*</span> <span class="n">mp2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">qd</span> <span class="o">*</span> <span class="n">qd</span> <span class="o">-</span> <span class="n">mq2</span> <span class="o">*</span> <span class="n">md2</span><span class="p">))</span>
 
-<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
-<span class="n">tup1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AverageONhost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Average of host, currently passing functor to device will fail</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">5.2795</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">hypy</span><span class="o">.</span><span class="n">PhaseSpace4</span><span class="p">(</span><span class="n">vec4</span><span class="o">.</span><span class="n">mass</span><span class="p">(),</span> <span class="p">[</span><span class="mf">3.096916</span><span class="p">,</span> <span class="mf">0.493677</span><span class="p">,</span> <span class="mf">0.13957018</span><span class="p">,</span> <span class="mf">0.0195018</span><span class="p">])</span>
+<span class="n">tup1</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">AverageOnhost</span><span class="p">(</span><span class="n">vec4</span><span class="p">,</span> <span class="n">foo</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>  <span class="c1"># Average of host, currently passing functor to device will fail</span>
 <span class="k">print</span> <span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># Mean</span>
 <span class="k">print</span> <span class="p">(</span><span class="n">tup</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># sqrt of variance</span>
-
-<span class="c1">####### ADD EXAMPLE of a functor over the phase-space given a list of mother particles.</span>
 </pre></div>
 </div>
-<p>#### TODO ####
-Add example and documentation of <code class="docutils literal"><span class="pre">Evaluate</span></code> methods.</p>
-<p>The complete method list supported by PhaseSpace Events classes can be found
-on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
-<p>The complete list of the classes in the PhaseSpace can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<p>Like generators, the Average on method also can accept the list of mother particle instead of one mother particle
+and calculate the <code class="docutils literal"><span class="pre">mean</span></code> and <code class="docutils literal"><span class="pre">sqrt(variance)</span></code>.</p>
+<p>The <code class="docutils literal"><span class="pre">EvaluateOnhost</span></code> and <code class="docutils literal"><span class="pre">EvaluateOndevice</span></code> evaluates a functor over the passed one mother particle or the list
+of mother particles.</p>
+<p>The complete list of the classes in the PhaseSpace can be found on <a class="footnote-reference" href="#f1" id="id1">[1]</a> and complete method list supported
+by PhaseSpace Events classes can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The method list for PhaseSpace classes</p>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The list of PhaseSpace classes</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace2</span></code>  Generate the phase-space with 2 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace2(mass, [2 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace3</span></code>  Generate the phase-space with 3 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace3(mass, [3 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace4</span></code>  Generate the phase-space with 4 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace4(mass, [4 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace5</span></code>  Generate the phase-space with 5 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace5(mass, [5 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace6</span></code>  Generate the phase-space with 6 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace6(mass, [6 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace7</span></code>  Generate the phase-space with 7 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace7(mass, [7 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace8</span></code>  Generate the phase-space with 8 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace8(mass, [8 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace9</span></code>  Generate the phase-space with 9 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace9(mass, [9 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace10</span></code>  Generate the phase-space with 10 particles. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>p = hypy.PhaseSpace10(mass, [10 daughter masses])</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The method list for PhaseSpace classes</p>
 <ul class="last">
 <li><p class="first"><code class="docutils literal"><span class="pre">GetSeed</span></code>  Get the seed. Syntax:</p>
 <blockquote>
@@ -120,105 +208,53 @@ on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">generate</span></code>  Generate the phase-space. Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">GenerateOnhost</span></code>  Generate the phase-space. Syntax:</p>
 <blockquote>
 <div><ul class="simple">
-<li>p.generate(vector4R, event)  # event1&#8217;s content will be assigned to event2.</li>
-<li>### SECOND EXAMPLE</li>
+<li>p.GenerateOnhost(vector4R, event)</li>
+<li>p.GenerateOnhost(hypy.host_vector_float4&amp; mothers, event)</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">AverageON</span></code> Get the mean and sqrt of variance. Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">GenerateOndevice</span></code>  Generate the phase-space. Syntax:</p>
 <blockquote>
 <div><ul class="simple">
-<li>p.AverageON(vector4R, functor, entires)</li>
-<li>### SECOND EXAMPLE</li>
+<li>p.GenerateOndevice(vector4R, event)</li>
+<li>p.GenerateOndevice(hypy.device_vector_float4&amp; mothers, event)</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">Evaluate</span></code> dummy Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">AverageOnhost</span></code> Get the mean and sqrt of variance. Syntax:</p>
 <blockquote>
 <div><ul class="simple">
-<li>dummy</li>
+<li>p.AverageOnhost(vector4R, functor, number_of_entires)</li>
+<li>p.AverageOnhost(hypy.host_vector_float4&amp; mothers, functor)</li>
 </ul>
 </div></blockquote>
 </li>
-</ul>
-</td></tr>
-</tbody>
-</table>
-<table class="docutils footnote" frame="void" id="f2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The list of PhaseSpace classes</p>
-<ul class="last">
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace1</span></code>  Generate the phase-space with 1 particles. Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">AverageOndevice</span></code> Get the mean and sqrt of variance. Syntax:</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">AverageOndevice</span></code> Get the mean and sqrt of variance. Syntax:</p>
 <blockquote>
 <div><ul class="simple">
-<li>p = hp.PhaseSpace1(mass, [1 daughter mass])</li>
+<li>p.AverageOndevice(vector4R, functor, number_of_entires)</li>
+<li>p.AverageOndevice(hypy.device_vector_float4&amp; mothers, functor)</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace2</span></code>  Generate the phase-space with 2 particles. Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">EvaluateOnhost</span></code> Evaluate a function over the given particle or list of particles:</p>
 <blockquote>
 <div><ul class="simple">
-<li>p = hp.PhaseSpace2(mass, [2 daughter masses])</li>
+<li>p.EvaluateOnhost(vector4R, hypy.host_vector_float2&amp; result, functor)</li>
+<li>p.EvaluateOnhost(hypy.host_vector_float4&amp; mothers, hypy.host_vector_float2&amp; result, functor)</li>
 </ul>
 </div></blockquote>
 </li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace3</span></code>  Generate the phase-space with 3 particles. Syntax:</p>
+<li><p class="first"><code class="docutils literal"><span class="pre">EvaluateOndevice</span></code> Evaluate a function over the given particle or list of particles:</p>
 <blockquote>
 <div><ul class="simple">
-<li>p = hp.PhaseSpace3(mass, [3 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace4</span></code>  Generate the phase-space with 4 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace4(mass, [4 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace5</span></code>  Generate the phase-space with 5 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace5(mass, [5 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace6</span></code>  Generate the phase-space with 6 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace6(mass, [6 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace7</span></code>  Generate the phase-space with 7 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace7(mass, [7 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace8</span></code>  Generate the phase-space with 8 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace8(mass, [8 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace9</span></code>  Generate the phase-space with 9 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace9(mass, [9 daughter masses])</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">PhaseSpace10</span></code>  Generate the phase-space with 10 particles. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>p = hp.PhaseSpace10(mass, [10 daughter masses])</li>
+<li>p.EvaluateOndevice(vector4R, hypy.device_vector_float2&amp; result, functor)</li>
+<li>p.EvaluateOndevice(hypy.device_vector_float4&amp; mothers, hypy.device_vector_float2&amp; result, functor)</li>
 </ul>
 </div></blockquote>
 </li>
@@ -234,7 +270,12 @@ on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/hydra_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
 
 
 

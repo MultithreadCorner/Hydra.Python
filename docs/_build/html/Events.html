@@ -40,13 +40,16 @@
             
   <div class="section" id="events-class">
 <h1>Events Class<a class="headerlink" href="#events-class" title="Permalink to this headline">¶</a></h1>
-<p>There are two types of Events one that runs on <code class="docutils literal"><span class="pre">host</span></code> and <code class="docutils literal"><span class="pre">device</span></code>. Events
-container currently supports up to (N=10) particles in any number of Events.
+<p>The Event class is a container class that holds the information corresponding to generated events.
+The Event class will not store the mother particle and store the N particle tuples with the
+element 0 storing the weight and rest of the elements storing the <code class="docutils literal"><span class="pre">Vector4R</span></code> of each particle.
+There are two types of Events one that runs on <code class="docutils literal"><span class="pre">host</span></code> and <code class="docutils literal"><span class="pre">device</span></code>. Events
+container currently supports up to (N=10) particles in final state with any number of Events.
 Both Host and Device Event classes add number (1 to 10) as their
 suffix to create Event for that number of particles and the type
 (host or device) is added as their prefix.</p>
 <div class="section" id="host">
-<h2>HOST<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h2>
+<h2>Host<a class="headerlink" href="#host" title="Permalink to this headline">¶</a></h2>
 <p>The host is generally defined as the CPU. This class is a wrapper of C++
 Events class that will work on CPU. This class is a container to hold
 the position of particles. We have 4 types of constructors
@@ -59,36 +62,36 @@ to instantiate the Events class:</p>
 </ul>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
 
-<span class="n">h_events_5</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents5</span><span class="p">()</span>  <span class="c1"># construc host Event with 5 particles and 0 Events</span>
+<span class="n">h_events_5</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_5</span><span class="p">()</span>  <span class="c1"># construct host Event with 5 particles and 0 Events</span>
 <span class="k">print</span> <span class="p">(</span><span class="n">h_events_5</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>  <span class="c1"># 0</span>
 
-<span class="n">h_events_7_100</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents7</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">h_events_7_100</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_7</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
 <span class="k">print</span> <span class="p">(</span><span class="n">h_events_7_100</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>  <span class="c1"># 100</span>
 </pre></div>
 </div>
-<p>The <code class="docutils literal"><span class="pre">hostEventsN</span></code> object can be copy constructed with the <code class="docutils literal"><span class="pre">hostEventsN</span></code>
-or <code class="docutils literal"><span class="pre">deviceEventsN</span></code> object.</p>
+<p>The <code class="docutils literal"><span class="pre">host_events_N</span></code> object can be copy constructed with the <code class="docutils literal"><span class="pre">host_events_N</span></code>
+or <code class="docutils literal"><span class="pre">device_events_N</span></code> object.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
-<span class="n">h_events_3</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">h_events_3</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_3</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 <span class="k">print</span> <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_events_3</span><span class="o">.</span><span class="n">Flags</span><span class="p">()))</span>  <span class="c1"># [False, False, False, False]</span>
 
 <span class="n">h_events_3</span><span class="o">.</span><span class="n">setFlag</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-<span class="n">h_events_3_copy</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents3</span><span class="p">(</span><span class="n">h_events_3</span><span class="p">)</span>
+<span class="n">h_events_3_copy</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_3</span><span class="p">(</span><span class="n">h_events_3</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">h_events_3_copy</span><span class="o">.</span><span class="n">Flags</span><span class="p">()))</span>  <span class="c1"># [False, True, False, False]</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">setFlags</span></code> method as demonstrated above can be used to set the
 particular Flag value and the <code class="docutils literal"><span class="pre">getFlag</span></code> method can be used the get the
 particular flag value with the index.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">h_event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents5</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">h_event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_5</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">h_event</span><span class="o">.</span><span class="n">setFlag</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 <span class="k">print</span> <span class="p">(</span><span class="n">h_event</span><span class="o">.</span><span class="n">getFlag</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># True</span>
 </pre></div>
 </div>
 <p>The host Events class provides an <code class="docutils literal"><span class="pre">assign</span></code> method to assign or copy the Events
 object. This is a very useful method to avoid the nasty bugs for example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">h_event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents5</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">h_event2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents5</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">h_event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_5</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">h_event2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_5</span><span class="p">()</span>
 
 <span class="c1"># Do things and later in the code ...</span>
 <span class="n">h_event2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">h_event</span><span class="p">)</span>
@@ -96,17 +99,18 @@ object. This is a very useful method to avoid the nasty bugs for example:</p>
 </pre></div>
 </div>
 <p>The host Events class also provides a method to set the Maximum weight of the
-Events. The method is useful to set the maximum weight. The complete method
-list provided by the Event classes can be found on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
+Events. The method is useful to set the maximum weight. The complete list of the classes
+in the Events container can be found on <a class="footnote-reference" href="#f1" id="id1">[1]</a>. The complete method
+list provided by the Event classes can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
 <p>The Events classes also provide a pythonic way to access the events with the
 <code class="docutils literal"><span class="pre">[]</span></code> operator. For example, an event value can be access like this.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">hostEvents5</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">event</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">host_events_5</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># (0.0, (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0), (0.0, 0.0, 0.0, 0.0))</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="device">
-<h2>DEVICE<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h2>
+<h2>Device<a class="headerlink" href="#device" title="Permalink to this headline">¶</a></h2>
 <p>The device is defined as the GPU and any other multicore CPU. The device Event
 class is exactly similar to the Host Events class but the only major difference
 is HOST Events class work on the single CPU while the DEVICE Events class work
@@ -119,16 +123,164 @@ also be used with the device classes, even the name of the methods are same,
 just the declaration of the objects is different. So if you want to create a
 device object of particle 7 you will do something like this,</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span>
-<span class="n">device_event_with_7_particle</span> <span class="o">=</span> <span class="n">HydraPython</span><span class="o">.</span><span class="n">deviceEvents7</span><span class="p">()</span>
+<span class="n">device_event_with_7_particle</span> <span class="o">=</span> <span class="n">HydraPython</span><span class="o">.</span><span class="n">device_events_7</span><span class="p">()</span>
 
 <span class="c1"># This will create a device Events with 0 states and 7 particles.</span>
 </pre></div>
 </div>
-<p>The complete list of the classes in the Events container can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The method list for Events classes</p>
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The list of Events classes</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_1</span></code>  Generate 1 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_1(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_2</span></code>  Generate 2 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_2(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_3</span></code>  Generate 3 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_3(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_4</span></code>  Generate 4 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_4(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_5</span></code>  Generate 5 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_5(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_6</span></code>  Generate 6 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_6(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_7</span></code>  Generate 7 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_7(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_8</span></code>  Generate 8 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_8(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_9</span></code>  Generate 9 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_9(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">host_events_10</span></code>  Generate 10 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>h_event = hp.host_events_10(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_1</span></code>  Generate 1 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_1(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_2</span></code>  Generate 2 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_2(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_3</span></code>  Generate 3 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_3(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_4</span></code>  Generate 4 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_4(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_5</span></code>  Generate 5 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_5(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_6</span></code>  Generate 6 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_6(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_7</span></code>  Generate 7 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_7(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_8</span></code>  Generate 8 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_8(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_9</span></code>  Generate 9 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_9(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">device_events_10</span></code>  Generate 10 particle Event. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>d_event = hp.device_events_10(entries)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The method list for Events classes</p>
 <ul class="last">
 <li><p class="first"><code class="docutils literal"><span class="pre">assign</span></code>  Assigns one Events content to other Events. Syntax:</p>
 <blockquote>
@@ -180,6 +332,13 @@ For example <code class="docutils literal"><span class="pre">for</span> <span cl
 <div><ul class="simple">
 <li>iterator = event.Daughters(i)  # event can be of the host or device type and then can be used to iterator over the values.
 For example <code class="docutils literal"><span class="pre">for</span> <span class="pre">daughter</span> <span class="pre">in</span> <span class="pre">iterator:</span> <span class="pre">print(daughter)</span></code> Will print out the ith particle state in all the events.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">getDaughters</span></code>  This method returns the daughter particles at given index.</p>
+<blockquote>
+<div><ul class="simple">
+<li>vector_float4 = event.getDaughters(i)</li>
 </ul>
 </div></blockquote>
 </li>
@@ -251,155 +410,6 @@ For example <code class="docutils literal"><span class="pre">for</span> <span cl
 </td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="f2" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The list of Events classes</p>
-<ul class="last">
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents1</span></code>  Generate 1 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents1(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents2</span></code>  Generate 2 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents2(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents3</span></code>  Generate 3 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents3(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents4</span></code>  Generate 4 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents4(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents5</span></code>  Generate 5 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents5(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents6</span></code>  Generate 6 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents6(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents7</span></code>  Generate 7 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents7(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents8</span></code>  Generate 8 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents8(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents9</span></code>  Generate 9 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents9(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">hostEvents10</span></code>  Generate 10 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>h_event = hp.hostEvents10(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents1</span></code>  Generate 1 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents1(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents2</span></code>  Generate 2 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents2(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents3</span></code>  Generate 3 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents3(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents4</span></code>  Generate 4 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents4(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents5</span></code>  Generate 5 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents5(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents6</span></code>  Generate 6 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents6(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents7</span></code>  Generate 7 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents7(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents8</span></code>  Generate 8 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents8(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">deviceEvents9</span></code>  Generate 9 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents9(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first"><code class="docutils literal"><span class="pre">devicevents10</span></code>  Generate 10 particle Event. Syntax:</p>
-<blockquote>
-<div><ul class="simple">
-<li>d_event = hp.hostEvents10(entries)</li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-</td></tr>
-</tbody>
-</table>
 </div>
 </div>
 
@@ -409,7 +419,12 @@ For example <code class="docutils literal"><span class="pre">for</span> <span cl
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Hydra.Python</a></h1>
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/hydra_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
 
 
 
@@ -427,8 +442,8 @@ For example <code class="docutils literal"><span class="pre">for</span> <span cl
 <li class="toctree-l1"><a class="reference internal" href="basics.html">First steps</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Vector.html">Vector Classes</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="">Events Class</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#host">HOST</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#device">DEVICE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#host">Host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#device">Device</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="PhaseSpace.html">PhaseSpace Class</a></li>
