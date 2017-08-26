@@ -1,5 +1,3 @@
-.. image:: hydra_logo.png
-
 Phase Space Example
 ====================
 This page is basically to demonstrate, how the PhaseSpace class with N
