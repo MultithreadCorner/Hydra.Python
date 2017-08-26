@@ -179,10 +179,13 @@ I learned about *Monte Carlo Simulations*, and how they can be used to solve
 challenging real life problems. I read and studied a research paper
 ( https://cds.cern.ch/record/275743/files/CERN-68-15.pdf ), learned about
 particle decays, learned the insights of C++ varidiac templates,
-wrote a blog about CRTP ( #TODO insert blog link), learned how to compile a
+wrote a blog about `CRTP`_, learned how to compile a
 python function and why simple python functions cannot be used in
 multithreaded environments. Most importantly I learned how to structure
 a project from scratch, how important documentation and test cases are.
+
+
+.. _CRTP: https://medium.com/@deepanshu2017/a-curiously-recurring-python-d3a441a58174
 
 
 Special Thanks
