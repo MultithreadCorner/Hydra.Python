@@ -53,7 +53,7 @@ or a phase-space given a range of mother particles and an output range.
     mothers[4] = (3.4406218104833015, -0.16339927010014546, 1.363729549941791, 0.6005257912194031)
 
     phsp2 = hypy.PhaseSpace2(3.0969, [0.1056583745, 0.1056583745])
-    container = hypy.host_events_2(5)
+    grand_daughter = hypy.host_events_2(5)
     phsp2.GenerateOnhost(mothers, grand_daughter)
 
     for i in grand_daughter: print(i)
