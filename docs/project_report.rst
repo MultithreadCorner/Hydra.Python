@@ -17,47 +17,47 @@ Project: Efficient Python routines for analysis on massively multi-threaded plat
 Submitted by- Deepanshu Thakur
 ******************************
 
-I spend my last 3 months working on `GSoC project`_. My GSoC project was
-related with writing the bindings of the Hydra C++ library. Hydra is a header
-only C++ library designed and used to run on Linux platforms. Hydra is a
+I spent my last 3 months working on a `GSoC project`_. My GSoC project was
+related with writing the bindings of the Hydra C++ library. Hydra is a header-only
+C++ library designed and used to run on Linux platforms. Hydra is a
 templated C++11 library designed to perform common High Energy Physics data
-analyses on massively parallel platforms. The idea of this GSoC project is to
-provide the bindings of the Hydra library, so that the python support for
-Hydra library can be added and python can be used for the prototyping or
+analysis on massively parallel platforms. The idea of this GSoC project was to
+provide the Python bindings for the Hydra library, so that the Python support
+can be added to the overall Hydra project and Python can be used for the prototyping or
 development.
 
 
 .. _GSoC project: https://summerofcode.withgoogle.com/projects/#6669304945704960
 
-My original proposal deliverables and my final output looks a little bit
-different and there are some very good reasons for it. The change of
+My original proposal deliverables and final output ended up looking a little bit
+different, and there are some very good reasons for it. The change of
 deliverables will become evident in the discussion of the design challenges
 and choices later in the report. In the beginning the goal was to write the
 bindings for the ``Data Fitting``, ``Random Number Generation``,
 ``Phase-Space Monte Carlo Simulation``, ``Functor Arithmetic`` and
 ``Numerical integration``, but we ended up having the bindings for
 ``Random Number Generation`` and ``Phase-Space Monte Carlo Simulation`` only.
-(Though remaining classes can be binded with some extra efforts but we do
+(The remaining classes can be binded with some extra effort but we do
 not have time left under the current scope of GSoC, so I have decided to
-continue with the project outside the scope of GSoC.)
+continue with the project outside the scope of GSoC given my interest in the project.)
 
 
-Choosing proper tools
-*********************
+Choosing the proper tools
+*************************
 
-Let me take you to my 3 months journey. First step was to find a tool or
-package to write the bindings. Several options were in principle available to
-write the bindings for example in the beginning we tried to evaluate the
-`SWIG`_.
+Let me take you though my three-month journey. First step was to find a tool or
+package to write the bindings with. Several options were in principle available to
+write the bindings. For example, at the beginning we tried to evaluate the
+`SWIG`_ project.
 But the problem with SWIG is, it is very complicated to use and second it
 does not support the ``variadic templates`` while Hydra underlying
 `Thrust library`_ depends heavily on variadic templates. After trying hands
 with SWIG and realizing it cannot fulfill our requirements, we turned our
-attention to `Boost.Python`_ which looks quite promising and a very large
-project but this large and complex suite project have so many tweaks and
-hacks so that it can work on almost any compiler but with added so many
-complexities and cost. Finally we turned our attention to use `pybind11`_.
-A quote taken from pybind11 documentation,
+attention to `Boost.Python`_, which looked quite promising. It is a very large
+project; but this large and complex suite project has so many tweaks and
+hacks so that it can work on almost any compiler. It does add much
+complexity and cost. Finally, we turned our attention to the newer `pybind11`_ project.
+A quote taken from the pybind11 documentation,
 
    Boost is an enormously large and complex suite of utility libraries
    that works with almost every C++ compiler in existence. This compatibility
@@ -80,31 +80,30 @@ to go ahead with pybind11. Next step was to `familiarize myself`_ with pybind11.
 The Basic design problem
 ************************
 
-Now we needed to solve the basic design problem which is the `CRTP idiom`_.
-Hydra library relies on the CRTP idiom to avoid runtime overhead. I
+The basic design problem is the `CRTP idiom`_.
+The Hydra library relies on the CRTP idiom to avoid runtime overhead. I
 investigated a lot about CRTP and it took a little while to finally come up
-with a solution that can work with any number N. It means our class can accept
-any number of particles at final states. (denoted by N) If you know about
-CRTP, it is a type of static polymorphism or compile time polymorphism. The
-idea that I implemented was to take a parameter from python and based on that
+with a solution that can work with any number of final-state particles (denoted N) often used in Hydra applications.
+If you know about CRTP, it is a type of static polymorphism, or compile-time polymorphism. The
+idea that I implemented was to take a parameter from Python and, based on that
 parameter, I was writing the bindings in a new file, compiling and generating
-them on runtime with system calls. Unfortunately generating bindings at
+them on runtime with system calls. Unfortunately, generating bindings at
 runtime and compiling them would take a lot of time and so, it is not
-feasible for user to each time wait for few minutes before actually be
-able to use the generated package. We decided to go ahead with fixed number
-of values. Means we generate bindings for a limited number of particles.
-Currently python bindings for classes supports up to 10 (N = 10) number of
-particles at final state. We can make that to work with any number we want,
+feasible for a user to each time wait for a few minutes before actually being
+able to use the generated package from Python. We decided to go ahead with a fixed number
+of values of N. It means we generate the bindings for a limited number of particles.
+Currently the Python bindings for the Hydra classes support up to 10 (N = 10) number of
+particles in the final state. Note that we can make that to work with any number we want,
 as our binding code is written within a macro, so it is just a matter of
-writing additional 1 extra call to make it use with extra value of N.
+writing additional and trivial-to-add extra calls to make the bindings work for extra values of N.
 
 .. _CRTP idiom: https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern
 
 
-The Hydra Binding
-*****************
+The Hydra bindings
+******************
 
-Now that the approach was decided, we jump into the bindings of Hydra.
+Now that the approach was decided, we jumped into the bindings of Hydra.
 (Finally after so many complications but unfortunately this was not the
 end of them.) We decided to bind the most important classes first,
 ``Random Number Generation`` and ``Phase-Space Monte Carlo Simulation``.
@@ -121,20 +120,20 @@ to generate the phase space monte carlo simulation.
  [F. James, Monte Carlo Phase Space, CERN 68-15 (1968)]
  (https://cds.cern/ch/record/275743).
 
-The Momentum and Energy units are GeV/C, GeV/C^2. The PhaseSpace monte
-carlo class depends on the ``Vector3R``,  ``Vector4R`` and ``Events`` classes.
+The momentum and energy units are GeV/c and GeV/c^2, respectively. The PhaseSpace Monte
+Carlo class depends on the ``Vector3R``,  ``Vector4R`` and ``Events`` classes.
 Thus PhaseSpace class cannot be binded before without any of the above classes.
 
 The ``Vector3R`` and ``Vector4R`` classes were binded. There were some problems
-like generating ``__eq__`` and ``__nq__`` methods for python side but I solved
-them by creating ``lambda function`` and iterating over values and checking
+like generating ``__eq__`` and ``__nq__`` methods for the Python side but I solved
+them by creating ``lambda functions`` and iterating over values and checking
 if they satisfy the conditions or not. The ``Vector4R`` or four-vector class
-represents a particle. The idea is I first bind the particles class
+represents a particle. The idea is I first bound the particles class
 (the four-vector class) than I had to bind the ``Events`` class that will
-hold the Phase Space generated by the ``PhaseSpace`` class, and then bind the
+hold the Phase Space events generated by the ``PhaseSpace`` class, and then bind the
 actual ``PhaseSpace`` class. The ``Events`` class were not so easy to bind
 because they were dependent on the ``hydra::multiarray`` and without their
-bindings, the ``Events`` class was impossible to bind. Thanks to my mentor
+bindings, the ``Events`` class was impossible to bind. Thanks to my mentors
 who had already binded these bindings for ``Random`` class with some tweaks on
 the pybind11’s bind_container itself. We even faced some design issues of
 Events class in Hydra itself. But eventually after solving these problems,
@@ -165,7 +164,7 @@ After completing the PhaseSpace code, I quickly converted the code into macro
 for supporting up-to 10 particles.
 
 Now the PhaseSpace class was working perfectly! Next step was to create a
-series of test cases and documentation and of-course the example of
+series of test cases, documentation, and of-course the example of
 PhaseSpace class in action. The remaining algorithms that I named at the
 start of the article are left to implement.
 
@@ -178,9 +177,9 @@ things not only related with programming but related with high energy physics.
 I learned about *Monte Carlo Simulations*, and how they can be used to solve
 challenging real life problems. I read and studied a research paper
 ( https://cds.cern.ch/record/275743/files/CERN-68-15.pdf ), learned about
-particle decays, learned the insights of C++ varidiac templates,
+particle decays, learned the insights of C++ variadic templates,
 wrote a blog about `CRTP`_, learned how to compile a
-python function and why simple python functions cannot be used in
+Python function and why simple Python functions cannot be used in
 multithreaded environments. Most importantly I learned how to structure
 a project from scratch, how important documentation and test cases are.
 
@@ -188,7 +187,7 @@ a project from scratch, how important documentation and test cases are.
 .. _CRTP: https://medium.com/@deepanshu2017/a-curiously-recurring-python-d3a441a58174
 
 
-Special Thanks
+Special thanks
 **************
 
 Shoutout to my amazing mentors. I would like to thank
