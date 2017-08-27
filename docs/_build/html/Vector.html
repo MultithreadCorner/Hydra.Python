@@ -1,0 +1,471 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Vector Classes &mdash; Hydra.Python 0.1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Hydra.Python 0.1.0 documentation" href="index.html" />
+    <link rel="next" title="Events Class" href="Events.html" />
+    <link rel="prev" title="First steps" href="basics.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="vector-classes">
+<h1>Vector Classes<a class="headerlink" href="#vector-classes" title="Permalink to this headline">¶</a></h1>
+<p>There are two vector classes available in Hydra, namely <code class="docutils literal"><span class="pre">Vector4R</span></code> and <code class="docutils literal"><span class="pre">Vector3R</span></code>.</p>
+<div class="section" id="vector4r">
+<h2>Vector4R<a class="headerlink" href="#vector4r" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">Vector4R</span></code> class available in Python wraps the C++ <code class="docutils literal"><span class="pre">Vector4R</span></code> class representing
+four-dimensional relativistic vectors.
+Three types of constructors allow to instantiate the <code class="docutils literal"><span class="pre">Vector4R</span></code> class:</p>
+<ul class="simple">
+<li>Default empty constructor.</li>
+<li>Copy constructor.</li>
+<li>Constructor from 4 real (<code class="docutils literal"><span class="pre">float</span></code>) numbers.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">vec1</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">()</span>  <span class="c1"># construction with values 0.0 for all 4 particals</span>
+<span class="n">vec2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">0.8385</span><span class="p">,</span> <span class="mf">0.1242</span><span class="p">,</span> <span class="mf">0.9821</span><span class="p">,</span> <span class="mf">1.2424</span><span class="p">)</span>
+<span class="n">vec3</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="n">vec2</span><span class="p">)</span>  <span class="c1"># Copy construct the vec3 from vec2</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">vec1</span><span class="p">)</span>  <span class="c1"># (0, 0, 0, 0)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec2</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821,1.2424)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec3</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821,1.2424)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">Vector4R</span></code> class also provides a pretty convenient method to create an instance from a python list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9241</span><span class="p">,</span> <span class="mf">0.13223</span><span class="p">,</span> <span class="mf">0.13121</span><span class="p">,</span> <span class="mf">1.1141</span><span class="p">]</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will construct a new <code class="docutils literal"><span class="pre">Vector4R</span></code> object with the values passed within
+a list. The list should contain exactly 4 elements otherwise a <code class="docutils literal"><span class="pre">TypeError</span></code>
+will be raised.
+The <code class="docutils literal"><span class="pre">set</span></code> methods can be used to set all 4 values or a particular value
+in a <code class="docutils literal"><span class="pre">Vector4R</span></code> object, while the <code class="docutils literal"><span class="pre">get</span></code> method can be used with <code class="docutils literal"><span class="pre">Vector4R</span></code>
+to get the value of a particular index. The <code class="docutils literal"><span class="pre">__getitem__</span></code> and
+<code class="docutils literal"><span class="pre">__setitem</span></code> methods can also be used to get or set the value which comes
+very handy and maintain more pythonic way to access and set the values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec5</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">0.8385</span><span class="p">,</span> <span class="mf">0.1242</span><span class="p">,</span> <span class="mf">0.9821</span><span class="p">,</span> <span class="mf">1.2424</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821,1.2424)</span>
+
+<span class="n">vec5</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.9887</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.9887,0.1242,0.9821,1.2424)</span>
+
+<span class="n">vec5</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.1234</span><span class="p">,</span> <span class="mf">0.5118</span><span class="p">,</span> <span class="mf">0.9101</span><span class="p">,</span> <span class="mf">0.1121</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.1234,0.5118,0.9101,0.1121)</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 0.5118</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># 0.5118</span>
+<span class="n">vec5</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5678</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.1234,0.5678,0.9101,0.1121)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">Vector4R</span></code> object can be multiplied or divided by a real value while it
+can be added or subtracted with another <code class="docutils literal"><span class="pre">Vector4R</span></code> object. One Vector4R
+object can be multiplied by another <code class="docutils literal"><span class="pre">Vector4R</span></code> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec6</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">0.8215</span><span class="p">,</span> <span class="mf">0.9241</span><span class="p">,</span> <span class="mf">0.0105</span><span class="p">,</span> <span class="mf">1.1994</span><span class="p">)</span>
+<span class="n">vec6</span> <span class="o">*=</span> <span class="mf">1.1</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (0.90365,1.01651,0.01155,1.31934)</span>
+<span class="n">vec6</span> <span class="o">/=</span> <span class="mf">0.6</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.50608,1.69418,0.01925,2.1989)</span>
+
+<span class="n">vec7</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">0.1223</span><span class="p">,</span> <span class="mf">0.6433</span><span class="p">,</span> <span class="mf">0.1234</span><span class="p">,</span> <span class="mf">0.3010</span><span class="p">)</span>
+<span class="n">vec6</span> <span class="o">+=</span> <span class="n">vec7</span>  <span class="c1"># Add vec6 with the values of vec7</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.62838,2.33748,0.14265,2.4999)</span>
+
+<span class="n">vec6</span> <span class="o">-=</span> <span class="n">vec7</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.50608,1.69418,0.01925,2.1989)</span>
+</pre></div>
+</div>
+<p>Two <code class="docutils literal"><span class="pre">Vector4R</span></code> objects can easily be added, subtracted or multiplied:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">+</span> <span class="pre">v2</span></code> # Returns a Vector4R object</li>
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">-</span> <span class="pre">v2</span></code> # Returns a Vector4R object</li>
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">*</span> <span class="pre">v2</span></code> # Returns a real number</li>
+</ul>
+</div></blockquote>
+<p>All above three are valid for any <code class="docutils literal"><span class="pre">Vector4R</span></code> object. There are various
+other methods available in <code class="docutils literal"><span class="pre">Vector4R</span></code>. The list of <code class="docutils literal"><span class="pre">Vector4R</span></code>
+methods can be found on <a class="footnote-reference" href="#f1" id="id1">[1]</a>.</p>
+<p>The <code class="docutils literal"><span class="pre">Vector4R</span></code> provides an <code class="docutils literal"><span class="pre">assign</span></code> method to assign or copy the Vector4R
+object. This is a very useful method to avoid the nasty bugs for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">(</span><span class="mf">0.2010</span><span class="p">,</span> <span class="mf">0.3010</span><span class="p">,</span> <span class="mf">0.0210</span><span class="p">,</span> <span class="mf">0.8385</span><span class="p">)</span>
+<span class="n">vec2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector4R</span><span class="p">()</span>
+
+<span class="c1"># Do things and later in code ...</span>
+<span class="n">vec2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="n">vec</span> <span class="o">==</span> <span class="n">vec2</span>  <span class="c1"># True since all values are equal</span>
+<span class="n">vec</span> <span class="ow">is</span> <span class="n">vec2</span>  <span class="c1"># False</span>
+
+<span class="n">vec</span> <span class="o">=</span> <span class="n">vec2</span>   <span class="c1"># Reference is copied</span>
+<span class="n">vec</span> <span class="o">==</span> <span class="n">vec2</span>  <span class="c1"># True</span>
+<span class="n">vec</span> <span class="ow">is</span> <span class="n">vec2</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="vector3r">
+<h2>Vector3R<a class="headerlink" href="#vector3r" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">Vector43</span></code> class available in Python wraps the C++ <code class="docutils literal"><span class="pre">Vector3R</span></code> class representing
+three-dimensional Euclidian vectors.
+Three types of constructors allow to instantiate the <code class="docutils literal"><span class="pre">Vector3R</span></code> class:</p>
+<ul class="simple">
+<li>Default empty constructor.</li>
+<li>Copy constructor.</li>
+<li>Constructor from 3 real (<code class="docutils literal"><span class="pre">float</span></code>) numbers.</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">HydraPython</span> <span class="kn">as</span> <span class="nn">hp</span>
+
+<span class="n">vec1</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">()</span>  <span class="c1"># construction with values 0.0 for all 3 particals</span>
+<span class="n">vec2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="mf">0.8385</span><span class="p">,</span> <span class="mf">0.1242</span><span class="p">,</span> <span class="mf">0.9821</span><span class="p">)</span>
+<span class="n">vec3</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="n">vec2</span><span class="p">)</span>  <span class="c1"># Copy construct the vec3 from vec2</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">vec1</span><span class="p">)</span>  <span class="c1"># (0,0,0)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec2</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec3</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">Vector3R</span></code> class also provides a pretty convenient method to create an
+object from python list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">list_</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.9241</span><span class="p">,</span> <span class="mf">0.13223</span><span class="p">,</span> <span class="mf">0.13121</span><span class="p">]</span>
+<span class="n">vec4</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will construct a new <code class="docutils literal"><span class="pre">Vector3R</span></code> object with the values passed within
+a list. The list should contain exactly 3 elements otherwise a <code class="docutils literal"><span class="pre">TypeError</span></code>
+will be raised.
+The <code class="docutils literal"><span class="pre">set</span></code> methods can be used to set all 3 values or a particular value
+in a <code class="docutils literal"><span class="pre">Vector3R</span></code> object, while the <code class="docutils literal"><span class="pre">get</span></code> method can be used with <code class="docutils literal"><span class="pre">Vector3R</span></code>
+to get the value of a particular index. The <code class="docutils literal"><span class="pre">__getitem__</span></code> and
+<code class="docutils literal"><span class="pre">__setitem</span></code> methods can also be used to get or set the value which comes
+very handy and maintain more pythonic way to access and set the values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec5</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="mf">0.8385</span><span class="p">,</span> <span class="mf">0.1242</span><span class="p">,</span> <span class="mf">0.9821</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.8385,0.1242,0.9821)</span>
+
+<span class="n">vec5</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.9887</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.9887,0.1242,0.9821)</span>
+
+<span class="n">vec5</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mf">0.1234</span><span class="p">,</span> <span class="mf">0.5118</span><span class="p">,</span> <span class="mf">0.9101</span><span class="p">)</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.1234,0.5118,0.9101)</span>
+
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 0.5118</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># 0.5118</span>
+<span class="n">vec5</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5678</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec5</span><span class="p">)</span>  <span class="c1"># (0.1234,0.5678,0.9101)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">Vector3R</span></code> object can be multiplied or divided by a real value while it
+can be added or subtracted with another <code class="docutils literal"><span class="pre">Vector3R</span></code> object. One <code class="docutils literal"><span class="pre">Vector3R</span></code>
+object can be multiplied by another <code class="docutils literal"><span class="pre">Vector3R</span></code> object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec6</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="mf">0.8215</span><span class="p">,</span> <span class="mf">0.9241</span><span class="p">,</span> <span class="mf">0.0105</span><span class="p">)</span>
+<span class="n">vec6</span> <span class="o">*=</span> <span class="mf">1.1</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (0.90365,1.01651,0.01155)</span>
+<span class="n">vec6</span> <span class="o">/=</span> <span class="mf">0.6</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.50608,1.69418,0.01925)</span>
+
+<span class="n">vec7</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="mf">0.1223</span><span class="p">,</span> <span class="mf">0.6433</span><span class="p">,</span> <span class="mf">0.1234</span><span class="p">)</span>
+<span class="n">vec6</span> <span class="o">+=</span> <span class="n">vec7</span>  <span class="c1"># Add vec6 with the values of vec7</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.62838,2.33748,0.14265)</span>
+
+<span class="n">vec6</span> <span class="o">-=</span> <span class="n">vec7</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">vec6</span><span class="p">)</span>  <span class="c1"># (1.50608,1.69418,0.01925)</span>
+</pre></div>
+</div>
+<p>Two <code class="docutils literal"><span class="pre">Vector3R</span></code> objects can easily be added, subtracted or multiplied:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">+</span> <span class="pre">v2</span></code> # Returns a Vector3R object</li>
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">-</span> <span class="pre">v2</span></code> # Returns a Vector3R object</li>
+<li><code class="docutils literal"><span class="pre">v</span> <span class="pre">=</span> <span class="pre">v1</span> <span class="pre">*</span> <span class="pre">v2</span></code> # Returns a real number</li>
+</ul>
+</div></blockquote>
+<p>All above three are valid for any <code class="docutils literal"><span class="pre">Vector3R</span></code> object. There are various
+other methods available in <code class="docutils literal"><span class="pre">Vector3R</span></code>. The list of <code class="docutils literal"><span class="pre">Vector3R</span></code>
+methods can be found on <a class="footnote-reference" href="#f2" id="id2">[2]</a>.</p>
+<p>The <code class="docutils literal"><span class="pre">Vector3R</span></code> provides an <code class="docutils literal"><span class="pre">assign</span></code> method to assign or copy the Vector3R
+object. This is a very useful method to avoid the nasty bugs for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vec</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">(</span><span class="mf">0.2010</span><span class="p">,</span> <span class="mf">0.3010</span><span class="p">,</span> <span class="mf">0.0210</span><span class="p">)</span>
+<span class="n">vec2</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">Vector3R</span><span class="p">()</span>
+
+<span class="c1"># Do things and later in code ...</span>
+<span class="n">vec2</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<span class="n">vec</span> <span class="o">==</span> <span class="n">vec2</span>  <span class="c1"># True since all values are equal</span>
+<span class="n">vec</span> <span class="ow">is</span> <span class="n">vec2</span>  <span class="c1"># False</span>
+
+<span class="n">vec</span> <span class="o">=</span> <span class="n">vec2</span>   <span class="c1"># Reference is copied</span>
+<span class="n">vec</span> <span class="o">==</span> <span class="n">vec2</span>  <span class="c1"># True</span>
+<span class="n">vec</span> <span class="ow">is</span> <span class="n">vec2</span>  <span class="c1"># True</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><p class="first">The method list for Vector4R</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">set</span></code> Set the value at an index or all 4 values of Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.set(idx, float)</li>
+<li>vec1.set(float, float, float, float)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">get</span></code> Get the value at an index for a Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.get(idx)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">assign</span></code>  Assigns one Vector4R content to other Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.assign(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">cont</span></code>  Finds the cont of the Vector4R object. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.cont(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">mass</span></code>  Returns the mass of the Vector4R object. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.mass()</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">mass2</span></code>  Returns the mass2 of the Vector4R object. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.mass()</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">applyRotateEuler</span></code>  Apply the rotate Eular on given Vector4R object. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.applyRotateEuler(float, float, float)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">applyBoostTo</span></code>  Apply the boost on the given Vector4R object. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.applyBoostTo(vec2, bool)</li>
+<li>vec1.applyBoostTo(Vector3R, bool) # Pay attention to Vector3R object</li>
+<li>vec1.applyBoostTo(float, float, float, bool)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">cross</span></code>  Returns the cross product of two Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result_vector = vec1.cross(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">dot</span></code>  Returns the dot product of two Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.dot(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">d3mag</span></code>  Returns the d3mag for two Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.d3mag()</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">dotr3</span></code>  Returns the dot product of three Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.dotr3(vec2, vec3)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">mag2r3</span></code>  Returns the mag2r3 of two Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.mag2r3(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">magr3</span></code>  Returns the magr3 of two Vector4R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result_vector = vec1.magr3(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><p class="first">The method list for Vector3R</p>
+<ul class="last">
+<li><p class="first"><code class="docutils literal"><span class="pre">set</span></code> Set the value at an index or all 3 values of Vector3R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.set(idx, float)</li>
+<li>vec1.set(float, float, float)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">get</span></code> Get the value at an index for a Vector3R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.get(idx)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">assign</span></code>  Assigns one Vector4R content to other Vector3R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>vec1.assign(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">dot</span></code>  Returns the dot product of two Vector3R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.dot(vec2)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">d3mag</span></code>  Returns the d3mag for two Vector3R. Syntax:</p>
+<blockquote>
+<div><ul class="simple">
+<li>result = vec1.d3mag()</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/hydra_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">About this project</a></li>
+</ul>
+<p class="caption"><span class="caption-text">The basics</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basics.html">First steps</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Vector Classes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vector4r">Vector4R</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vector3r">Vector3R</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Events.html">Events Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpace.html">PhaseSpace Class</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Random.html">Random Class</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="PhaseSpaceExample.html">Phase Space Example</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="basics.html" title="previous chapter">First steps</a></li>
+      <li>Next: <a href="Events.html" title="next chapter">Events Class</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Antonio Augusto Alves Junior.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/Vector.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
