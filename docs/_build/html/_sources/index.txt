@@ -1,0 +1,29 @@
+.. only: not latex
+
+Hydra.Python --- Python bindings for the Hydra C++ library
+==========================================================
+
+.. only: not latex
+
+    Contents:
+
+.. toctree::
+   :maxdepth: 1
+
+   intro
+
+.. toctree::
+   :caption: The basics
+   :maxdepth: 2
+
+   basics
+   Vector
+   Events
+   PhaseSpace
+   Random
+
+.. toctree::
+   :caption: Examples
+   :maxdepth: 2
+
+   PhaseSpaceExample
