@@ -3,14 +3,14 @@
 PhaseSpace Class
 ################
 
-Ths class implements the phase-space Monte Carlo simulation where N is the number
-of particles in the Final state. Currently PhaseSpace class supports up-to
+This class implements the phase-space Monte Carlo event generation where N is the number
+of particles in the final state. Currently PhaseSpace class supports up-to
 N=10 number of particles in the Final state. Most of the PhaseSpace class
 methods can work on both ``HOST`` and ``DEVICE``. The number of particles is
 associated with suffix with the class name.
 
-This class is a wrapper of C++ PhaseSpace class. The PhaseSpace class one constructor
-to instantiate the PhaseSpace class:
+This class is the wrapper for the C++ PhaseSpace class. The PhaseSpace class contains one constructor
+to instantiate it:
 
 - Constructor with mother mass and N number of daughter masses.
 
@@ -20,11 +20,11 @@ to instantiate the PhaseSpace class:
 
     vec4 = hypy.Vector4R(5.2795, 0.0, 0.0, 0.0)
     p = hypy.PhaseSpace4(vec4.mass(), [3.096916, 0.493677, 0.13957018, 0.0195018])
-    # This will construct the PhaseSpace object with the mass provided by the vector4R
-    # class and the exactly 4 daughter masses in the list.
+    # This will construct the PhaseSpace object with the mass of the decaying particle provided by the vector4R
+    # class and with the 4 daughter masses in the list.
 
 
-The PhaseSpace classes provides the method to Generate a phase-space given a mother particle and an output range
+The PhaseSpace classes provides a method to generate a phase-space decay given a mother particle and an output range
 or a phase-space given a range of mother particles and an output range.
 
 .. code-block:: python
@@ -53,7 +53,7 @@ or a phase-space given a range of mother particles and an output range.
     mothers[4] = (3.4406218104833015, -0.16339927010014546, 1.363729549941791, 0.6005257912194031)
 
     phsp2 = hypy.PhaseSpace2(3.0969, [0.1056583745, 0.1056583745])
-    container = hypy.host_events_2(5)
+    grand_daughter = hypy.host_events_2(5)
     phsp2.GenerateOnhost(mothers, grand_daughter)
 
     for i in grand_daughter: print(i)
@@ -86,18 +86,18 @@ of a functor over the phase-space given a list of mother particles.
     print (tup[1])  # sqrt of variance
 
 
-Like generators, the Average on method also can accept the list of mother particle instead of one mother particle
+Like generators, the AverageOn method also can accept the list of mother particle instead of one mother particle
 and calculate the ``mean`` and ``sqrt(variance)``.
 
 The ``EvaluateOnhost`` and ``EvaluateOndevice`` evaluates a functor over the passed one mother particle or the list
 of mother particles.
 
 
-The complete list of the classes in the PhaseSpace can be found on [#f1]_ and complete method list supported
-by PhaseSpace Events classes can be found on [#f2]_.
+The complete list of class implementations can be found at [#f1]_ and the complete list of methods supported
+can be found at [#f2]_.
 
 
-.. [#f1] The list of PhaseSpace classes
+.. [#f1] The list of PhaseSpace classe implementations
 
   - ``PhaseSpace2``  Generate the phase-space with 2 particles. Syntax:
 
@@ -136,7 +136,7 @@ by PhaseSpace Events classes can be found on [#f2]_.
       - p = hypy.PhaseSpace10(mass, [10 daughter masses])
 
 
-.. [#f2] The method list for PhaseSpace classes
+.. [#f2] The list of methods for the PhaseSpace classes
 
   - ``GetSeed``  Get the seed. Syntax:
 
@@ -168,7 +168,7 @@ by PhaseSpace Events classes can be found on [#f2]_.
       - p.AverageOndevice(hypy.device_vector_float4& mothers, functor)
 
   - ``EvaluateOnhost`` Evaluate a function over the given particle or list of particles:
-
+1
       - p.EvaluateOnhost(vector4R, hypy.host_vector_float2& result, functor)
       - p.EvaluateOnhost(hypy.host_vector_float4& mothers, hypy.host_vector_float2& result, functor)
 
