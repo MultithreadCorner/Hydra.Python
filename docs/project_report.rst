@@ -168,6 +168,10 @@ series of test cases, documentation, and of-course the example of
 PhaseSpace class in action. The remaining algorithms that I named at the
 start of the article are left to implement.
 
+You can find check list of my `commits`_.
+
+
+.. _commits: https://github.com/MultithreadCorner/Hydra.Python/commits/GSoC2017-release?author=Deepanshu2017
 
 The happy learning
 ******************
