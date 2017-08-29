@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/hydrapython-documentation/badge/?version=latest)](http://hydrapython-documentation.readthedocs.io/en/latest/?badge=latest)
+
 Hydra.Python
 ============
 
