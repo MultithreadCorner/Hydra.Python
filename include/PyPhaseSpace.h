@@ -169,8 +169,8 @@ namespace hydra_python {
 
 #define PHASESPACE_CLASS_BODY(N, RNG)                                          \
 	py::class_<hydra::PhaseSpace<N, RNG>>(m, "PhaseSpace" #N)              \
-	    .def(py::init<hydra::GReal_t,                                      \
-			  const std::array<hydra::GReal_t, N>&>(), "Construct a PhaseSpace"#N "Object with mother mass and " #N " daughter masses")             \
+	    .def(py::init<const std::array<hydra::GReal_t, N>&>(), \
+		 "Construct a PhaseSpace"#N "Object with mother mass and " #N " daughter masses")  \
 	    .def("GetSeed", &hydra::PhaseSpace<N, RNG>::GetSeed)               \
 	    .def("SetSeed", &hydra::PhaseSpace<N, RNG>::SetSeed)               \
 		GENERATE_ON_EVENT(N, RNG, host) \

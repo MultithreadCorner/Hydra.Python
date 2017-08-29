@@ -57,23 +57,21 @@ class TestPhaseSpace(unittest.TestCase):
             self.check_tuple(first, second)
 
     def test_default_constructor(self):
-        vector_mass = 5.140252
         float_list = [1.1, 1.2, 0.242, 0.8385977]
-        ps = hypy.PhaseSpace4(vector_mass, float_list)
+        ps = hypy.PhaseSpace4(float_list)
         self.assertIsInstance(ps, hypy.PhaseSpace4, 'Failure: Not an instance of PhaseSpace_4')
 
     def test_N_PhaseSpace(self):
-        vector_mass = 9629.140252
-        ps1 = hypy.PhaseSpace1(vector_mass, random_floats(0.1, 2.2, 1))
-        ps2 = hypy.PhaseSpace2(vector_mass, random_floats(0.1, 2.2, 2))
-        ps3 = hypy.PhaseSpace3(vector_mass, random_floats(0.1, 2.2, 3))
-        ps4 = hypy.PhaseSpace4(vector_mass, random_floats(0.1, 2.2, 4))
-        ps5 = hypy.PhaseSpace5(vector_mass, random_floats(0.1, 2.2, 5))
-        ps6 = hypy.PhaseSpace6(vector_mass, random_floats(0.1, 2.2, 6))
-        ps7 = hypy.PhaseSpace7(vector_mass, random_floats(0.1, 2.2, 7))
-        ps8 = hypy.PhaseSpace8(vector_mass, random_floats(0.1, 2.2, 8))
-        ps9 = hypy.PhaseSpace9(vector_mass, random_floats(0.1, 2.2, 9))
-        ps10 = hypy.PhaseSpace10(vector_mass, random_floats(0.1, 2.2, 10))
+        ps1 = hypy.PhaseSpace1(random_floats(0.1, 2.2, 1))
+        ps2 = hypy.PhaseSpace2(random_floats(0.1, 2.2, 2))
+        ps3 = hypy.PhaseSpace3(random_floats(0.1, 2.2, 3))
+        ps4 = hypy.PhaseSpace4(random_floats(0.1, 2.2, 4))
+        ps5 = hypy.PhaseSpace5(random_floats(0.1, 2.2, 5))
+        ps6 = hypy.PhaseSpace6(random_floats(0.1, 2.2, 6))
+        ps7 = hypy.PhaseSpace7(random_floats(0.1, 2.2, 7))
+        ps8 = hypy.PhaseSpace8(random_floats(0.1, 2.2, 8))
+        ps9 = hypy.PhaseSpace9(random_floats(0.1, 2.2, 9))
+        ps10 = hypy.PhaseSpace10(random_floats(0.1, 2.2, 10))
         self.assertIsInstance(ps1, hypy.PhaseSpace1, 'Failure: Not an instance of PhaseSpace1')
         self.assertIsInstance(ps2, hypy.PhaseSpace2, 'Failure: Not an instance of PhaseSpace2')
         self.assertIsInstance(ps3, hypy.PhaseSpace3, 'Failure: Not an instance of PhaseSpace3')
@@ -86,15 +84,14 @@ class TestPhaseSpace(unittest.TestCase):
         self.assertIsInstance(ps10, hypy.PhaseSpace10, 'Failure: Not an instance of PhaseSpace10')
 
     def test_seed(self):
-        vector_mass = 5.140252
         float_list = [1.1, 1.2, 0.242, 0.8385977]
-        ps = hypy.PhaseSpace4(vector_mass, float_list)
+        ps = hypy.PhaseSpace4(float_list)
         ps.SetSeed(123)
         self.assertEqual(123, ps.GetSeed())
 
     def test_generator_1(self):
         vec4 = hypy.Vector4R(5.2795, 0.0, 0.0, 0.0)
-        phsp = hypy.PhaseSpace4(vec4.mass(), [3.096916, 0.493677, 0.13957018, 0.0195018])
+        phsp = hypy.PhaseSpace4([3.096916, 0.493677, 0.13957018, 0.0195018])
         e_host = hypy.host_events_4(3)
         phsp.GenerateOnhost(vec4, e_host)
         tup = ((0.00050889380,
@@ -128,8 +125,8 @@ class TestPhaseSpace(unittest.TestCase):
         masses1 = [Jpsi_mass, K_mass, pi_mass]
         masses2 = [mu_mass, mu_mass]
 
-        phsp1 = hypy.PhaseSpace3(B0_mass, masses1)
-        phsp2 = hypy.PhaseSpace2(Jpsi_mass, masses2)
+        phsp1 = hypy.PhaseSpace3(masses1)
+        phsp2 = hypy.PhaseSpace2(masses2)
 
         daughters_d = hypy.host_events_3(nentries)
         grand_daughters_d = hypy.host_events_2(nentries)
@@ -139,7 +136,7 @@ class TestPhaseSpace(unittest.TestCase):
 
     def test_average_on(self):
         vec4 = hypy.Vector4R(5.2795, 0.0, 0.0, 0.0)
-        p = hypy.PhaseSpace4(vec4.mass(), [3.096916, 0.493677, 0.13957018, 0.0195018])
+        p = hypy.PhaseSpace4([3.096916, 0.493677, 0.13957018, 0.0195018])
         tup1 = p.AverageOnhost(vec4, functor, 10)
         tup2 = (-0.983049786694, 0.010451881904)
         self.assertAlmostEqual(tup1[0], tup2[0])
@@ -158,7 +155,7 @@ class TestPhaseSpace(unittest.TestCase):
 
         b0 = hypy.Vector4R(b0_mass, 0.0, 0.0, 0.0)
         masses = [jpsi_mass, k_mass, pi_mass]
-        phsp = hypy.PhaseSpace3(b0_mass, masses)
+        phsp = hypy.PhaseSpace3(masses)
 
         result = hypy.host_vector_float2(5)
         phsp.EvaluateOnhost(b0, result, functor)
