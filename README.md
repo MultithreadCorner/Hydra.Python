@@ -1,10 +1,7 @@
-[![Documentation Status](https://readthedocs.org/projects/hydrapython-documentation/badge/?version=latest)](http://hydrapython-documentation.readthedocs.io/en/latest/?badge=latest)
-
 Hydra.Python
 ============
 
-Python 2.7+ and 3.x bindings for the [Hydra C++ library](https://github.com/MultithreadCorner/Hydra/).
-
+Python 2.7+ and 3.x bindings for the [Hydra C++ library](https://github.com/MultithreadCorner/Hydra/
 The bindings are produced with [pybind11](http://pybind11.readthedocs.io/). The project makes use of [CMAKE](https://cmake.org/).
 
 You can find the Hydra.Python [here](https://github.com/MultithreadCorner/Hydra.Python/tree/GSoC2017-release).
