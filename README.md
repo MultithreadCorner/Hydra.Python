@@ -1,6 +1,6 @@
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![Documentation Status](https://readthedocs.org/projects/hydrapython-documentation/badge/?version=latest)](http://hydrapython-documentation.readthedocs.io/en/latest/?badge=latest)
-[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/hydra-hython)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/hydra-python)
 
 Hydra.Python
 ============
@@ -26,6 +26,6 @@ Work-in-progress instructions:
 
 These instructions create a library .so to be imported from Python.
 Comprehensive documentation is to be found under the `docs/` folder. The `docs/` folder
-also contains the [GSoC 2017 project report](https://github.com/MultithreadCorner/Hydra.Python/blob/master/docs/project_report.rst).
+also contains the [report of the GSoC 2017 project](https://github.com/MultithreadCorner/Hydra.Python/blob/master/docs/project_report.rst) that initiated the development of Hydra.Python.
 
 You can also check the detailed [documentation of Hydra.Python](https://hydrapython-documentation.readthedocs.io/en/latest/).
