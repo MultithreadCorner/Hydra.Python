@@ -31,8 +31,8 @@ def main():
     masses1 = [Jpsi_mass, K_mass, pi_mass]  # List of daughter particles
     masses2 = [mu_mass, mu_mass]  # List of grand-daughter particles
 
-    phsp1 = hypy.PhaseSpace3(B0_mass, masses1)
-    phsp2 = hypy.PhaseSpace2(Jpsi_mass, masses2)
+    phsp1 = hypy.PhaseSpace3(masses1)
+    phsp2 = hypy.PhaseSpace2(masses2)
 
     #     Device    #
 

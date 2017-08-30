@@ -28,7 +28,7 @@ def main():
 
     B0 = hypy.Vector4R(B0_mass, 0.0, 0.0, 0.0)
     masses = [Jpsi_mass, K_mass, pi_mass]  # List of final-state particles
-    phsp = hypy.PhaseSpace3(B0_mass, masses)
+    phsp = hypy.PhaseSpace3(masses)
 
     #     Device    #
     events_d = hypy.device_events_3(nentries)

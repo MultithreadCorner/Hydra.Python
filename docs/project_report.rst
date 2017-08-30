@@ -166,9 +166,9 @@ for supporting up-to 10 particles.
 Now the PhaseSpace class was working perfectly! Next step was to create a
 series of test cases, documentation, and of-course the example of
 PhaseSpace class in action. The remaining algorithms that I named at the
-start of the article are left to implement.
-
-You can find check list of my `commits`_.
+start of the article are left to implement. You can find check list
+of my `commits`_. I would also like to continue to the Hydra.Python project
+outside the scope of Google Summer of Code.
 
 
 .. _commits: https://github.com/MultithreadCorner/Hydra.Python/commits/GSoC2017-release?author=Deepanshu2017
@@ -195,7 +195,11 @@ Special thanks
 **************
 
 Shoutout to my amazing mentors. I would like to thank
-Dr. Antonio Augusto Alves Jr. and Dr. Eduardo Rodrigues for being awesome
+`Dr. Antonio Augusto Alves Jr.`_ and `Dr. Eduardo Rodrigues`_ for being awesome
 mentors and for all the time they invested in me during GSoC. I also would
 like to thank the CERN-HSF community for their time and helping me whenever I
 had a problem. Thank you!
+
+
+.. _Dr. Eduardo Rodrigues: http://erodrigu.web.cern.ch/erodrigu/
+.. _Dr. Antonio Augusto Alves Jr.: https://github.com/AAAlvesJr
