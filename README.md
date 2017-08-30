@@ -15,7 +15,7 @@ Getting started
 Work-in-progress instructions:
 
 0. when cmake'ing pybind11, make sure to specify the correct major Python version. For example `cmake -DPYTHON_EXECUTABLE:FILEPATH=/usr/bin/python` to make sure Python 2 is picked up. (Or provide the path to python3)
-1. clone the git repository: `git clone https://github.com/MultithreadCorner/Hydra.Python.git`
+1. clone the git repository: `git clone https://github.com/AAAlvesJr/Hydra.git`
 2. go to the Hydra.Python directory just retrieved: `cd Hydra.Python`
 3. create a build directory: `mkdir build`
 4. go to build directory: `cd build`
