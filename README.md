@@ -1,4 +1,7 @@
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.png?v=103)](https://opensource.org/licenses/GPL-3.0/)
 [![Documentation Status](https://readthedocs.org/projects/hydrapython-documentation/badge/?version=latest)](http://hydrapython-documentation.readthedocs.io/en/latest/?badge=latest)
+[![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/hydra-hython)
+
 
 Hydra.Python
 ============
