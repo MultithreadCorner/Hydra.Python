@@ -52,7 +52,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'Hydra.Python'
 copyright = '2017, Antonio Augusto Alves Junior'
-author = 'Deepanshu Thakur'
+author = 'Antonio Augusto Alves Junior \\and Deepanshu Thakur \\and Eduardo Rodrigues'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -149,7 +149,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'HydraPython.tex', 'Hydra.Python Documentation',
-     'Deepanshu Thakur', 'manual'),
+     'Antonio Augusto Alves Junior \\and Deepanshu Thakur \\and Eduardo Rodrigues', 'manual'),
 ]
 
 
