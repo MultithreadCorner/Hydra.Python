@@ -10,6 +10,23 @@ The bindings are produced with [pybind11](http://pybind11.readthedocs.io/). The 
 
 You can find the Hydra.Python GSoC2017-release [here](https://github.com/MultithreadCorner/Hydra.Python/tree/GSoC2017-release).
 
+Documentation
+-------------
+
+Comprehensive documentation is can be found under the `docs/` folder. The `docs/` folder
+also contains the [GSoC 2017 project report](https://github.com/MultithreadCorner/Hydra.Python/blob/master/docs/project_report.rst).
+
+The manual of the project is generated using [Sphinx](http://www.sphinx-doc.org/en/stable/) and is hosted in 
+[ReadTheDocs](https://readthedocs.org/).
+Find below the links for the different versions available for the manual:
+
+  1. [__latest html__](https://readthedocs.org/projects/hydrapython-documentation/badge/?version=latest)
+  2. [__latest pdf__](https://readthedocs.org/projects/hydrapython-documentation/downloads/pdf/latest/)
+  3. [__latest epub__](https://readthedocs.org/projects/hydrapython-documentation/downloads/epub/latest/)
+ 
+Other versions, generated from different branches can be found on the [here](https://readthedocs.org/projects/hydrapython-documentation/downloads).
+
+[Doxygen](http://www.doxygen.nl/index.html) reference documentation is underway. 
 
 Getting started
 ---------------
@@ -25,7 +42,8 @@ Work-in-progress instructions:
 6. `make`
 
 These instructions create a library .so to be imported from Python.
-Comprehensive documentation is to be found under the `docs/` folder. The `docs/` folder
-also contains the [report of the GSoC 2017 project](https://github.com/MultithreadCorner/Hydra.Python/blob/master/docs/project_report.rst) that initiated the development of Hydra.Python.
 
-You can also check the detailed [documentation of Hydra.Python](https://hydrapython-documentation.readthedocs.io/en/latest/).
+
+Authors
+=======
+[Antonio Augusto Alves Jr](@AAAlvesJr) , [Deepanshu Tharkur](@Deepanshu2017) and [Eduardo Rodrigues](@eduardo-rodrigues)
